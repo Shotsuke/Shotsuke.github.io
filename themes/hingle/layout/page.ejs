@@ -1,0 +1,16 @@
+<main>
+    <div class="wrap min">
+        <section class="page-title">
+            <h2>
+                <%= page.title ? page.title : "No Title Page" %>
+            </h2>
+        </section>
+        <article class="page-content">
+            <% if (moment().unix() - page.date.unix()>= 15552000) { %>
+                <blockquote>Last modified <%= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
+                        Protions of it may be modified. Contact the author for more imformation.</blockquote>
+                <% } %>
+                    <%- page.content %>
+        </article>
+    </div>
+</main>
