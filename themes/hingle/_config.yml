@@ -1,17 +1,14 @@
 author: 'Shotsuke' # 作者名称
-author_avatar: 'themes\Hingle\source\static\img\icon.png' # 作者头像
+author_avatar: '/static/img/icon.png' # 作者头像
 author_text: 'DuDuDuDuDu=>DuDuDuDuDuLu=>' # 作者信息
 social: # 社交链接
   - title: 'Github'
     icon: 'github'
     link: 'https://github.com/shotsuke'
-  - title: 'Home'
-    icon: 'home'
-    link: 'https://bing.com'
-# background: 'https://api.paugram.com/wallpaper?source=gh' # 主题背景
+background: '/static/img/koneko-background.png' # 主题背景
 menu: # 页眉菜单项目
   'About Me': /about
-  # '朋友们': /friends
+  'Friends': /friends
 config:
   copyright: false # 复制的时候弹出保留原站链接说明
-  night: true # 自动切换夜间模式
+  night: false # 自动切换夜间模式

@@ -12,7 +12,7 @@ Max degree: $\Delta(G)$
 Min degree: $\delta(G)$
 
 Adjacent Matrix
-Incidence Matrix(关联矩阵): $M_{i,j}$ denotes whether $v_i$ and $e_j$ is connected.
+Incidence Matrix: $M_{i,j}$ denotes whether $v_i$ and $e_j$ is connected.
 
 Subgraph
 - Vertex Induced Subgraph
