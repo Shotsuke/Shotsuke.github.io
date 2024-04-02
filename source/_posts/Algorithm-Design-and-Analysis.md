@@ -1,70 +1,70 @@
 ---
-title: Algorithm Design and Analysis
+title: 算法设计与分析 <Algorithm Design and Analysis>
 date: 2024-03-05 14:06:57
 categories: "Course Notes"
 tags: Course
 ---
 
-Notice: this note is originally writen by obisidian.
-Because markdown does not support: $...$ ~~I am lazy to modify it~~, there are lots of errors.
-Copy them and paste them into obisidian or latex.
+算法设计：感觉不如[OI Wiki](https://oi-wiki.org/)
+课本：算法设计与分析 第二版 黄宇 南京大学编著 机械工业出版社
 
-# 1. Model of Computation
+# 难题 & 思考
 
-Strategy
-^
-|
-|   D&C         Optimise of Graph(MST, Path): Greedy, DP
-|    ^                      ^
-|    |                      |
-|    |                      |
-|    |                      |
-|   BF              Traverse of Graph: BFS, DFS
-|
-------------------------------------------- > Problem
+## 关于堆：14.4
 
-The main body should be the problem, then consider the aspact of strategy.
+请证明在一个有n个节点的堆中，所有节点的高度之和最多为n - 1，并说明在何种情况下所有节点的高度之和为n - 1。
 
 
-# 2. Asymptotics
+**Std::Prove**
 
-## Basic ideas
+首先，对于一个任意的堆，其所有子堆中至多只能有一个是非完美堆。
+而对于完美堆，我们可以轻松计算出所有节点的高度和，并与节点个数进行比较。
+凭此进行递归即可证。
 
-Find key in a sequence: O(n)
+然而，给出的标准证明并没有解释为什么这么做，这就像是一个非常tricky的奇思妙想。这在数学证明中是~~令人不快的~~天才的想法。
+深入考察堆的结构和性质，我给出了如下较为严谨的证明，其更加自然（就是我比较菜吧）
 
-n should be large enough, and the analysis should focus on its essential parts.
+**My::Prove&Thinking**
 
-Key notations:
-$w(n)$: the worst situation time cost
-$A(n)$: the average time cost
-$O, \Omega , \Theta , o , \omega$
+**证明：**考虑所有点的高度和与边之间的数量对应关系，原命题转化为证明所有点高度和不大于边数量。
 
-- $O$
-	- $f \in O(g)$ means: $\exists n_0 , \forall n \geq n_0 \ ,\ \exists C \ , \ f(n) \leq Cg(n)$
-	- Or: $\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = C < \infty$
-- $\Omega$
-	-  ... $f (n) \geq Cg(n)$
-- $\Theta$
-	- ... $C_1 g(n) \leq f(n) \leq C_2 g(n)$
-- $o$
-	- 
-- $\omega$
-	- 
+**引理1：**在堆的任意一层中，将该层节点按照其下标从小到大排序，考察它们形成的高度序列，必然呈现如下二者情况之一（定义NULL节点的高度为-1）：
+- a) 若干个i + 1，之后是若干个i
+- b) 全为i
 
-## Definition
+**引理1的证明**：该层为
+- 深度为0的层
+- 堆是完美二叉堆
+的情况时显然为情况b)。
+其余情况时，
+- 若该层有任意两个节点的高度相差大于1，那么不符合这是一个堆。
+- 若该层有任意两个节点u,v具有相同的高度，但是在这两个节点之间有具有不同高度值的节点$w$，那么考察该堆的深度最大的层；
+	- w的高度较小，那么节点u,v所对应的叶子节点下标之间有一段空缺，这违反了堆的存储是以数组连续存储的。
+	- w的高度较大，那么节点w所对应的叶子节点下标之前有一段空缺，这违反了堆的存储是以数组连续存储的。
+因此剩余的情况必然符合情况a)或者b)。
+引理得证。
 
-passed
+**引理2：**对于任意堆，任意节点的高度必然为其左孩子的高度加一（定义NULL节点的高度为-1）。
 
-## Examples
+由引理1和节点高度的计算公式立得之。
 
-passed
+**引理3：**定义一个点为**好点**，当且仅当这个点满足：其左孩子的高度大于右孩子的高度（定义NULL节点的高度为-1）。对于任意堆的任一层，**好点**至多只能有一个。
 
-# 3. Recursion
+**引理3的证明：**
+考虑该层的下一层。在下一层中，由引理1得，相邻两个点的高度要么相等，要么左比右大1。而**好点**要求其左右孩子高度不相同，这样的点对在下一层中最多只有一对。因此引理3得证。当下一层满足情况的点对共享父节点时，这一层有一个**好点**；当下一层没有满足情况的点对或者有但是不共享父节点时，这一层没有**好点**。
 
-## Recursion Algorithm Design
+现将所有点的高度与边建立对应关系。
+- 根节点的高度值对应其一直访问左孩子到达叶子节点的路径长度
+- 如果一个点是父节点的右孩子，那么将其高度值对应其一直访问左孩子到达叶子节点的路径长度
+- 如果一个点是父节点的左孩子，那么将其高度值对应其一直访问右孩子到达叶子节点的路径长度
 
-## Recursion Equation Solution
-
-I have learnt Master Theorem in discrete maths, so passed. 
-
-This class for me is a review about how to draw a recursion equation and how to solve it, so there are no notes here.
+现在我们来比较这个对应关系
+- 由引理2，我们可知任意点的高度 = 其一直访问左孩子到达叶子节点的路径长度。
+- 如果某一点不是**好点**，那么其高度 = 其一直访问右孩子到达叶子节点的路径长度是相等。
+- 如果某一点是**好点**，那么其高度 = 其一直访问右孩子到达叶子节点的路径长度 + 1。
+因此，考察任意一条边：
+- 如果该边在根节点一直访问右孩子到达叶子节点的路径中，那么这条边不在这个对应关系中
+- 否则，该边必被对应且仅被对应一次，对应的点满足以下两种情况之一：
+	- 一直访问左孩子到达叶子节点的节点的路径中有该边，且该点为其父节点的右孩子
+	- 一直访问右孩子到达叶子节点的节点的路径中有该边，且该点为其父节点的左孩子，或者该点为根节点。
+故我们现在仅需比较好点的数量和根节点一直访问右孩子到达叶子节点的路径长度。在这个点高度-边的对应关系中，根节点的高度已经被相等数量的边对应，因此只需要考虑非根层的好点数量；由引理3，好点的数量至多为堆的高度，而这是包括根节点所在层的，因此非根层的好点数量至多为堆的高度 - 1，而根节点一直访问右孩子到达叶子节点的路径长度恰为堆的高度 - 1，因此所有点高之和不大于n - 1。

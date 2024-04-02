@@ -5,8 +5,16 @@ date: 2024-03-04 15:40:31
 
 # Info
 
-A student in Nanjing University.
-Majoring in Computer Science and Technology, Information and Computing Science.
+ID: Shotsuke
+
+就读南京大学，二年级本科生。
+A Sophomore in Nanjing University
+
+计算机科学与技术系，信息计算与科学专业
+Computer Science and Technology, Infomation Computing and Science
+
+联系我：1946029982@qq.com / shotsuke@proton.me
+Can be Reached at: 1946029982@qq.com / shotsuke@proton.me
 
 # Why write blog?
 
