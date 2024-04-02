@@ -5,30 +5,91 @@ categories: "Course Notes"
 tags: Course
 ---
 
-# 1. Basic Concepts of Graph
+# Algorithm & Pseudocode
 
-Degree Sequence: Non-increasing sequence of all vertex sorted by every degree.
-Max degree: $\Delta(G)$
-Min degree: $\delta(G)$
+## Cut vertices: Tarjan
+Input: G = <V , E> and a vertex u
+Output: Each vertex's isCutVertex member
+If **u.inCutVertex** is true, then u is a cut vertex.
+```
+DFSCV(G , u):
+    time <- time + 1
+    u.d <- time
+    u.low <- u.d
+    u.visited <- true
 
-Adjacent Matrix
-Incidence Matrix: $M_{i,j}$ denotes whether $v_i$ and $e_j$ is connected.
+    foreach (u , v) in E do:
+        if v.visited is false do:
+            v.parent <- u
+            u.children <- u.children + 1
+            DFSCV(G , v)
+            u.low <- MIN{u.low , v.low}
+            if u.parent is nullptr and u.children >= 2 do:
+                u.isCutVertex <- true
+            elseif u.parent isn't nullptr and v.low >= u.d do:
+                u.isCutVertex <- true
+        elseif v isn't u.parent do:
+            u.low <- MIN{u.low , v.d}
+```
 
-Subgraph
-- Vertex Induced Subgraph
-- Edge Induced Subgraph
-- Spanning Subgraph
+## Cut Edge: Tarjan
+Like **Cut Vertex: Tarjan**, by changing **v.low >= u.d** into **v.low > u.d**.
+And we don't need to think about whether u is root node.
 
+Input: G = <V , E> and a vertex u
+Output: Each vertex's isCutEdge member
+If **u.isCutEdge** is true, then **(u , u.parent)** consists a bridge.
+```
+DFSCE(G , u):
+    time <- time + 1
+    u.d <- time
+    u.low <- u.d
+    u.visited <- true
 
-# 2. Connection and Traverse
+    foreach (u , v) in E do:
+        if v.visited is false do:
+            v.parent <- u
+            u.children <- u.children + 1
+            DFSCV(G , v)
+            u.low <- MIN{u.low , v.low}
+            if u.parent is nullptr and v.low > u.d do:
+                u.isCutEdge <- true
+        elseif v isn't u.parent do:
+            u.low <- MIN{u.low , v.d}
+```
 
-## Connection and DFS
+## Eulerian Trail/Circuit: Hierholzer
+Input: G = <V , E>
+Output: The vertices of the eulerian trail of the G.
+To drive this function, we can choose any vertex u in a graph.
+If the graph doesn't contain a eulerian circuit but contains a eulerian trail,
+choose a vertex v with odd degree can draw a eulerian trail.
+```
+Hierholzer(u):
+    circuit <- find a circuit in E begin with u
+    if circuit is empty do:
+        return u
+    
+    E <- E - circuit
+    foreach v in circuit do:
+        v <- Hierholzer(v)
+    return circuit
+```
 
-Walk（路线）：允许重复
-Path（路径）：不允许重复
-Trail（迹）：不重复出现的路线
-Internal Vertex（内顶点）：路中除起点、终点的点
+However, this pseudocode is too abstract to translate it into codes,
+so here is my version:
+```
+DFS(u , circuit):
+    foreach v is adjacent to u do:
+        E <- E - (u , v)
+        DFS(v , circuit)
+    circuit.push(u)
+Hierholzer():
+    if exists a vertex v with odd degree
+        u := v
+    else
+        u := any vertex v in V
 
-## Cut Vertex and Cut Edge
-
-The vertex(edge) that cut the graph into two parts.
+    DFS(u , circuit)
+    return circuit
+```
