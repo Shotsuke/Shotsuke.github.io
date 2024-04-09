@@ -9,11 +9,12 @@ description: ''
 keywords:
 author: Shotsuke
 language: en
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url:  https://shotsuke-blog.vercel.app
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -43,14 +44,16 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-syntax_highlighter: highlight.js
+# syntax_highlighter: highlight.js
 highlight:
+  enable: false # oirgin: true
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
+  enable: true # origin: false
   preprocess: true
   line_number: true
   tab_replace: ''

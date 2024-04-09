@@ -10,7 +10,7 @@ tags: Course
 ## Cut vertices: Tarjan
 
 若**u.isCutVertex**为真，那么u就是一个割点。
-```
+```pseudocode
 Input: G = <V , E> and a vertex u
 Output: Each vertex's isCutVertex member
 DFSCV(G , u):
@@ -40,7 +40,7 @@ DFSCV(G , u):
 
 若**u.isCutEdge**为真，那么 **(u , u.parent)** 是一个桥。
 
-```
+```pseudocode
 Input: G = <V , E> and a vertex u
 Output: Each vertex's isCutEdge member
 DFSCE(G , u):
@@ -66,7 +66,7 @@ DFSCE(G , u):
 ### Fleury
 
 Fleury算法优先选择不是割边的边进行遍历。
-```
+```pseudocode
 Input: G = <V , E> 
 Output: The vertices of the eulerian trail of the G
 Fleury():
@@ -92,7 +92,7 @@ Fleury():
 为驱动这个函数，我们可以选择图中的任意一点。
 如果这个图不包含任何欧拉回路，但是包含一条欧拉迹，
 那么选取一个奇度点作为起始即可。
-```
+```pseudocode
 Input: G = <V , E>
 Output: The vertices of the eulerian trail of the G.
 Hierholzer(u):
@@ -108,7 +108,7 @@ Hierholzer(u):
 但是，这份伪代码~~过分~~简洁了，以至于甚至第一眼看不出来如何实现。
 以下是较为直白的版本：
 
-```
+```pseudocode
 Input: G = <V , E>
 Output: The vertices of the eulerian trail of the G.
 DFS(u , circuit):
@@ -127,7 +127,7 @@ Hierholzer():
 ```
 
 ## Block：
-~~~
+~~~pseudocode
 Input: G = <V , E>
 Output: Each block of G
 DFSBlk(G , u):

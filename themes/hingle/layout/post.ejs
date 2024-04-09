@@ -15,10 +15,10 @@
             </div>
         </section>
         <article class="post-content">
-            <% if (moment().unix() - page.date.unix()>= 15552000) { %>
-                <blockquote>Last modified <%= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
-                        Protions of it may be modified. Contact the author for more imformation.</blockquote>
-                <% } %>
+            <%# if (moment().unix() - page.date.unix()>= 15552000) { %>
+                <!-- <blockquote>Last modified <%#= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
+                        Protions of it may be modified. Contact the author for more imformation.</blockquote> -->
+                <%# } %>
                     <%- page.content %>
         </article>
         <section class="post-near">

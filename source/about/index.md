@@ -14,7 +14,7 @@ A Sophomore in Nanjing University
 Computer Science and Technology, Infomation Computing and Science
 
 联系我：1946029982@qq.com / shotsuke@proton.me
-Can be Reached at: 1946029982@qq.com / shotsuke@proton.me
+Be Reached at: 1946029982@qq.com / shotsuke@proton.me
 
 # Why write blog?
 

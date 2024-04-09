@@ -12,6 +12,7 @@
     "version": "7.1.1"
   },
   "dependencies": {
+    "bump": "^0.2.5",
     "hexo": "^7.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
@@ -22,6 +23,6 @@
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "vercel": "^33.6.1"
+    "vercel": "^33.7.0"
   }
 }
