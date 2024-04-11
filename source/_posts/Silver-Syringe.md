@@ -9,6 +9,7 @@ tags:
 
 # 银质注射器
 
+SAME LINK: [Bilibili 银质注射器](https://www.bilibili.com/read/cv23120771/)
 
 谨以此文，献给所有似死之人，献给所有挣扎着努力地活下去的人，献给鼓起勇气好好地和四月自己的分身分别的自己。
 

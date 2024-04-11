@@ -162,3 +162,53 @@ GetBlk(G , u):
         Join blkStack to blk[blkNum]
     return blk
 ~~~
+
+## Max Matching
+
+### Hungarian Algorithm
+
+核心思想：从空集匹配M出发，不断寻找不被M饱和的交错路，并以其来扩充M。
+~~~pseudocode
+Hungarian(G = <X union Y , E>)
+    M := NULL
+    do:
+        foreach u in (X union Y) do:
+            u.visited <- true
+        foreach r in X do:
+            if r.visited is true and r is not saturated by M do:
+                P <- DFSAP ()
+                if P is not NULL do:
+                    M <- {e | e in P} DELTA M
+                    // DELTA = symmetric difference operation
+                    break
+    while P is not NULL
+    return M
+
+DFSAP(G = <X union Y , E> , u , M):
+    u.visited <- true
+    if u is not saturated by M and u is not the root of DFS tree do:
+        return the path from root to u
+    else do:
+        foreach (u, v) in E do:
+            if v.visited is false and the path from root to v is an alternating path of M do:
+                P* <- DFSAP(G , v , M)
+                if P* is not NULL do:
+                    return P*
+    return NULL
+~~~
+
+### Hopcroft-Karp Algorithm
+
+~~~pseudocode
+Hopcroft-Karp(G = <X union Y>)
+    M := NULL
+    do:
+        Q <- HKInit(G , M)
+        Y <- HKBFS(G , M , Q)
+        P <- HKPaths(G , Y)
+        foreach p in P do:
+            M <- {e | e in p} DELTA M
+            // DELTA = symmetric difference operation
+    while P is not NULL
+    return M
+~~~
