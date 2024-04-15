@@ -7,7 +7,11 @@ tags: Course
 
 # 算法与伪代码 <Algorithm & Pseudocode>
 
-## Cut vertices: Tarjan
+## Ch2: Connection
+
+### Cut vertices
+
+#### Tarjan Algorithm
 
 若**u.isCutVertex**为真，那么u就是一个割点。
 ```pseudocode
@@ -33,7 +37,9 @@ DFSCV(G , u):
             u.low <- MIN{u.low , v.d}
 ```
 
-## Cut Edge: Tarjan
+### Cut Edge
+
+#### Tarjan Algorithm
 
 算法与**Cut Vertex: Tarjan**相近,将**v.low >= u.d**改为**v.low > u.d**即可完成算法。
 我们甚至不需要去考虑v是否为根节点的情况。
@@ -61,9 +67,11 @@ DFSCE(G , u):
             u.low <- MIN{u.low , v.d}
 ```
 
-## Eulerian Trail/Circuit:
+## Ch3: Circle
 
-### Fleury
+### Eulerian Trail/Circuit:
+
+#### Fleury Algorithm
 
 Fleury算法优先选择不是割边的边进行遍历。
 ```pseudocode
@@ -87,7 +95,7 @@ Fleury():
 ```
 但是有个不是很显然的问题是，先使用Tarjan算法处理桥边，然后直接使用Fleury算法进行欧拉迹的处理，但是在Fleury算法的过程中会删去一些边，可能会导致原先的非桥边变成桥边。一个可行但是比较暴力的想法是在删去任何边之后立刻重新进行一次Tarjan算法以更新所有的桥边。
 
-### Hierholzer
+#### Hierholzer Algorithm
 
 为驱动这个函数，我们可以选择图中的任意一点。
 如果这个图不包含任何欧拉回路，但是包含一条欧拉迹，
@@ -126,7 +134,9 @@ Hierholzer():
     return circuit
 ```
 
-## Block：
+## Ch4: Connectivity
+
+### Block
 ~~~pseudocode
 Input: G = <V , E>
 Output: Each block of G
@@ -163,9 +173,11 @@ GetBlk(G , u):
     return blk
 ~~~
 
-## Max Matching
+## Ch5: Matching
 
-### Hungarian Algorithm
+### Max Matching
+
+#### Hungarian Algorithm
 
 核心思想：从空集匹配M出发，不断寻找不被M饱和的交错路，并以其来扩充M。
 ~~~pseudocode
@@ -190,17 +202,20 @@ DFSAP(G = <X union Y , E> , u , M):
         return the path from root to u
     else do:
         foreach (u, v) in E do:
-            if v.visited is false and the path from root to v is an alternating path of M do:
+            if v.visited is false and the path
+            from root to v is an alternating path of M do:
                 P* <- DFSAP(G , v , M)
                 if P* is not NULL do:
                     return P*
     return NULL
 ~~~
 
-### Hopcroft-Karp Algorithm
+#### Hopcroft-Karp Algorithm
 
+不断循环尝试找一个M增广路的集合P，直到不存在增广路。
+HKInit
 ~~~pseudocode
-Hopcroft-Karp(G = <X union Y>)
+Hopcroft-Karp(G = <X union Y , E>)
     M := NULL
     do:
         Q <- HKInit(G , M)
@@ -211,4 +226,63 @@ Hopcroft-Karp(G = <X union Y>)
             // DELTA = symmetric difference operation
     while P is not NULL
     return M
+
+HKInit(G = <X union Y , E> , M)
+    stack Q := NULL
+    foreach u in (X union Y) do:
+        if u in X and u is not saturated by M do:
+            u.visited <- true
+            u.d <- 0
+            Q.push(u)
+        else do:
+            u.visited <- false
+            u.d <- +infty
+    return Q
+
+HKBFS(G = <X union Y , E> , M , Q):
+    Y' := NULL
+    d' := +infty
+    while Q is not empty do:
+        v <- Q.pop()
+        if v.d > d' do:
+            break
+        elseif v is not saturated by M and v.d > 0 do:
+            Y' <- Y' union {v}
+            d' <- v.d
+        else
+            foreach (v , w) in E do:
+                if not w.visited and the path
+                from BFS tree root to w is an alternating path of M do:
+                    w.visited <- true
+                    w.d <- v.d + 1
+                    Q.push(w)
+    return Y'
 ~~~
+
+## Ch6: Weighted Graph
+
+### Chinese Postman Problem
+
+#### Edmonds-Johnsun Algorithm
+
+```pseudocode
+Edmonds-Johnson(G = <V , E , w>):
+```
+
+### (Metric) Traveling Salesperson Problem
+
+#### Christofides-Serdyukov Algorithm
+
+```pseudocode
+Christofides-Serdyukov(G = <V , E , w):
+```
+
+## Ch7: Directed Graph
+
+### Max Flow in Flow Network
+
+#### Ford-Fulkerson Algorithm
+
+```pseudocode
+Ford-Fulkerson(G = <V , A , c , s , t>):
+```

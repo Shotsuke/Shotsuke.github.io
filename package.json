@@ -19,10 +19,11 @@
     "hexo-generator-index": "^3.0.0",
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-marked": "^6.0.0",
+    "hexo-renderer-kramed": "^0.1.4",
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
+    "mathjax": "^3.2.2",
     "vercel": "^33.7.0"
   }
 }

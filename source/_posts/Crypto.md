@@ -5,14 +5,10 @@ categories: "Course Notes"
 tags: Course
 ---
 
-🙇markdown公式块渲染仍在研究中🙇
-🙇建议扔到markdown/latex/或者什么支持的程序上看🙇
-
 ## Perfect Security （完美保密性）
 
 ### One-Time Pad 算法
-![One-Time Pad](./imgs/Crypto/otp.jpg)
-
+![One-Time Pad](\../imgs/Crypto/otp.jpg)
 M,K,C全部一样，$\{0,1\}^l$表示l位比特串（这仅是一个例子）
 
 gen：随机生成密钥k
@@ -49,7 +45,7 @@ $Pr[M=m|C=c] = Pr[M=m]$ 右边大于0，
 
 对于任意选取的c，必定有对应的**互不相同的**密钥使之解密到明文，
 
-否则会有某个明文$m^*$的概率为0 ，则知 之。
+否则会有某个明文$m^*$的概率为0 ，则知之。
 
 
 
@@ -92,7 +88,8 @@ Efficient adversaries = Randomized algorithms + Polynomial time bounded
 
 ##### super-polynomial（超多项式）
 
-$$superpoly(n) > n^c$$ when n is sufficiently large.
+$$superpoly(n) > n^c$$
+when n is sufficiently large.
 
 如果对手使用的算法复杂度是超多项式的，那么我们通过扩大数据规模能够使对手GG。
 
@@ -170,7 +167,7 @@ $$\mid Pr[D(G(s)) = 1] - Pr[D(r) = 1] \mid \le negl(n) $$
 在此时去分辨以r作为密钥和以G去生成密钥的区别十分小，此时即可
 
 我们称l为G的拓展因子(**expansion factor**)（种子）
-![prg](./imgs/Crypto/prg.jpg)
+![prg](\../imgs/Crypto/prg.jpg)
 
 
 
@@ -312,7 +309,7 @@ void rc4_crypt(unsigned char* s,unsigned char* Data,unsigned long Len)
 
 我们使用$PrivK_{A,\Pi}^{mult}$来表示这种情况。（多消息的窃听实验）
 
-仍然由挑战者自己来选择两段明文发送，原先的m0，m1改为：$M_0 = (m_{0,1} , ... , m_{0,t}) , M_1 = (m_{1,1} , ... , m_{1,t})$
+仍然由挑战者自己来选择两段明文发送，原先的m0，m1改为：$$M_0 = (m_{0,1} , ... , m_{0,t}) , M_1 = (m_{1,1} , ... , m_{1,t})$$
 
 其中对应的明文段的长度相等。将其全部加密后二选一，$C = (c_1,...,c_t)$发送给挑战者，然后令其输出0，1.
 
@@ -327,7 +324,7 @@ void rc4_crypt(unsigned char* s,unsigned char* Data,unsigned long Len)
 
 
 ### CPA indistinguishability experiment（选择明文攻击-不可区分实验）
-![cpa](./imgs/Crypto/cpa.jpg)
+![cpa](\../imgs/Crypto/cpa.jpg)
 
 敌手能够自主地选择明文(chosen-plaintext attacks)**是什么**，攻击者能够选择**任何**明文进行加密。
 
@@ -436,7 +433,8 @@ $$\le \frac{1}{2} + \frac{q(n)}{2^n}$$
 
 是一个双射。排列函数将输入数据的元素重新排列，以创建一个新的排列或置换，从而隐藏原始数据的结构或特征。
 
-设F是一个密钥函数，如果$I_{in} = I_{out}$，并且对于所有的k，$F_k:\{0,1\}^{I_{in}} \rightarrow \{0,1\}^{I_{out}}$是一一对应的，那么我们称F是一个密钥排列（置换）。
+设F是一个密钥函数，如果$I\_{in} = I\_{out}$，并且对于所有的k，$F\_k:\{0,1\}^{ I\_{in} } \rightarrow \{0,1\}^{ I_{out} }$
+是一一对应的，那么我们称F是一个密钥排列（置换）。
 
 称$I_{in}$是F的**块长度**，也就是接受多少位的输入数据
 
@@ -500,8 +498,8 @@ F是一个块密码，假定明文m长度是n的l倍。ECB将其分割称若干�
 
 ##### CBC mode
 
-类似EBC，将每次得到的$c_i$，与下一次的输入$m_{i+1}$进行异或后投喂到Fk中，得到$c_{i+1}$，如此循环。这更加要求了Fk的逆函数。
-![CBC-Mode](./imgs/Crypto/CBC-Mode.png)
+类似EBC，将每次得到的$c\_i$，与下一次的输入$m\_{i+1}$进行异或后投喂到Fk中，得到$c_{i+1}$，如此循环。这更加要求了Fk的逆函数。
+![CBC-Mode](\../imgs/Crypto/CBC-Mode.png)
 对于CBC模式安全性的分析：因为每次加密前都会引入一个随机的因子来和m1异或，所以在此模式下弥补了EBC的缺陷。可以证明，如果F是一个PRF，那么CBC是一个CPA安全的方案。
 
 ##### OFB mode
@@ -595,9 +593,9 @@ $$<m_1'||m_2',t_1'||t_2'><m_1||m_2,t_1||t_2>\rightarrow<m_1||m_2',t_1||t_2'>$$
 
 #### CBC-MAC
 
-![CBC-Mode](./imgs/Crypto/CBC-Mode.png)
-![由CBC构造的MAC算法](./imgs/Crypto/由CBC构造的MAC算法.png)
-![CBC-MAC对比CBC](./imgs/Crypto/CBC-MAC对比CBC.png)
+![CBC-Mode](\../imgs/Crypto/CBC-Mode.png)
+![由CBC构造的MAC算法](\../imgs/Crypto/由CBC构造的MAC算法.png)
+![CBC-MAC对比CBC](\../imgs/Crypto/CBC-MAC对比CBC.png)
 
 上述是CBC和CBC-MAC的示意图。注意在此时CBC-MAC仅仅输出最后一个$t_l$作为tag。在F为伪随机函数的情况下，令l为多项式，上述的构造对于$l(n)*n$长度的消息的加密是安全的。
 
@@ -614,11 +612,11 @@ A允许继续使用神谕机，但是禁止给DEC输入c，最后输出b‘
 
 选择明文攻击的安全性：$$Pr[PrivK^{cca} _{A,\Pi(n)} = 1] ≤ 1/2 + negl(n)$$
 CCA安全是不可延展（或：不可锻造）的。
-![CCA](./imgs/Crypto/CCA.png)
+![CCA](\../imgs/Crypto/CCA.png)
 
-![CCA-example](./imgs/Crypto/CCA-example.png)
+![CCA-example](\../imgs/Crypto/CCA-example.png)
 
-![CCA性质](./imgs/Crypto/CCA性质.png)
+![CCA性质](\../imgs/Crypto/CCA性质.png)
 ### 哈希函数及其应用
 
 哈希函数常见于压缩，我们要求：
@@ -653,8 +651,8 @@ $$Pr[Hash-coll_{A,\Pi}(n) = 1] \leq negl(n)$$
 
 #### Merkle-Damgard Transform
 
-![Merkle-Damgard-哈希1](./imgs/Crypto/Merkle-Damgard-哈希1.png)
-![Merkle-Damgard-哈希2](./imgs/Crypto/Merkle-Damgard-哈希2.png)
+![Merkle-Damgard-哈希1](\../imgs/Crypto/Merkle-Damgard-哈希1.png)
+![Merkle-Damgard-哈希2](\../imgs/Crypto/Merkle-Damgard-哈希2.png)
 输入长度(a+b)，输出长度a。构造(Gen,H):
 Gen：same
 H：接受s和任意长度的x，将x切为若干固定长度，最终的输出仅会有最终的$H^s(x)$
@@ -670,7 +668,7 @@ H：接受s和任意长度的x，将x切为若干固定长度，最终的输出�
 
 #### HMAC
 
-![Merkle-Dangard-哈希3](./imgs/Crypto/Merkle-Dangard-哈希3.png)
+![Merkle-Dangard-哈希3](\../imgs/Crypto/Merkle-Dangard-哈希3.png)
 
 ## One-Way Functions and Hard-Core Predicates (单向函数与硬核谓词)
 
@@ -678,7 +676,7 @@ H：接受s和任意长度的x，将x切为若干固定长度，最终的输出�
 
 #### DEF 单向函数
 
-![定义：单向函数](../imgs/Crypto/定义：单向函数.png)
+![定义：单向函数](\../imgs/Crypto/定义：单向函数.png)
 
 这是说，从x计算到fx很容易，但是从fx到x的计算很困难。
 
@@ -693,7 +691,7 @@ H：接受s和任意长度的x，将x切为若干固定长度，最终的输出�
 
 一个可能的单向函数的候选：质因数分解。$f(x,y) = xy$，其正向容易计算，但是分解质因数（目前）并不是PPT。
 
-另一个例子：$f_{ss}(x_1 , \dots , x_n , l) = \Sigma _{i \in l} x_i$，其中l是$\{1,2,\dots,n\}$的一个子集。
+另一个例子：$f\_{ss}(x\_1 , \dots , x\_n , l) = \Sigma _{i \in l} x\_i$，其中l是$\{1,2,\dots,n\}$的一个子集。
 
 
 #### Hard-core predicates （硬核谓词）
@@ -704,14 +702,14 @@ H：接受s和任意长度的x，将x切为若干固定长度，最终的输出�
 
 ##### DEF 硬核谓词
 
-![定义：硬核谓词](../imgs/Crypto/定义：硬核谓词.png)
+![定义：硬核谓词](\../imgs/Crypto/定义：硬核谓词.png)
 
 硬核谓词被设计用于探究单向函数隐藏的那部分关于输入的信息，其是关于f输入每个比特的一些信息的汇合。如果hc是一个f的硬核谓词，那么其能够在多项式的时间内计算出，但是在给出f的情况下能够不被高于1/2的概率计算出。这就表明这部分信息的汇合无法被观测到。
 
 ##### Goldreich-Levin Theorem
 
 假定f是一个单向函数，那么可以构造出一个单向函数g，并且给出其的一个hc。
-![定理：Goldreich-Levin-Theorem](../imgs/Crypto/定理：Goldreich-Levin-Theorem.png)
+![定理：Goldreich-Levin-Theorem](\../imgs/Crypto/定理：Goldreich-Levin-Theorem.png)
 
 #### Constructing PRGs with One-Way Function
 
@@ -721,7 +719,7 @@ $G(s) = f(s) \mid \mid hc(s)$是一个PRG，如果f是一个单向的重排函�
 
 
 ### 1. Where we are now
-![目前大纲](../imgs/Crypto/目前大纲.png)
+![目前大纲](\../imgs/Crypto/目前大纲.png)
 
 ### 2. Preliminaries and Basic Group Theory
 
@@ -747,14 +745,14 @@ $a = qb + r$，能够证明q和r唯一；对于q和r的计算能够在多项式�
 
 由**可信任的KDC**给会话的所有人分发各自不同的密钥，每次通讯的消息由KDC进行加密，在另一侧解密。在会话结束后需要擦拭掉密钥。
 
-![KDC协议](../imgs/Crypto/KDC协议.png)
+![KDC协议](\../imgs/Crypto/KDC协议.png)
 
 
 ###  Achieving Private Communications without Pre-existence of Secure Channel
 
 #### Diffie-Hellman key-exchange protocol
 
-![Diffie-Hellman-key-exchange-protocol](../imgs/Crypto/Diffie-Hellman-key-exchange-protocol.png)
+![Diffie-Hellman-key-exchange-protocol](\../imgs/Crypto/Diffie-Hellman-key-exchange-protocol.png)
 首先通信双方都需要输入一个安全参数1n，然后运行协议：
 
 1. Alice运行 $ç(1^n)$ 从而获得(G, q, g)
@@ -764,17 +762,17 @@ $a = qb + r$，能够证明q和r唯一；对于q和r的计算能够在多项式�
 5. Alice收到hB后输出密钥$k_A := h_B^x$
 
 定义其的安全性如下：
-![key-exchange-experiment](../imgs/Crypto/key-exchange-experiment.png)
+![key-exchange-experiment](\../imgs/Crypto/key-exchange-experiment.png)
 
 但是这不能抵御**中间人攻击**
 
-![中间人攻击](../imgs/Crypto/中间人攻击.png)
+![中间人攻击](\../imgs/Crypto/中间人攻击.png)
 
 ## Public-Key Encryption (公钥加密)
 
 ### 1 What is Public-Key Encryption
 
-![公钥加密算法](../imgs/Crypto/公钥加密算法.png)
+![公钥加密算法](\../imgs/Crypto/公钥加密算法.png)
 
 公钥加密由三个PPT算法构成。
 Gen：生成一对钥匙，public key和secret key。
@@ -868,7 +866,7 @@ Vrfy: $m = [\sigma^e \mod N]$
 
 #### RSA-FDH
 
-Gen: 相比RSA，多确定一个随机函数$H:\{0,1\}^* \rightarrow \mathbb{Z}_N ^*$
+Gen: 相比RSA，多确定一个随机函数$H:\{0,1\}^{\*} \rightarrow \mathbb{Z}_N ^{\*}$
 
 Sign: $\sigma := [H(m)^d \mod N]$
 
@@ -906,9 +904,9 @@ Vrfy: $\sigma^e = H(m) \mod N$
 
 相较于直接发送私钥x，我们将私钥作了一个仿射变换，这对其便是一个加密。
 
-显然地，$y^a * I = g^{ax} * g^b = g^X$，y是公钥。如果证明者知道私钥，那么显然可以通过验证。但是如果其不知道，那么其仅有一个negl(n)的概率通过验证。
+显然地，$y^a \* I = g^{ax} \* g^b = g^X$，y是公钥。如果证明者知道私钥，那么显然可以通过验证。但是如果其不知道，那么其仅有一个negl(n)的概率通过验证。
 
-![Schnorr-signature-scheme](./imgs/Crypto/Schnorr-signature-scheme.png)
+![Schnorr-signature-scheme](\../imgs/Crypto/Schnorr-signature-scheme.png)
 
 ### 4 Certificates and Public-Key Infrastructure
 
