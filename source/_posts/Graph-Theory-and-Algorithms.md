@@ -267,6 +267,16 @@ HKBFS(G = <X union Y , E> , M , Q):
 
 ```pseudocode
 Edmonds-Johnson(G = <V , E , w>):
+    EM := NULL
+    V_odd := {v in V | d(v) is odd}
+    E_odd := {(u , v) | u and v are both in V_odd}
+    w_odd := {distance of (u , v) | u and v are both in V_odd}
+    G_odd := <V_odd , E_odd , w_o>
+    M := perfect matching with min weight in G_odd
+    foreach (u , v) in M do:
+        E* := {x | x in (u , v) path with min weight}
+        E_Mul <- E_Mul union E*
+    return the Eulerian circuit of <V , E union E_Mul>
 ```
 
 ### (Metric) Traveling Salesperson Problem
