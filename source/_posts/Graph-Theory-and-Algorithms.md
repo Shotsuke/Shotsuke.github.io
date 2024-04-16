@@ -181,7 +181,9 @@ GetBlk(G , u):
 
 核心思想：从空集匹配M出发，不断寻找不被M饱和的交错路，并以其来扩充M。
 ~~~pseudocode
-Hungarian(G = <X union Y , E>)
+Input: G = <X union Y , E>
+Output: The max matching of G
+Hungarian(G = <X union Y , E>):
     M := NULL
     do:
         foreach u in (X union Y) do:
@@ -215,7 +217,9 @@ DFSAP(G = <X union Y , E> , u , M):
 不断循环尝试找一个M增广路的集合P，直到不存在增广路。
 HKInit
 ~~~pseudocode
-Hopcroft-Karp(G = <X union Y , E>)
+Input: G = <X union Y , E>
+Output: The max matching of G
+Hopcroft-Karp(G = <X union Y , E>):
     M := NULL
     do:
         Q <- HKInit(G , M)
@@ -227,7 +231,7 @@ Hopcroft-Karp(G = <X union Y , E>)
     while P is not NULL
     return M
 
-HKInit(G = <X union Y , E> , M)
+HKInit(G = <X union Y , E> , M):
     stack Q := NULL
     foreach u in (X union Y) do:
         if u in X and u is not saturated by M do:
@@ -266,6 +270,8 @@ HKBFS(G = <X union Y , E> , M , Q):
 #### Edmonds-Johnsun Algorithm
 
 ```pseudocode
+Input: G = <V , E , w>, foreach w >= 0
+Output: Min sum of postman path 
 Edmonds-Johnson(G = <V , E , w>):
     EM := NULL
     V_odd := {v in V | d(v) is odd}
@@ -284,8 +290,20 @@ Edmonds-Johnson(G = <V , E , w>):
 #### Christofides-Serdyukov Algorithm
 
 ```pseudocode
-Christofides-Serdyukov(G = <V , E , w):
+Input: G = <V , E , w>, w satisfies triangle inequality (Metric)
+Output: The (APPROXIMATE) answer of TSP 
+Christofides-Serdyukov(G = <V , E , w>):
+    T := <V , E_Tree> <- the min spanning tree of G
+    V_odd <- {v in V | d_Tree(v) is odd}
+    M <- perfect matching with min weight in G[V_odd]
+    C <- Eulerian circuit of <V , E_Tree union M>
+    C <- remove duplicated  vertices in C
+    return C union {start vertex of C}
 ```
+
+Christofides-Serdyukov Algorithm具有$\frac{3}{2}$的近似性。
+
+**⚠：度量旅行商问题具有$\frac{123}{122}$不可近似性，即不存在近似比为小于$\frac{123}{122}$的常数的多项式时间算法，除非$P = NP$。**
 
 ## Ch7: Directed Graph
 
@@ -293,6 +311,20 @@ Christofides-Serdyukov(G = <V , E , w):
 
 #### Ford-Fulkerson Algorithm
 
+福特算法不断地在剩余网络中寻找增广路，并将其加入到最大流当中。其先减少反向边的流量，再增加正向边的流量。
+
 ```pseudocode
+Input: G = <V , A , c , s , t>
+Output: The max flow in the network
 Ford-Fulkerson(G = <V , A , c , s , t>):
+    f := 0
+    while G_f includes an alternating path P do:
+        r <- min r(u , v) , <u , v> is in P
+        foreach <u , v> in P do:
+            if <v , u> in A do:
+                r' <- min{f(<v , u>) , r}
+                f(<v , u>) <- f(<v , u>) - r'
+                r <- r - r'
+            if <u , v> in A do:
+                f(<u , v>) <- f(<u , v>) + r
 ```
