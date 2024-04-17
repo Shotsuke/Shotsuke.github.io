@@ -2,7 +2,9 @@
 title: 图论与算法 <Graph Theory and Algorithms>
 date: 2024-03-05 16:39:52
 categories: "Course Notes"
-tags: Course
+tags: 
+    - Note
+    - Graph Theorem and Algorithms
 ---
 
 # 算法与伪代码 <Algorithm & Pseudocode>
@@ -18,23 +20,23 @@ tags: Course
 Input: G = <V , E> and a vertex u
 Output: Each vertex's isCutVertex member
 DFSCV(G , u):
-    time <- time + 1
-    u.d <- time
-    u.low <- u.d
-    u.visited <- true
+    time ← time + 1
+    u.d ← time
+    u.low ← u.d
+    u.visited ← true
 
     foreach (u , v) in E do:
         if v.visited is false do:
-            v.parent <- u
-            u.children <- u.children + 1
+            v.parent ← u
+            u.children ← u.children + 1
             DFSCV(G , v)
-            u.low <- MIN{u.low , v.low}
+            u.low ← MIN{u.low , v.low}
             if u.parent is nullptr and u.children >= 2 do:
-                u.isCutVertex <- true
+                u.isCutVertex ← true
             elseif u.parent isn't nullptr and v.low >= u.d do:
-                u.isCutVertex <- true
+                u.isCutVertex ← true
         elseif v isn't u.parent do:
-            u.low <- MIN{u.low , v.d}
+            u.low ← MIN{u.low , v.d}
 ```
 
 ### Cut Edge
@@ -50,21 +52,21 @@ DFSCV(G , u):
 Input: G = <V , E> and a vertex u
 Output: Each vertex's isCutEdge member
 DFSCE(G , u):
-    time <- time + 1
-    u.d <- time
-    u.low <- u.d
-    u.visited <- true
+    time ← time + 1
+    u.d ← time
+    u.low ← u.d
+    u.visited ← true
 
     foreach (u , v) in E do:
         if v.visited is false do:
-            v.parent <- u
-            u.children <- u.children + 1
+            v.parent ← u
+            u.children ← u.children + 1
             DFSCV(G , v)
-            u.low <- MIN{u.low , v.low}
+            u.low ← MIN{u.low , v.low}
             if u.parent is nullptr and v.low > u.d do:
-                u.isCutEdge <- true
+                u.isCutEdge ← true
         elseif v isn't u.parent do:
-            u.low <- MIN{u.low , v.d}
+            u.low ← MIN{u.low , v.d}
 ```
 
 ## Ch3: Circle
@@ -88,9 +90,9 @@ Fleury():
             e := e*
         else do:
             e := any edge u connecting
-        u <- another vertex in e
+        u ← another vertex in e
         trail.push(u)
-        E <- E - e
+        E ← E - e
     return trail
 ```
 但是有个不是很显然的问题是，先使用Tarjan算法处理桥边，然后直接使用Fleury算法进行欧拉迹的处理，但是在Fleury算法的过程中会删去一些边，可能会导致原先的非桥边变成桥边。一个可行但是比较暴力的想法是在删去任何边之后立刻重新进行一次Tarjan算法以更新所有的桥边。
@@ -104,12 +106,12 @@ Fleury():
 Input: G = <V , E>
 Output: The vertices of the eulerian trail of the G.
 Hierholzer(u):
-    circuit <- find a circuit in E begin with u
+    circuit ← find a circuit in E begin with u
     if circuit is empty do:
         return u
-    E <- E - circuit
+    E ← E - circuit
     foreach v in circuit do:
-        v <- Hierholzer(v)
+        v ← Hierholzer(v)
     return circuit
 ```
 
@@ -121,7 +123,7 @@ Input: G = <V , E>
 Output: The vertices of the eulerian trail of the G.
 DFS(u , circuit):
     foreach v is adjacent to u do:
-        E <- E - (u , v)
+        E ← E - (u , v)
         DFS(v , circuit)
     circuit.push(u)
 
@@ -141,17 +143,17 @@ Hierholzer():
 Input: G = <V , E>
 Output: Each block of G
 DFSBlk(G , u):
-    time <- time + 1
-    u.d <- time
-    u.low <- u.d
+    time ← time + 1
+    u.d ← time
+    u.low ← u.d
     u.visited = true
     foreach (u , v) in E do:
         if v.visited is false do:
             blkStack.push((u , v))
-            v.parent <- u
-            u.children <- u.children + 1
+            v.parent ← u
+            u.children ← u.children + 1
             DFSBlk(G , v)
-            u.low <- MIN{u.low , v.low}
+            u.low ← MIN{u.low , v.low}
             if u.parent is nullptr and u.children >= 2 or
                 u.parent is not nullptr and v.low >= u.d do:
                 blkNum++
@@ -163,7 +165,7 @@ DFSBlk(G , u):
         elseif v is not u.parent do:
             if u.d > v.d do:
                 blkStack.push((u , v))
-            u.low <- MIN{u.low , v.d}
+            u.low ← MIN{u.low , v.d}
 
 GetBlk(G , u):
     DFSBlk(G , u)
@@ -187,26 +189,26 @@ Hungarian(G = <X union Y , E>):
     M := NULL
     do:
         foreach u in (X union Y) do:
-            u.visited <- true
+            u.visited ← true
         foreach r in X do:
             if r.visited is true and r is not saturated by M do:
-                P <- DFSAP ()
+                P ← DFSAP ()
                 if P is not NULL do:
-                    M <- {e | e in P} DELTA M
+                    M ← {e | e in P} DELTA M
                     // DELTA = symmetric difference operation
                     break
     while P is not NULL
     return M
 
 DFSAP(G = <X union Y , E> , u , M):
-    u.visited <- true
+    u.visited ← true
     if u is not saturated by M and u is not the root of DFS tree do:
         return the path from root to u
     else do:
         foreach (u, v) in E do:
             if v.visited is false and the path
             from root to v is an alternating path of M do:
-                P* <- DFSAP(G , v , M)
+                P* ← DFSAP(G , v , M)
                 if P* is not NULL do:
                     return P*
     return NULL
@@ -222,11 +224,11 @@ Output: The max matching of G
 Hopcroft-Karp(G = <X union Y , E>):
     M := NULL
     do:
-        Q <- HKInit(G , M)
-        Y <- HKBFS(G , M , Q)
-        P <- HKPaths(G , Y)
+        Q ← HKInit(G , M)
+        Y ← HKBFS(G , M , Q)
+        P ← HKPaths(G , Y)
         foreach p in P do:
-            M <- {e | e in p} DELTA M
+            M ← {e | e in p} DELTA M
             // DELTA = symmetric difference operation
     while P is not NULL
     return M
@@ -235,30 +237,30 @@ HKInit(G = <X union Y , E> , M):
     stack Q := NULL
     foreach u in (X union Y) do:
         if u in X and u is not saturated by M do:
-            u.visited <- true
-            u.d <- 0
+            u.visited ← true
+            u.d ← 0
             Q.push(u)
         else do:
-            u.visited <- false
-            u.d <- +infty
+            u.visited ← false
+            u.d ← +infty
     return Q
 
 HKBFS(G = <X union Y , E> , M , Q):
     Y' := NULL
     d' := +infty
     while Q is not empty do:
-        v <- Q.pop()
+        v ← Q.pop()
         if v.d > d' do:
             break
         elseif v is not saturated by M and v.d > 0 do:
-            Y' <- Y' union {v}
-            d' <- v.d
+            Y' ← Y' union {v}
+            d' ← v.d
         else
             foreach (v , w) in E do:
                 if not w.visited and the path
                 from BFS tree root to w is an alternating path of M do:
-                    w.visited <- true
-                    w.d <- v.d + 1
+                    w.visited ← true
+                    w.d ← v.d + 1
                     Q.push(w)
     return Y'
 ~~~
@@ -281,7 +283,7 @@ Edmonds-Johnson(G = <V , E , w>):
     M := perfect matching with min weight in G_odd
     foreach (u , v) in M do:
         E* := {x | x in (u , v) path with min weight}
-        E_Mul <- E_Mul union E*
+        E_Mul ← E_Mul union E*
     return the Eulerian circuit of <V , E union E_Mul>
 ```
 
@@ -293,11 +295,11 @@ Edmonds-Johnson(G = <V , E , w>):
 Input: G = <V , E , w>, w satisfies triangle inequality (Metric)
 Output: The (APPROXIMATE) answer of TSP 
 Christofides-Serdyukov(G = <V , E , w>):
-    T := <V , E_Tree> <- the min spanning tree of G
-    V_odd <- {v in V | d_Tree(v) is odd}
-    M <- perfect matching with min weight in G[V_odd]
-    C <- Eulerian circuit of <V , E_Tree union M>
-    C <- remove duplicated  vertices in C
+    T := <V , E_Tree> ← the min spanning tree of G
+    V_odd ← {v in V | d_Tree(v) is odd}
+    M ← perfect matching with min weight in G[V_odd]
+    C ← Eulerian circuit of <V , E_Tree union M>
+    C ← remove duplicated  vertices in C
     return C union {start vertex of C}
 ```
 
@@ -319,12 +321,12 @@ Output: The max flow in the network
 Ford-Fulkerson(G = <V , A , c , s , t>):
     f := 0
     while G_f includes an alternating path P do:
-        r <- min r(u , v) , <u , v> is in P
+        r ← min r(u , v) , <u , v> is in P
         foreach <u , v> in P do:
             if <v , u> in A do:
-                r' <- min{f(<v , u>) , r}
-                f(<v , u>) <- f(<v , u>) - r'
-                r <- r - r'
+                r' ← min{f(<v , u>) , r}
+                f(<v , u>) ← f(<v , u>) - r'
+                r ← r - r'
             if <u , v> in A do:
-                f(<u , v>) <- f(<u , v>) + r
+                f(<u , v>) ← f(<u , v>) + r
 ```
