@@ -71,14 +71,13 @@ Input:
 
 ### Summary
 
-- DA consists of phases. Each one contains iterations changing the flow using shortest augmenting paths of a fixed length, $l$.
-- At the beginning of each phase, the extended BFS builds in $O(|E|)$ time a layered network data structure, $\hat{L}$, of length $l$. The layered network is constantly maintained during the phase as the union of all shortest augmenting paths of length $l$, until it vanishes, in total time $O(|E|)$.
-- The layered structure of $\hat{L}$ and absence of dead-ends in it allow for the execution of every iteration of FF in $O(l)=O(|V|)$time.
-- The layered network is strictly pruned after each iteration of $FF$. Therefore, the number of iterations at each phase is bounded by $|E|$.
-- When the layered network vanishes, there isnoaugmentingpathof length lesser than or equal to $l$, w.r.t the current flow. Hence, the length of the next layered network, equal to the length of the currently shortest augmenting path, is strictly greater than $l$.
-- Since the length of $\hat{L}$ grows from phase to phase, there are at most $|V| − 1$ phases.
-- When DA stops, the current flow is maximum.
-- The running time of DA is $O(|V|^2|E|)$.
+- DA 由多个阶段组成。每个阶段都包含使用固定长度的最短增广路径来改变流程的迭代
+- 在每个阶段开始时，扩展的 BFS 在$O(|E|)$时间内构建一个分层网络数据结构，长度为$𝐿$。分层网络在该阶段持续保持为所有长度为的最短增广路径的并集，直到它消失，总时间$O(|E|)$。
+- $\hat{L}$的分层结构及其中不存在死胡同允许在$O(l)=O(|V|)$时间内执行$FF$的每次迭代。
+- 在$FF$的每次迭代后，分层网络都会被严格修剪，考虑集合$Sat$的大小。因此，每个阶段的迭代次数受$|E|$限制。
+- 当分层网络消失时，不存在长度小于或等于当前流的增强路径。因此，下一层网络的长度等于当前最短增广路径的长度，严格大于$l$。
+- 由于$\hat{L}$的长度逐阶段增长，因此最多有$|V| − 1$个阶段。
+- 因此总时间复杂度$O((|V| - 1)(|E||V| + |E|)) = O(|V|^2 |E|)$
 
 ## 3. The Version of Shimon Even and Alon Itai
 
