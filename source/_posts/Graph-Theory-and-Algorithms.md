@@ -7,6 +7,67 @@ tags:
     - Graph Theorem and Algorithms
 ---
 
+# 数据结构
+
+## 邻接表
+
+```C++
+vector<int> e[MAXN];
+// Or int vertices[MAXN][MAXN]
+
+signed main()
+{
+    for (int u, v; t; --t)
+    {
+        cin >> u >> v;
+        e[u].push_back(v);
+    }
+}
+```
+
+## 链式前向星
+
+```C++
+class edge
+{
+public:
+    int to;
+    int net;
+    long long val;
+} e[MAXM];
+
+inline void addEdge(int u, int v, long long w)
+{
+    e[++tot].to = v;
+    e[tot].val = w;
+    e[tot].net = head[u];
+    head[u] = tot;
+    // Reversed Edge: Use x ^ 1 to visited another.
+    e[++tot].to = u;
+    e[tot].val = 0;
+    e[tot].net = head[v];
+    head[v] = tot;
+}
+
+signed main()
+{
+    for (int i = 1, u, v, w; i <= m; ++i)
+    {
+        cin >> u >> v >> w;
+        if (!flag[u][v])
+        {
+            addEdge(u, v, w);
+            flag[u][v] = tot;
+        }
+        else
+        {
+            e[flag[u][v] - 1].val += w;
+        }
+    }
+}
+```
+
+
 # 算法与伪代码 <Algorithm & Pseudocode>
 
 ## Ch2: Connection
@@ -330,3 +391,5 @@ Ford-Fulkerson(G = <V , A , c , s , t>):
             if <u , v> in A do:
                 f(<u , v>) ← f(<u , v>) + r
 ```
+
+但是，FF算法~~速度太慢了~~在后世被大幅度地改进了。将FF算法使用的DFS改用为BFS可以得到EK算法，这能够显著地提升算法的速度；建立分层图以及使用其可以得到Dinitz算法（见Paper Notes: Dinitz' Algorithm The Original Version and Even's Version），显著地降低理论上的时间复杂度。另外还有[ISAP和HLPP](https://www.luogu.com/article/6qms0ux2)。
