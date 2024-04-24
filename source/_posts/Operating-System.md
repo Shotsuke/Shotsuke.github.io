@@ -11,6 +11,30 @@ tags: Note
 
 课程主页、PPT：[https://jyywiki.cn/OS/2024/](https://jyywiki.cn/OS/2024/)
 
+# 绪论
+
+## 操作系统概述
+
+## 应用视角的操作系统
+
+### strace
+
+在最简单的情况下，strace运行指定的命令直到其退出。它<span style="color:red; font-weight:700">拦截并记录</span>**被进程调用的系统调用**以及**进程接收到的信号**。每个系统调用的名称、其参数和返回值都会被打印到标准错误或使用 -o 选项指定的文件中。
+使用例：
+```bash
+$ strace ./a.out
+$ strace ls
+$ strace ls |& grep -e read -e write
+```
+
+# 并发
+
+# 虚拟化
+
+# 内核
+
+# 持久化
+
 # Experiments:
 
 ## M1: pstree

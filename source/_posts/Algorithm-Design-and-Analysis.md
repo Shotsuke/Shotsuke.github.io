@@ -15,11 +15,39 @@ tags: Note
 
 - 算法基本概念
 - 时间复杂度的计算
-- （分治）排序
-- （线性时间）选择
-- （对数时间）查找
-- 哈希表和查找
+- 排序
+  - $QUICK-SORT: O(n \log n)$
+    -  $PARTITION: O(n)$
+  - $MERGE-SORT: O(n \log n)$
+    - $MERGE: O(n)$
+  - 下界证明：决策树的叶节点对应于排序的结果，而排序的结果为输入元素的某一种排列，所以排列的结果有$n!$种，决策树的叶节点至少有$n!$。记高度$h$，叶节点个数$L$，那么$n! \leq L \leq 2^h$，因此$h \geq \log (n!) = \Omega(n \log n)$。由树高代表了最坏情况时间复杂度的下解则得之。
+- 选择
+  - $PARTITION + SELECT: average\ O(n)\ and\ worst\ O(n^2)$
+  - 每五个一组，取中位数，递归：$SELECT-WLINEAR: worst\ O(n)$
+- 查找
+  - $BINARY-SEARCH: O(\log n)$
+  - 由需要平衡二叉搜索树，推到红黑树
+- 堆与偏序关系
+  - $MAKE: O(n)$
+  - $REPAIR: O(\log n)$
+  - 高度为$h$的节点个数为$\lceil \frac{n}{2^{h+1}} \rceil$
 - 并查集
+  - 加权并
+  find(x) { return pa[x] == x ? x : pa[x] = find(pa[x]); }
+
+  - 路径压缩查
+  void unite(size_t x, size_t y) {
+    x = find(x), y = find(y);
+    if (x == y) return; 
+    if (size[x] < size[y]) swap(x, y);
+    pa[y] = x;
+    size[x] += size[y];
+  }
+  - 对于包含$n$个元素的并查集，执行长度为$l$的加权并和路径压缩查，最坏情况时间复杂度为$O((n+l) \log^* n) \approx O(n+l)$
+- 哈希表和查找
+  - 封闭寻址，查找代价：$O(1 + \alpha) , \alpha = \frac{n}{m}$
+  - 开放寻址，不成功的寻找代价：$O(\frac{1}{1 - \alpha})$
+  - 开放寻址，成功寻址的平均代价：$O(\frac{1}{\alpha} \ln \frac{1}{1-\alpha})$
 - 摊销分析
 - 对手论证
 - 图遍历

@@ -14,7 +14,7 @@ menu: # 页眉菜单项目
   'Friends': /friends
 config:
   copyright: false # 复制的时候弹出保留原站链接说明
-  night: false # 自动切换夜间模式
+  night: true # 自动切换夜间模式
 mathjax:
   enable: true
   cdn: https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML
