@@ -71,6 +71,7 @@ void spin_unlock(lock_t *lk) {
   - 生产者向缓冲区中输入数据，满时等待
   - 消费者从缓冲区中取走数据，空时等待
   - 条件变量
+
 ```C++
 #define CAN_PRODUCE {0, 1}
 #define CAN_CONSUME {0, 1}
