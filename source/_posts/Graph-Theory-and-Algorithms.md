@@ -68,11 +68,11 @@ signed main()
 ```
 
 
-# 算法与伪代码 <Algorithm & Pseudocode>
+# 算法、伪代码与笔记 <Algorithm & Pseudocode & Notes>
 
 ## Ch2: Connection
 
-### Cut vertices
+### Cut Vertices
 
 #### Tarjan Algorithm
 
@@ -393,3 +393,17 @@ Ford-Fulkerson(G = <V , A , c , s , t>):
 ```
 
 但是，FF算法~~速度太慢了~~在后世被大幅度地改进了。将FF算法使用的DFS改用为BFS可以得到EK算法，这能够显著地提升算法的速度；建立分层图以及使用其可以得到Dinitz算法（见Paper Notes: Dinitz' Algorithm The Original Version and Even's Version），显著地降低理论上的时间复杂度。另外还有[ISAP和HLPP](https://www.luogu.com/article/6qms0ux2)。
+
+
+## Ch8: Independence, Covering and Dominating
+
+**（最大）边独立集**：边的匹配集。（最大）记为$\alpha'(G)$
+**（最大）点独立集**：任意两点不相邻之集。（最大）记为$\alpha(G)$
+**（最大）边覆盖集**：包含所有顶点的边集。（最大）记为$\beta'(G)$
+**（最大）点覆盖集**：包含所有边的点。（最大）记为$\beta(G)$
+**（最小）边支配集**：补集中的每条边都与其中至少一条边相邻。（最小）记为$\gamma'(G)$
+**（最小）点支配集**：补集中的每个点都与其中至少一个点相邻。（最小）记为$\gamma(G)$
+
+
+### Edge Covering Set
+
