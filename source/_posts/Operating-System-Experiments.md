@@ -229,4 +229,4 @@ int atomic_xchg(int *addr, int newval) {
 }
 ```
 
-**为什么刚好<span style="color:red; font-weight:700">可以直接拒绝超过 16 MiB 的内存分配</span>**：堆大小128M，至多8个cpu，因此单个cpu管理的内存超过16M可能即会出现跨cpu分配的情况。实际上，这是简化了实现。
+**为什么刚好<span style="color:red; font-weight:700">可以直接拒绝超过 16 MiB 的内存分配</span>**：堆大小最小128M，至多8个cpu，因此单个cpu管理的内存超过16M可能即会出现跨cpu分配的情况。实际上，这是简化了实现。
