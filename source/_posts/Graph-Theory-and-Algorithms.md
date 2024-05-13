@@ -87,16 +87,16 @@ DFSCV(G , u):
     u.visited ← true
 
     foreach (u , v) in E do:
-        if v.visited is false do:
+        if v.visited = false do:
             v.parent ← u
             u.children ← u.children + 1
             DFSCV(G , v)
             u.low ← MIN{u.low , v.low}
-            if u.parent is nullptr and u.children >= 2 do:
+            if u.parent = nullptr and u.children >= 2 do:
                 u.isCutVertex ← true
-            elseif u.parent isn't nullptr and v.low >= u.d do:
+            elseif u.parent != nullptr and v.low >= u.d do:
                 u.isCutVertex ← true
-        elseif v isn't u.parent do:
+        elseif v != u.parent do:
             u.low ← MIN{u.low , v.d}
 ```
 
@@ -119,14 +119,14 @@ DFSCE(G , u):
     u.visited ← true
 
     foreach (u , v) in E do:
-        if v.visited is false do:
+        if v.visited = false do:
             v.parent ← u
             u.children ← u.children + 1
             DFSCV(G , v)
             u.low ← MIN{u.low , v.low}
-            if u.parent is nullptr and v.low > u.d do:
+            if u.parent = nullptr and v.low > u.d do:
                 u.isCutEdge ← true
-        elseif v isn't u.parent do:
+        elseif v != u.parent do:
             u.low ← MIN{u.low , v.d}
 ```
 
@@ -146,8 +146,8 @@ Fleury():
     else do:
         u := any vertex v in V not isolated
     trail.push(u)
-    while u is not isolated do:
-        if u is in e* and e* is not a bridge do:
+    while u != isolated do:
+        if u is in e* and e* != a bridge do:
             e := e*
         else do:
             e := any edge u connecting
@@ -209,21 +209,21 @@ DFSBlk(G , u):
     u.low ← u.d
     u.visited = true
     foreach (u , v) in E do:
-        if v.visited is false do:
+        if v.visited = false do:
             blkStack.push((u , v))
             v.parent ← u
             u.children ← u.children + 1
             DFSBlk(G , v)
             u.low ← MIN{u.low , v.low}
-            if u.parent is nullptr and u.children >= 2 or
-                u.parent is not nullptr and v.low >= u.d do:
+            if u.parent = nullptr and u.children >= 2 or
+                u.parent != nullptr and v.low >= u.d do:
                 blkNum++
                 do:
                     (x , y) := blkStack.top()
                     blk[blkNum].push((x , y))
                     blkStack.pop()
-                while (x , y) is not (u , v)
-        elseif v is not u.parent do:
+                while (x , y) != (u , v)
+        elseif v != u.parent do:
             if u.d > v.d do:
                 blkStack.push((u , v))
             u.low ← MIN{u.low , v.d}
@@ -252,13 +252,13 @@ Hungarian(G = <X union Y , E>):
         foreach u in (X union Y) do:
             u.visited ← true
         foreach r in X do:
-            if r.visited is true and r is not saturated by M do:
+            if r.visited = true and r != saturated by M do:
                 P ← DFSAP ()
-                if P is not NULL do:
+                if P != NULL do:
                     M ← {e | e in P} DELTA M
                     // DELTA = symmetric difference operation
                     break
-    while P is not NULL
+    while P != NULL
     return M
 
 DFSAP(G = <X union Y , E> , u , M):
@@ -267,10 +267,10 @@ DFSAP(G = <X union Y , E> , u , M):
         return the path from root to u
     else do:
         foreach (u, v) in E do:
-            if v.visited is false and the path
+            if v.visited = false and the path
             from root to v is an alternating path of M do:
                 P* ← DFSAP(G , v , M)
-                if P* is not NULL do:
+                if P* != NULL do:
                     return P*
     return NULL
 ~~~
@@ -291,7 +291,7 @@ Hopcroft-Karp(G = <X union Y , E>):
         foreach p in P do:
             M ← {e | e in p} DELTA M
             // DELTA = symmetric difference operation
-    while P is not NULL
+    while P != NULL
     return M
 
 HKInit(G = <X union Y , E> , M):
@@ -404,6 +404,56 @@ Ford-Fulkerson(G = <V , A , c , s , t>):
 **（最小）边支配集**：补集中的每条边都与其中至少一条边相邻。（最小）记为$\gamma'(G)$
 **（最小）点支配集**：补集中的每个点都与其中至少一个点相邻。（最小）记为$\gamma(G)$
 
-
 ### Edge Covering Set
 
+
+## Ch9 Coloring
+
+### Edge Coloring
+
+#### Divide and Conquer Algorithm
+
+```pseudocode
+Input: Binary Graph G = <X union Y , E>
+Output: Edge Coloring of G
+DCEC:
+    
+```
+
+#### Misra Algorithm
+
+逐步构造一个边染色，每步染一条边，并对已经染过的边色进行必要的调整，保持所有相邻的已经染过的边的色各不同。
+```pseudocode
+Input: G = <V , E>
+Output: Edge Coloring of G
+Misra:
+    while exists (u, v0) in E, ec((u, v0)) = 0 do:
+        // 仍有边未染色
+        v0, v1, ..., vl ← extremely max fan of u
+        // v0未染色，(u, v1), ..., (u, vl)均已染色
+        cl ← the color not in edges connecting vl 
+        cu ← the color not in edges connecting u
+        // 意图对点u所关联的一条未染色的边(u, v0)染色
+        if exists vk in v0, ..., v_{l-1}, ec((u, vk)) = cl do:
+            // 选择的cl颜色已经为点u所关联的边(u, vk)的颜色
+            P ← the extremely max path from u, alternating through cl and cu
+            foreach e in all edges in P do:
+                // 转换极长路中cu和cl颜色，为意图染cl色腾出空间
+                if ec(e) = cl do:
+                    ec(e) ← cu
+                else do:
+                    ec(e) ← cl
+            if P goes through v_{k-1} do:
+                // 若该极长路经过vk，此时(u, vk)颜色已被转换为cu
+                // 此时直接考虑整个扇的旋转即可
+                vw ← vl
+            else do:
+                // 若极长路径不经过vk，那么将vk之前的的扇旋转即可
+                vw ← v_{k-1}
+        else
+            vw ← vl
+        foreach vi in {v1, v2, ..., vw} do:
+            ec((u, v_{i-1})) ← ec((u, vi))
+        ec((u, vw)) ← cl
+        // 将所有的颜色传给上一条边，然后另未染色的边进行染色
+```
