@@ -457,3 +457,58 @@ Misra:
         ec((u, vw)) ← cl
         // 将所有的颜色传给上一条边，然后另未染色的边进行染色
 ```
+
+## Chapter 10: Plane
+
+**可平面性：**如果一个图能够在一个平面上画出。
+**平面图：**图在平面上映射的图像结果
+**$K\_5$, $K\_{3,3}$：**是不可平面的
+**面：**平面图将平面分割出的极大相连区域，分为无限面和有限面
+**面数：**面的数量，记作$\varphi(H)$。
+
+**欧拉公式：**$v(G) - \varepsilon(G) + \varphi(H) = 2$
+
+### Planable
+
+#### DMP Algorithm
+
+DMP算法逐步尝试构造图的平面图嵌入，每步尝试将当前已经映射到平面上的子图中的一个片段中的固定点之间的一条路径映射到平面上。
+
+**片段：**若G的子图B恰由不在边集E\*但端点在顶点集V\*的一条边组成，或恰由图G - V\*的一个连通分支以及端点分别在该连通分支和V\*中的所有边组成，那么称B为G的H片段。B和H的公共顶点称为固定点。
+
+对于2-点连通度的点G，DMP算法从G中的任意一个环开始。对于更高的连通度，将其分解为若干的块。
+- 尝试加入一条路径来映射到平面上
+  - 对于一个片段，只有当该片段中所有的固定点都被H中的同一个面的边界包含时，这个片段才有可能被映射到该平面上。
+    - 对于能够被加入到平面图中的片段，记录其固定点能够被面包含的面
+    - 如果不存在这样的面，那么这个片段就无法被映射到平面上了，因此直接输出不可
+  - 检验所有的片段，选择一个能够映射到平面上的
+    - 如果有片段只能够被一个面包含，那么需要先将该片段映射到平面上
+    - 如果有多个这样的片段，那么随机从这些片段中选择一个
+  - 将选定的片段中的任意两个固定点之间的一条路加入到对平面图的映射中
+- 直到将所有的点和边映射到平面图之中。
+
+```pseudocode
+Input: Connected G = <V , E>
+Output: Whether the graph G is planable
+DMP: 
+    H = <V* , E*> ← a random circle in G
+    Map H to plane and get f0 and f1
+    while H != G do:
+        foreach Bi in all fragments H of G do:
+            Bi.F ← NULL
+            foreach fj in all surface of the plane graph of H
+                if the boundary of fj saturates all attached vertices of Bi do:
+                    Bi.F ← Bi.F union {fi}
+            if Bi.F = NULL do:
+                output: G is NOT planable
+            else if |Bi.F| = 1 do:
+                B ← Bi
+            
+        if B = NULL do:
+            B ← a random fragment H of G
+        P ← a random path from a random attached vertex in B to another
+        f ← a random plane of B.F
+        map P to f
+        update V* and E*
+    output G is planable
+```
