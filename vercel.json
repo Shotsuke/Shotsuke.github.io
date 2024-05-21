@@ -1,0 +1,9 @@
+{
+    "redirects": [
+        {
+            "source": "/(.*)",
+            "destination": "https://shotsuke.github.io/$1",
+            "permanent": true
+        }
+    ]
+}
