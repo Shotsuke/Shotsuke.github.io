@@ -1,6 +1,6 @@
 ---
 title: 塔罗牌 <Tarot Cards>
-date: 2099-12-31 00:00:00
+date: 2004-04-19 00:00:00
 categories: "Tarot"
 tags: 
 	- Tarot
