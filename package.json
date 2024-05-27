@@ -24,6 +24,6 @@
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
     "mathjax": "^3.2.2",
-    "vercel": "^34.1.11"
+    "vercel": "^34.2.3"
   }
 }
