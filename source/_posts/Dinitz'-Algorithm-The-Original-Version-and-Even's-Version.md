@@ -1,5 +1,5 @@
 ---
-title: Dinitz' Algorithm The Original Version and Even's Version
+title: "Dinitz' Algorithm: The Original Version and Even's Version"
 date: 2024-04-17 20:00:00
 categories: "Paper Notes"
 tags: 

@@ -157,9 +157,56 @@ $ mmap [proc]
 **⚠：**该部分的部分内容无法在**wsl**下运行，因为代码调用了` /boot/linuz `，但是wsl是windows的子系统，其` /boot `为空文件夹，与linux系统不完全一样。
 
 **syscall**
+“跳转并链接”
+```pseudocode
+syscall = “jal”:  // sysret: 逆操作
+    mov %rip, %rcx
+    mov %rflags, %r11
+    set SS = kernel, SS = kernel, CPL = 0
+    jmp IA32_LSTAR  // System Target Address Register
+```
+
+**中断**
 - 保存寄存器等各种现场、上下文
+  - 保存至内存中
+  - save context: rip cs rflags rsp rsp0
+  - save register
 - 切换上下文到应当执行的位置
 - （等待切换的上下文结束）
 - 恢复上下文，继续执行
+
+**虚拟地址空间**
+64位地址后12位是偏移量，中36位是虚拟页号
+普通实现：x86, ARM, RISC-V, ...
+f (内存部分): Radix Tree
+- 一个 1024 叉树 (64-bit: 512 叉)
+- 32bit：10b + 10b + 12b
+  - 1024叉刚好能够存放到4KB的页表中，如此便有多级页表
+    - 在32位机中，两个10bit恰好对应两层，即二级页表
+    - 在64位机中，一个指针8B，因此恰好为512叉
+  - i386: 2 层，正好 10 + 10 + 12
+  - x86_64: PML4/PML5
+    - 也有三级页表 (sv39，索引 512 GB)
+
+f (处理器部分): CR3 (PDBR)
+`struct page *cr3;  // 指向数据结构根的指针，即第一级页表地址`
+- Translation-Lookaside Buffer (TLB): 缓存
+
+**上下文切换**
+考试不会考细节，但是一定要记得上下文切换
+- 在每一次中断的时候，都有一个指针能够获取所有的寄存器
+- 然后可以将这些寄存器保存下来
+- 在保存之后，可以任意选择系统中的进程执行
+
+```C
+Context *on_interrupt(Event ev, Context *ctx) {
+    current->context = *ctx;
+
+    // Can return any valid Context*
+    current = schedule();
+
+    return &current->context;
+}
+```
 
 # 持久化
