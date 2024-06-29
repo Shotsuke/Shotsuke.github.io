@@ -120,6 +120,34 @@ void consumer()
 }
 ```
 
+**条件变量**
+
+```C++
+void T_produce() {
+    while (1) {
+        // Needs an empty slot for producing.
+        P(&empty);
+
+        printf("(");
+
+        // Creates a filled slot.
+        V(&fill);
+    }
+}
+
+void T_consume() {
+    while (1) {
+        // Needs a filled slot for consuming.
+        P(&fill);
+
+        printf(")");
+        
+        // Creates an empty slot.
+        V(&empty);
+    }
+}
+```
+
 # 虚拟化
 
 ## 进程的地址空间
@@ -151,6 +179,17 @@ $ mmap [proc]
 
 **可执行文件**
 是一个状态机初始状态的描述
+
+## 动态链接和加载
+
+动态链接是为拆解应用程序的需求的
+- 运行库和应用代码隔离
+  - 应用之间的库共享
+    - 每个程序都需要 glibc
+    - 但系统里只需要一个副本就可以了
+  - 大型项目的分解
+    - 改一行代码不用重新链接 2GB 的文件
+    - libjvm.so, libart.so, ...
 
 # 内核
 
