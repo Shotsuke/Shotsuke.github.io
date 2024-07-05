@@ -277,6 +277,31 @@ DDL战士就是要M4，M5连着一起写！二者的文件操作、子线程的�
 
 如何将`strace`的输出和`COMMAND`的输出区分开，好吧其实方法有很多:)
 
+# M6: fsrecov
+
+任务：给出一个被快速格式化的FAT32结构的文件系统，尽可能地还原出其中的数据。
+
+收获：理解FAT32文件系统，手册阅读能力，长篇代码编写。
+
+_**难度：😹HARD**_ _**耗时：⌛I am doing**_
+
+深读了：[JYY os persistance readfat.c](https://jyywiki.cn/os-demos/persistence/readfat/) (or: `wget -r -np -nH --cut-dirs=2 -R "index.html*"`)
+
+因此先以readfat.c源代码来理解FAT32文件系统。其实在代码中并没有隐藏什么高深的结构，毕竟FAT32文件系统本身也不是特别的复杂。FAT32文件结构及其遍历思路如图。
+- 关键头文件`fat32.h`
+  - `fat32hdr` 记录了保留扇区的内容（前512字节）
+  - `fat32dent` 记录了数据区的内容
+  - `__attribute__((packed))` 禁用对齐
+- 全局变量
+  - `struct fat32hdr *hdr` 用于存储 FAT32 文件系统的头部信息。
+- 函数
+  - `void *mmap_disk(const char *fname)` 将给定的.img镜像文件映射到内存中
+  - `u32 next_cluster(int n)`  返回下一个簇的值
+  - `void *cluster_to_sec(int n)` 将簇号转化为地址
+  - `void dfs_scan(u32 clusId, int depth, int is_dir)` 遍历搜索
+
+![FAT32](\../imgs/OS/FAT32.jpg)
+
 # L0: hello, bare-metal!
 
 任务：在裸机上编程，实现**显示**一张图片和监测键盘的输入。
