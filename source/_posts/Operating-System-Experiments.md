@@ -23,9 +23,9 @@ _**难度：😼MEDIUM**_ _**耗时：⌛6 h**_
 
 # M2: libco
 
-**稳住别浪✊✊✊**
+**✊✊✊**
 
-![Step by step to finish it.](\../imgs/Operating-System/M2-AC.jpg)
+![Step by step to finish it.](\../imgs/Operating-System-Experiments/M2-AC.jpg)
 
 任务：自定义结构体，完成协程库
 
@@ -232,7 +232,7 @@ _**难度：😺EASY**_ _**耗时：⌛2 h**_
 
 **你怎么知道我一发秒了🤣🤣🤣**
 
-![ONE submit kills the match.](\../imgs/Operating-System/M4-AC.jpg)
+![ONE submit kills the match.](\../imgs/Operating-System-Experiments/M4-AC.jpg)
 
 任务：C语言同样也可以实现“交互式”的shell，支持即时定义函数，而且能计算C表达式的数值。
 
@@ -252,7 +252,7 @@ _**难度：😹HARD**_ _**耗时：⌛12 h**_
 
 **主播给打急眼了，遂几乎通宵干这个实验😡😡😡**
 
-![Stay up to work out it QAQ](\../imgs/Operating-System/M5-AC.jpg)
+![Stay up to work out it QAQ](\../imgs/Operating-System-Experiments/M5-AC.jpg)
 
 任务：实现一个命令行工具，它能启动另一个程序，并统计该程序中各个系统调用的占用时间。
 
@@ -279,11 +279,17 @@ DDL战士就是要M4，M5连着一起写！二者的文件操作、子线程的�
 
 # M6: fsrecov
 
+**耻辱下播😵**
+
+![M6-part-correct](\../imgs/Operating-System-Experiments/M6-part.jpg)
+
 任务：给出一个被快速格式化的FAT32结构的文件系统，尽可能地还原出其中的数据。
 
 收获：理解FAT32文件系统，手册阅读能力，长篇代码编写。
 
-_**难度：😹HARD**_ _**耗时：⌛I am doing**_
+没写：对数据存放在不连续簇中的图片恢复（卷积、神经网络等）
+
+_**难度：🙀WARNING**_ _**耗时：⌛24h（没打过）**_
 
 深读了：[JYY os persistance readfat.c](https://jyywiki.cn/os-demos/persistence/readfat/) (or: `wget -r -np -nH --cut-dirs=2 -R "index.html*"`)
 
@@ -300,7 +306,18 @@ _**难度：😹HARD**_ _**耗时：⌛I am doing**_
   - `void *cluster_to_sec(int n)` 将簇号转化为地址
   - `void dfs_scan(u32 clusId, int depth, int is_dir)` 遍历搜索
 
-![FAT32](\../imgs/OS/FAT32.jpg)
+![FAT32](\../imgs/Operating-System-Experiments/FAT32.jpg)
+
+在理解了FAT32文件系统之后，查看其对于快速格式化的说明。其快速格式化清空了整个fat表，和根目录文件夹(`./`)对应的簇下所有的信息。因此只能从数据区入手。根据实验描述，根目录文件夹下还有一个文件夹(`./DCIM/`)，该文件夹下的所有内容仍然在数据区中，因此可以通过暴力查找该文件夹的所有簇来恢复出所有文件的文件名。
+
+`east test 1` 和 `easy test 2` 均只要求恢复出文件名。猜测这两个测试点只有创建文件，没有删除文件，这意味着，这两个测试点的`./DCIM/`所在簇的簇号一定是升序连续的。就是说，如果簇3，8215，15318三个簇是分配给这个文件夹的，那么访问顺序一定是3，8215，15318。而在`hard test`中文件夹簇并没有升序连续，也就是说实际上的访问顺序可能是3，15318，8215。
+
+对于`hard test`下的文件恢复，需要注意的是：
+- 文件夹簇号不升序连续
+  - 如果认为文件夹簇号升序连续，仅能处理约1/3的数据
+- 文件的簇号倾向连续，但仍然会断开不连续，例如#9135-#9318, #9462-#9499存放了一个文件的数据
+  - 如果认为文件簇号全部连续，则几乎没能恢复任何数据
+  - 主播没处理完这一部分qaq，因为还要打L1和L2:(
 
 # L0: hello, bare-metal!
 
