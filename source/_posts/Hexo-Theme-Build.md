@@ -11,15 +11,15 @@ tags: Note
 
 `header`放在左侧，右上布置`oftwi_pc`社交链接，中间为`main`。
 
-<div>
-    <img src="\../imgs/Hexo-Theme-Build/home1.jpg" alt="home1" width="50%" height="50%" display="inline-block"/>
-    <img src="\../imgs/Hexo-Theme-Build/home2.jpg" alt="home2" width="50%" height="50%" display="inline-block"/>
+<div class="image-gallery">
+    <img src="\../imgs/Hexo-Theme-Build/home1.jpg" alt="home1" width="45%" class="image-item"/>
+    <img src="\../imgs/Hexo-Theme-Build/home2.jpg" alt="home2" width="45%" class="image-item"/>
 </div>
 
 
 在点开任意一个`header`中的标签后，`main`中的元素变化。
 
-<img src="\../imgs/Hexo-Theme-Build/labelopen.jpg" alt="labelopen" width="50%" height="50%" />
+<img src="\../imgs/Hexo-Theme-Build/labelopen.jpg" alt="labelopen" width="45%" class="image-item"/>
 
 # 编写
 

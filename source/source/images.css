@@ -1,0 +1,12 @@
+.image-gallery {
+    display: flex;
+    justify-content: space-between;
+    /* 可以调整为center或其他值来控制图片间距 */
+}
+
+.image-item {
+    /* width: 30%; */
+    /* 调整为你希望的宽度 */
+    height: auto;
+    /* 使图片保持原始纵横比 */
+}
