@@ -1,0 +1,20 @@
+<header class="header">
+    <h1 class="blogTitle">
+        <%= config.title %>
+    </h1>
+    <span>
+        <%= config.description %>
+    </span>
+
+    <nav class="headerNav">
+        <ul class="headerNavLists">
+            <% for (var i in theme.menu){ %>
+                <li class="headerNavLists__item" id="nav-<%- theme.menu[i].replace(/^\// , '') %>">
+                    <a href="<%- url_for(theme.menu[i]) %>">
+                        <%= i %>
+                    </a>
+                </li>
+                <% } %>
+        </ul>
+    </nav>
+</header>

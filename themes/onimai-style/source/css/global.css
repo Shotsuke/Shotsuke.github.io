@@ -1,0 +1,20 @@
+:root {
+    --color-mizuki: #ddaacc;
+    --color-lightpink: #f9d3d2;
+}
+
+* {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    box-sizing: border-box;
+    max-height: 999999px;
+    outline: none;
+}
+
+html {
+    scrollbar-color: var(--color-mizuki);
+}
+
+.blogTitle {
+    color: var(--color-mizuki);
+}

@@ -23,10 +23,9 @@ tags: Note
 
 # 编写
 
-
 [来自官方文档](https://hexo.io/zh-cn/docs/themes)
 
-创建 Hexo 主题非常简单，只需创建一个新文件夹即可。 并修改 _config.yml 内的 theme 设定，即可切换主题。 一个主题可能会有以下的结构：
+创建 Hexo 主题非常简单，只需创建一个新文件夹即可。 并修改根目录下 _config.yml 内的 theme 设定，即可切换主题。 一个主题可能会有以下的结构：
 ```
 .
 ├── _config.yml
@@ -37,3 +36,22 @@ tags: Note
 ```
 
 我们可以暂时不要`languages`和`scripts`，只着手写`layout`和`source`。其中约定将布局放在`layout`文件夹，将素材放在`source`文件夹。具体而言，将html/ejs/njk放在layout中，将css和js放在source中。
+
+```
+layout
+├── _partial
+|   ├── head.ejs
+|   └── header.ejs
+├── index.ejs
+└── layout.ejs
+```
+
+```
+source
+├── css
+|   ├── global.css
+|   └── header.css
+└── images
+```
+
+在`layout.ejs`中引入`head.ejs`，在`head.ejs`中引入所有的css样式进行渲染。

@@ -1,0 +1,6 @@
+menu: # 页眉菜单项目
+  home: /
+  about: /about/
+  tags: /tags/
+  categories: /categories/
+  archives: /archives/
