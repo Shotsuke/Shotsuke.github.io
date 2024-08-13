@@ -1,6 +1,12 @@
 :root {
     --color-mizuki: #ddaacc;
     --color-lightpink: #f9d3d2;
+    --color-silver-mahiru-hair: #f1edee;
+    --color-hazerose-mahiru-hair: #ebdae0;
+    --color-brown-mahiru-eye: #682219;
+    --color-dove-mahiru-eye: #9c5c65;
+
+    --set-min-height: 1150px;
 }
 
 * {
@@ -11,10 +17,22 @@
     outline: none;
 }
 
-html {
-    scrollbar-color: var(--color-mizuki);
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+hr,
+menu,
+nav,
+section,
+main {
+    display: block
 }
 
-.blogTitle {
-    color: var(--color-mizuki);
+html {
+    scrollbar-color: var(--color-mizuki);
 }

@@ -1,0 +1,31 @@
+body {
+    -webkit-text-size-adjust: 100%;
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+#fullWrap {
+    width: 100%;
+    min-width: 1200px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    /* background-size: cover; */
+    background-repeat: repeat;
+    background-color: var(--color-lightpink);
+    background-image: url(../img/bg_dots.png);
+    opacity: 0.7;
+}
+
+.main {
+    width: calc(100% - 230px);
+    margin-left: auto;
+}
+
+.mainContents {
+    position: relative;
+}
