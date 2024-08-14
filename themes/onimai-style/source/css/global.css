@@ -1,12 +1,17 @@
 :root {
     --color-mizuki: #ddaacc;
+    --color-kanade: #bb6688;
+    --color-ena: #ccaa88;
+    --color-mafuyu: #8888cc;
     --color-lightpink: #f9d3d2;
     --color-silver-mahiru-hair: #f1edee;
     --color-hazerose-mahiru-hair: #ebdae0;
     --color-brown-mahiru-eye: #682219;
     --color-dove-mahiru-eye: #9c5c65;
 
-    --set-min-height: 1150px;
+    --background-main: url('../img/shiina-nanoha.jpg');
+
+    --set-min-height: 900px;
 }
 
 * {
@@ -15,6 +20,7 @@
     box-sizing: border-box;
     max-height: 999999px;
     outline: none;
+    text-decoration: none;
 }
 
 article,
@@ -34,5 +40,23 @@ main {
 }
 
 html {
-    scrollbar-color: var(--color-mizuki);
+    scrollbar-color: var(--color-dove-mahiru-eye) var(--color-lightpink);
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-dove-mahiru-eye);
+    border-radius: 4px;
+    margin: 2px;
+    box-shadow: none;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background: var(--color-lightpink);
 }

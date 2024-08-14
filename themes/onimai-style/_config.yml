@@ -1,3 +1,11 @@
+social:
+  - name: 'Github'
+    link: 'https://github.com/shotsuke'
+  - name: 'Bilibili'
+    link: 'https://space.bilibili.com/32768166'
+  - name: 'Steam'
+    link: 'http://steamcommunity.com/id/Shotsuke'
+
 menu: # 页眉菜单项目
   home: /
   about: /about/

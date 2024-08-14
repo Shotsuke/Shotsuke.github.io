@@ -1,0 +1,12 @@
+#footer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 220px;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+}
+
+.framework a {
+    color: #000;
+}

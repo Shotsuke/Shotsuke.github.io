@@ -1,0 +1,53 @@
+body {
+    -webkit-text-size-adjust: 100%;
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+#fullWrap {
+    width: 100%;
+    min-width: 1200px;
+    min-height: 100dvh;
+    position: relative;
+    /* background-size: cover; */
+    background-repeat: repeat;
+    background-color: var(--color-lightpink);
+    /* background-image: url(../img/bg_dots.png); */
+    opacity: 0.7;
+}
+
+.main {
+    width: calc(100% - 230px);
+    margin-left: auto;
+    min-height: var(--set-min-height);
+    background-color: #fff;
+
+    opacity: .8;
+    background-size: cover;
+    background-position: center;
+}
+
+.mainContents {
+    position: relative;
+    width: 100%;
+    min-height: inherit;
+    z-index: 2;
+}
+
+.mainbg {
+    position: fixed;
+    top: 0;
+    left: 230px;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    background-image: var(--background-main);
+    opacity: 0.5;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}

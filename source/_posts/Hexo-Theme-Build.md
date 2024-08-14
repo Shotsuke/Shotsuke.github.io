@@ -54,4 +54,12 @@ source
 └── images
 ```
 
-在`layout.ejs`中引入`head.ejs`，在`head.ejs`中引入所有的css样式进行渲染。
+在`layout.ejs`中引入`head.ejs`，在`head.ejs`中引入所有的css样式进行渲染。往后就是自学ejs嵌入（虽然也只是学了一点皮毛），和使用css来渲染元素。
+
+
+
+## 8.14：
+
+中间纯玩了三四天，写JYY的lab代码花了两三天，在8.4时搭起了home的框架，今天大致是把main填满了：
+
+![8.14](\../imgs/Hexo-Theme-Build/8.14.jpg)

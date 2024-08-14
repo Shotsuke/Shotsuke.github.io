@@ -1,0 +1,22 @@
+.homePosts {
+    width: 100%;
+    padding: 110px 15% 0 5%;
+}
+
+.postItem {
+    width: 100%;
+    height: 9em;
+    border: 3px solid var(--color-mafuyu);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 15px;
+
+    font-weight: 700;
+}
+
+.postItemInfo {
+    padding: 0 40px;
+}
