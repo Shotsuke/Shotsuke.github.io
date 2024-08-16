@@ -3,9 +3,8 @@ title: Hexo主题搭建日志 <LETS GO HEXO>
 date: 2024-08-04 23:00:00
 categories: "Biuld Notes"
 tags: Note
+excerpt: 绪山真寻太可爱了！公式网站太可爱了！想要复刻！
 ---
-
-前言：绪山真寻太可爱了！公式网站太可爱了！想要复刻！
 
 # 阅读网页代码
 
@@ -63,3 +62,9 @@ source
 中间纯玩了三四天，写JYY的lab代码花了两三天，在8.4时搭起了home的框架，今天大致是把main填满了：
 
 ![8.14](\../imgs/Hexo-Theme-Build/8.14.jpg)
+
+## 8.16 
+
+home页面告一段落，主要收尾了footer
+
+![8.16](\../imgs/Hexo-Theme-Build/8.16.jpg)

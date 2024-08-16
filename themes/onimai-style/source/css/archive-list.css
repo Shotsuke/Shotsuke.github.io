@@ -15,8 +15,41 @@
     margin-top: 15px;
 
     font-weight: 700;
+    text-decoration: none;
+}
+
+.homePosts,
+.postItem,
+.postCategory,
+.postTags,
+.postTitle,
+.postExcerpt {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-text-black);
+}
+
+.postCategory a,
+.postTags a {
+    color: var(--color-text-hightlight);
 }
 
 .postItemInfo {
     padding: 0 40px;
+}
+
+.pageNavigator {
+    cursor: default;
+    margin-top: 3em;
+    padding-bottom: 3em;
+    font-size: 1.25em;
+    text-align: center;
+    font-weight: normal;
+    animation: fade-in-top .3s .7s both;
+    -webkit-animation: fade-in-top .3s .7s both;
+}
+
+.pageNavigator a,
+.pageNavigator span {
+    padding: 0 .3em
 }

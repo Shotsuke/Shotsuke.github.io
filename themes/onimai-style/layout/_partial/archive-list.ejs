@@ -3,16 +3,16 @@
         <div class="postItem">
             <div class="postItemInfo">
                 <h2>
-                    <a href="<%- post.link ? post.link : url_for(post.path) %>">
+                    <a href="<%- post.link ? post.link : url_for(post.path) %>" class="postTitle">
                         <%= post.title ? post.title : "No Title" %>
                     </a>
                 </h2>
                 <% if (post.excerpt) { %>
-                    <p>
+                    <p class="postExcerpt">
                         <%= strip_html(post.excerpt) %>
                     </p>
                     <% } else { %>
-                        <p>
+                        <p class="postExcerpt">
                             <%= truncate(strip_html(post.content), { length: 100 }) %>
                         </p>
                         <% } %>
@@ -21,15 +21,18 @@
                                     <%= date(post.date, "YYYY.MM.DD" ) %>
                                 </time>
                                 <% if (post.categories && post.categories.length){ %>
-                                    <span class="category"><%- list_categories(post.categories, { show_count: false,
+                                    <span class="postCategory"><%- list_categories(post.categories, { show_count: false,
                                             class: "" , style: "none" , separator: ", " }) %></span>
                                     <% } %>
                                         <% if (post.tags && post.tags.length){ %>
-                                            <span class="tags"><%- list_tags(post.tags, { show_count: false, class: "" ,
-                                                    style: "none" , separator: ", " }) %></span>
+                                            <span class="postTags"><%- list_tags(post.tags, { show_count: false,
+                                                    class: "" , style: "none" , separator: ", " }) %></span>
                                             <% } %>
                             </div>
             </div>
         </div>
         <% }) %>
+</section>
+<section class="pageNavigator">
+    <%- paginator({ prev_text: "<-" , next_text: "->" }) %>
 </section>

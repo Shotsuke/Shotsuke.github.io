@@ -6,6 +6,7 @@ tags:
     - Graph Theorem and Algorithms
     - Read Paper
     - Note
+excerpt: 图论课程要求的论文的笔记记录。
 ---
 
 # [Dinitz' Algorithm: The Original Version and Even's Version](https://doi.org/10.1007/11685654_10)

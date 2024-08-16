@@ -3,6 +3,7 @@ title: 密码学原理 <Elements of Cryptography>
 date: 2023-09-01 14:06:57
 categories: "Course Notes"
 tags: Note
+excerpt: 密码学导论笔记。
 ---
 
 ## Perfect Security （完美保密性）

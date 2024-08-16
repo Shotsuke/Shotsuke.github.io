@@ -3,6 +3,7 @@ title: 操作系统 <Operating System>
 date: 2024-03-05 16:43:16
 categories: "Course Notes"
 tags: Note
+excerpt: 都来选jyy的操作系统！考前刷壳/平时听课记录的笔记。
 ---
 
 遵守:[请大家自觉不要把自己的实验作业代码公开。如果你本着 “炫耀” 的态度公布，那你的代码很可能写得很烂不值得炫耀。请停止这种对学弟和学妹造成伤害的行为——如果你看到了互联网上的代码，请记得 Academic Integrity 且主动不要使用它们。](https://jyywiki.cn/OS/2024/labs/Labs.md)因此仅会有伪代码来记录自己的思路。而对于实验以外的部分，例如有强度的测试用例，则会完整地附上。

@@ -1,12 +1,20 @@
 #footer {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    width: 220px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: linear-gradient(to right,
+            var(--color-lightpink) 230px,
+            var(--color-silver-mahiru-hair) 230px);
+    opacity: .7;
+    text-align: center;
+    color: var(--color-text-hightlight);
     font-weight: 500;
     letter-spacing: -0.05em;
 }
 
-.framework a {
-    color: #000;
+#footer a {
+    text-decoration: none;
+    color: var(--color-brown-mahiru-eye);
 }
