@@ -1,67 +1,70 @@
-<main>
-    <div class="wrap min">
-        <section class="post-title">
-            <h2>
-                <%= page.title ? page.title : "No Title" %>
-            </h2>
-            <div class="post-meta">
-                <time class="date">
-                    <%= date(page.date, "YYYY.MM.DD" ) %>
-                </time>
-                <% if (page.categories && page.categories.length){ %>
-                    <span class="category"><%- list_categories(page.categories, { show_count: false, class: "" ,
-                            style: "none" , separator: ", " }) %></span>
-                    <% } %>
-            </div>
-        </section>
-        <article class="post-content">
-            <%# if (moment().unix() - page.date.unix()>= 15552000) { %>
-                <!-- <blockquote>Last modified <%#= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
-                        Protions of it may be modified. Contact the author for more imformation.</blockquote> -->
-                <%# } %>
-                    <%- page.content %>
-        </article>
-        <section class="post-near">
-            <ul>
-                <% if( page.prev !==undefined) { %>
-                    <li>Previous: <a href="<%= url_for(page.prev.path) %>">
-                            <%= page.prev.title %>
-                        </a></li>
-                    <% } else { %>
-                        <li>Previous: No articles remaining. =v=</li>
-                        <% } %>
-                            <% if( page.next !==undefined) { %>
-                                <li>Next: <a href="<%= url_for(page.next.path) %>">
-                                        <%= page.next.title %>
-                                    </a></li>
-                                <% } else { %>
-                                    <li>Next: No articles remaining. =v=</li>
-                                    <% } %>
-            </ul>
-        </section>
-        <% if (page.tags && page.tags.length){ %>
-            <section class="post-tags">
-                <%- list_tags(page.tags, { show_count: false, class: "" , style: "none" , separator: "" }) %>
-            </section>
-            <% } %>
-                <% if (theme.author && theme.author_text) { %>
-                    <section class="post-author">
-                        <% if (theme.author_avatar) { %>
-                            <figure class="author-avatar">
-                                <img src="<%- theme.author_avatar %>" alt="<%= theme.author %>" />
-                            </figure>
+<div id="fullWrap">
+    <main class="main">
+        <div class="mainContents">
+            <%- partial("_partial/social") %>
+                <section class="postTitle">
+                    <h2>
+                        <%= page.title ? page.title : "No Title" %>
+                    </h2>
+                    <div class="postMeta">
+                        <time class="date">
+                            <%= date(page.date, "YYYY.MM.DD" ) %>
+                        </time>
+                        <% if (page.categories && page.categories.length){ %>
+                            <span class="category"><%- list_categories(page.categories, { show_count: false, class: "" ,
+                                    style: "none" , separator: ", " }) %></span>
                             <% } %>
-                                <div class="author-info">
-                                    <h4>
-                                        <%= theme.author %>
-                                    </h4>
-                                    <p><%- theme.author_text %></p>
-                                </div>
+                    </div>
+                </section>
+                <article class="postContent">
+                    <%# if (moment().unix() - page.date.unix()>= 15552000) { %>
+                        <!-- <blockquote>Last modified <%#= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
+                        Protions of it may be modified. Contact the author for more imformation.</blockquote> -->
+                        <%# } %>
+                            <%- page.content %>
+                </article>
+                <section class="postNear">
+                    <ul>
+                        <% if( page.prev !==undefined) { %>
+                            <li>Previous: <a href="<%= url_for(page.prev.path) %>">
+                                    <%= page.prev.title %>
+                                </a></li>
+                            <% } else { %>
+                                <li>Previous: No articles remaining. =v=</li>
+                                <% } %>
+                                    <% if( page.next !==undefined) { %>
+                                        <li>Next: <a href="<%= url_for(page.next.path) %>">
+                                                <%= page.next.title %>
+                                            </a></li>
+                                        <% } else { %>
+                                            <li>Next: No articles remaining. =v=</li>
+                                            <% } %>
+                    </ul>
+                </section>
+                <% if (page.tags && page.tags.length){ %>
+                    <section class="postTags">
+                        <%- list_tags(page.tags, { show_count: false, class: "" , style: "none" , separator: "" }) %>
                     </section>
                     <% } %>
-                        <!-- Mathjax -->
-                        <% if (theme.mathjax){ %>
-                            <%- partial('_partial/mathjax') %>
-                                <% } %>
-    </div>
-</main>
+                        <% if (theme.author && theme.author_text) { %>
+                            <section class="postAuthor">
+                                <% if (theme.author_avatar) { %>
+                                    <figure class="authorAvatar">
+                                        <img src="<%- theme.author_avatar %>" alt="<%= theme.author %>" />
+                                    </figure>
+                                    <% } %>
+                                        <div class="authorInfo">
+                                            <h4>
+                                                <%= theme.author %>
+                                            </h4>
+                                            <p><%- theme.author_text %></p>
+                                        </div>
+                            </section>
+                            <% } %>
+                                <!-- Mathjax -->
+                                <% if (theme.mathjax){ %>
+                                    <%- partial('_partial/mathjax') %>
+                                        <% } %>
+        </div>
+    </main>
+</div>

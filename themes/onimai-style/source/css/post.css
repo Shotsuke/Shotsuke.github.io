@@ -1,0 +1,119 @@
+#fullWrap {
+    width: 100%;
+    padding: 50px 15%;
+    background-color: var(--color-light-background);
+}
+
+/* Title Section */
+.postTitle {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.postTitle h2 {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.postMeta {
+    font-size: 0.9em;
+    color: var(--color-secondary);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.postMeta .category {
+    font-style: italic;
+}
+
+/* Content Section */
+.postContent {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: var(--color-text);
+    margin-bottom: 30px;
+}
+
+.postContent p {
+    margin: 20px 0;
+}
+
+/* Previous/Next Navigation */
+.postNear {
+    font-size: 1em;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.postNear ul {
+    list-style: none;
+    padding: 0;
+}
+
+.postNear li {
+    margin: 10px 0;
+}
+
+.postNear a {
+    text-decoration: none;
+    color: var(--color-link);
+    transition: color 0.3s ease;
+}
+
+.postNear a:hover {
+    color: var(--color-link-hover);
+}
+
+/* Tags Section */
+.postTags {
+    font-size: 0.9em;
+    color: var(--color-secondary);
+    margin: 30px 0;
+    text-align: center;
+}
+
+.postTags a {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: var(--color-tag-bg);
+    color: var(--color-tag-text);
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.postTags a:hover {
+    background-color: var(--color-tag-hover-bg);
+}
+
+/* Author Section */
+.postAuthor {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: var(--color-author-bg);
+    border-radius: 10px;
+}
+
+.authorAvatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.authorInfo h4 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--color-primary);
+}
+
+.authorInfo p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: var(--color-secondary);
+}
