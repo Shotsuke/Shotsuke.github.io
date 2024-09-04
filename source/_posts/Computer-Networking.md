@@ -3,7 +3,7 @@ title: 计算机网络 NJU * CS144 <Computer Networking>
 date: 2024-08-04 9:43:00
 categories: "Course Notes"
 tags: Note
-excerpt: 大二下暑期自学CS144计算机网络珍贵笔记记录 * 南京大学计算机网络混合笔记。
+excerpt: 大二下暑期自学CS144计算机网络珍贵笔记记录 * 南京大学2024秋计算机网络混合笔记。
 ---
 
 # U1 The Internet and IP
@@ -107,6 +107,30 @@ IP服务就像邮政服务一样，不保证一定能够送达，连着两三天
 - Destination IP Addr
 - (OPTIONS)
 - (PAD)
+
+#### ICMP
+
+用于在IP网络中发送错误消息、网络状态信息、诊断和控制信息。ICMP通常用于网络设备（如路由器、主机）之间，帮助检测和报告网络连接中的问题。
+
+`[Data][IP Header]`，取IP报文数据中的前8字节和IP头，与TYPE和CODE组成ICMP报文：`[8 Byte of Data][Header][TYPE][CODE]`，将其作为一份新的IP报文，添加上`[IP Header]`而后发送。
+
+**ping**
+
+`TYPE = 8, CODE = 0`，这是一个回显请求，用于发给服务端的ping。服务端在接收到后，回应一个`TYPE = 0, CODE = 0`的回显回答。
+
+**traceroute**
+
+- 发送初始数据包（TTL=1）：
+  - Traceroute 首先向目标主机发送一个 IP 数据包，设置 TTL 为 1。
+当数据包到达第一个路由器时，TTL 减为 0。这个路由器丢弃数据包，并向源主机发送一个 ICMP Time Exceeded 报文，告诉源主机该数据包已被丢弃。
+  - Traceroute 记录下这个 ICMP Time Exceeded 报文中包含的路由器信息（包括路由器的 IP 地址）以及该过程所需的时间（即往返时间）。
+- 逐步增加 TTL 值：
+  - 接着，Traceroute 发送第二个数据包，将 TTL 设置为 2。这使得数据包能够穿过第一个路由器，到达第二个路由器。
+第二个路由器再次将 TTL 减为 0，并返回 ICMP Time Exceeded 报文。Traceroute 再次记录该路由器的信息和时间。
+这个过程不断重复，逐步增加 TTL 值，直到数据包到达目标主机或达到预设的最大跳数（通常是 30）。
+- 到达目标主机：
+  - 当 TTL 足够大，数据包能够到达目标主机时，目标主机不会返回 ICMP Time Exceeded 报文，而是返回一个 ICMP Echo Reply 报文（如果是使用 ICMP 的 Traceroute）。
+  - 此时，Traceroute 知道已经到达目标主机，探测路径完成。
 
 ### Link Layer（链路层）
 - Frame（帧）：`[Link Header][Network Header][Transport Header][data][Link Trailer]`

@@ -3,7 +3,7 @@ title: 操作系统实验部分 <Operating System Experiments>
 date: 2024-03-24 16:43:16
 categories: "Course Notes"
 tags: Note
-excerpt: jyy操作系统实验回忆录
+excerpt: 南京大学2024春，jyy操作系统实验回忆录。
 ---
 
 # M1: pstree

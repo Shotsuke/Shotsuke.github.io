@@ -3,7 +3,7 @@ title: 算法设计与分析 <Algorithm Design and Analysis>
 date: 2024-03-05 14:06:57
 categories: "Course Notes"
 tags: Note
-excerpt: 算法笔记。
+excerpt: 南京大学2024春，算法设计与分析笔记。
 ---
 
 算法设计：感觉不如[OI Wiki](https://oi-wiki.org/)

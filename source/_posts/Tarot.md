@@ -4,7 +4,7 @@ date: 2004-04-19 00:00:00
 categories: "Tarot"
 tags: 
 	- Tarot
-excerpt: 古老的书卷，记录了某推爆桶游戏中若干卡牌的描述。
+excerpt: 古老的书卷，记录了某推箱子游戏中若干卡牌的描述。
 ---
 
 # 0-The Fool Upright

@@ -5,7 +5,7 @@ categories: "Course Notes"
 tags: 
     - Note
     - Graph Theorem and Algorithms
-excerpt: 图论笔记，算法解释，理论与代码。
+excerpt: 南京大学2024春，图论笔记，算法解释，理论与代码。
 ---
 
 # 数据结构
