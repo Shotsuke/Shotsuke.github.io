@@ -1,5 +1,5 @@
 ---
-title: 形式语言与自动机 <Forlaml Languages and Automata>
+title: 形式语言与自动机 <Formal Languages and Automata>
 date: 2024-09-03 14:01:00
 categories: "Course Notes"
 tags: Note

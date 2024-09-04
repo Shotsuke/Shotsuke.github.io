@@ -1,11 +1,12 @@
-<div id="fullWrap">
-    <main class="main">
-        <div class="mainContents">
-            <%- partial("_partial/social") %>
+<main class="main">
+
+    <div class="mainContents" id="postLayout">
+        <%- partial("_partial/social") %>
+            <div class="post">
                 <section class="postTitle">
-                    <h2>
+                    <h1>
                         <%= page.title ? page.title : "No Title" %>
-                    </h2>
+                    </h1>
                     <div class="postMeta">
                         <time class="date">
                             <%= date(page.date, "YYYY.MM.DD" ) %>
@@ -65,6 +66,9 @@
                                 <% if (theme.mathjax){ %>
                                     <%- partial('_partial/mathjax') %>
                                         <% } %>
-        </div>
-    </main>
-</div>
+            </div>
+            <div class="sideContent">
+                <h1>Sidebar Here</h1>
+            </div>
+    </div>
+</main>

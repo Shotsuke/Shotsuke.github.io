@@ -11,3 +11,8 @@ menu: # 页眉菜单项目
   about: /about/
   categories: /categories/
   archives: /archives/
+  friends: /friends/
+
+mathjax:
+  enable: true
+  cdn: https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML
