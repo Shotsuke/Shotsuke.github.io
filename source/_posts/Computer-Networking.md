@@ -143,7 +143,7 @@ IP服务就像邮政服务一样，不保证一定能够送达，连着两三天
     <img src="\../imgs/CS144-Computer-Networking/The-4-Layer-Model.jpg" alt="The-4-Layer-Model" width="45%" class="image-item"/>
     <img src="\../imgs/CS144-Computer-Networking/The-4-Layer-Model-Summary.jpg" alt="The-4-Layer-Model-Summary" width="45%" class="image-item"/>
     <img src="\../imgs/CS144-Computer-Networking/The-4-Layer-Model-Protocol-Example.jpg" alt="The-4-Layer-Model-Protocol-Example"  width="45%" class="image-item" />
-    <img src="\../imgs/CS144-Computer-Networking/The-7-Layer-Model.jpg" alt="The-7-Layer-Model.jpg"  width="45%" class="image-item" />T
+    <img src="\../imgs/CS144-Computer-Networking/The-7-Layer-Model.jpg" alt="The-7-Layer-Model.jpg"  width="45%" class="image-item" />
 </div>
 
 **IPV4**

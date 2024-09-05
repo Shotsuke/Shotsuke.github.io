@@ -1,12 +1,18 @@
 .image-gallery {
     display: flex;
-    justify-content: space-between;
-    /* 可以调整为center或其他值来控制图片间距 */
+    justify-content: center;
+    /* 图片居中排列 */
+    gap: 20px;
+    /* 设置图片之间的间距 */
+    flex-wrap: wrap;
+    /* 使图片在小屏幕时能够换行 */
 }
 
 .image-item {
-    /* width: 30%; */
-    /* 调整为你希望的宽度 */
+    width: 30%;
+    /* 设置每张图片的宽度为容器的30% */
     height: auto;
-    /* 使图片保持原始纵横比 */
+    /* 保持图片的原始纵横比 */
+    object-fit: cover;
+    /* 保证图片内容不被拉伸变形 */
 }

@@ -46,6 +46,13 @@ html {
     scrollbar-width: thin;
 }
 
+p img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

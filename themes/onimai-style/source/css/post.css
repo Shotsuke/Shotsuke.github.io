@@ -18,4 +18,5 @@
 
 .sideContent {
     transform: translate(10px, 110px);
+    height: calc(100% - 110px);
 }
