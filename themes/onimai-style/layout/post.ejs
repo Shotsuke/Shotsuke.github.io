@@ -2,11 +2,11 @@
     <div class="mainContents" id="postLayout">
         <%- partial("_partial/social") %>
             <div class="post">
-                <section class="postTitle">
+                <section class="post-Title">
                     <h1>
                         <%= page.title ? page.title : "No Title" %>
                     </h1>
-                    <div class="postMeta">
+                    <div class="post-Meta">
                         <time class="date">
                             <%= date(page.date, "YYYY.MM.DD" ) %>
                         </time>
@@ -16,14 +16,14 @@
                             <% } %>
                     </div>
                 </section>
-                <article class="postContent">
+                <article class="post-Content">
                     <%# if (moment().unix() - page.date.unix()>= 15552000) { %>
                         <!-- <blockquote>Last modified <%#= Math.ceil((moment().unix() - page.date.unix()) / 86400) %> days ago.
                         Protions of it may be modified. Contact the author for more imformation.</blockquote> -->
                         <%# } %>
                             <%- page.content %>
                 </article>
-                <section class="postNear">
+                <section class="post-Near">
                     <ul>
                         <% if( page.prev !==undefined) { %>
                             <li>Previous: <a href="<%= url_for(page.prev.path) %>">
@@ -42,32 +42,18 @@
                     </ul>
                 </section>
                 <% if (page.tags && page.tags.length){ %>
-                    <section class="postTags">
+                    <section class="post-Tags">
                         <%- list_tags(page.tags, { show_count: false, class: "" , style: "none" , separator: "" }) %>
                     </section>
                     <% } %>
-                        <% if (theme.author && theme.author_text) { %>
-                            <section class="postAuthor">
-                                <% if (theme.author_avatar) { %>
-                                    <figure class="authorAvatar">
-                                        <img src="<%- theme.author_avatar %>" alt="<%= theme.author %>" />
-                                    </figure>
-                                    <% } %>
-                                        <div class="authorInfo">
-                                            <h4>
-                                                <%= theme.author %>
-                                            </h4>
-                                            <p><%- theme.author_text %></p>
-                                        </div>
-                            </section>
-                            <% } %>
-                                <!-- Mathjax -->
-                                <% if (theme.mathjax){ %>
-                                    <%- partial('_partial/mathjax') %>
-                                        <% } %>
+
+                        <!-- Mathjax -->
+                        <% if (theme.mathjax){ %>
+                            <%- partial('_partial/mathjax') %>
+                                <% } %>
             </div>
-            <div class="sideContent">
-                <h1>Sidebar Here</h1>
-            </div>
+            <aside id="toc-container">
+                <nav id="toc"></nav>
+            </aside>
     </div>
 </main>

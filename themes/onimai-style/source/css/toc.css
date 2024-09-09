@@ -1,0 +1,26 @@
+#toc-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 250px;
+    border-left: 3px solid #ccc;
+    padding-left: 15px;
+}
+
+#toc ul {
+    list-style: none;
+    padding: 0;
+}
+
+#toc li {
+    margin: 5px 0;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #333;
+}
+
+#toc a:hover {
+    text-decoration: underline;
+}
