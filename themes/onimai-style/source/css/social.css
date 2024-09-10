@@ -51,5 +51,6 @@
 }
 
 .topLinks a:hover {
+    background-color: var(--color-hazerose-mahiru-hair);
     transform: translateY(-6px);
 }

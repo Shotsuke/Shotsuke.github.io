@@ -87,6 +87,7 @@
 
 .navLink:hover {
     background-color: var(--color-hazerose-mahiru-hair);
+    transform: translateX(-10px);
 }
 
 .navLink::before {

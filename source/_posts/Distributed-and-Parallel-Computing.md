@@ -8,9 +8,16 @@ excerpt: 南京大学2024秋，分布式与并行计算笔记。
 
 Score：课程作业 * 30% + 期末考试 * 70%
 
+# Outline
+
+- Basic
+- Structure
+- Algorithms
+- Programming
+
+# Basic
+
 # Structures
-
-
 
 # Algorithms
 

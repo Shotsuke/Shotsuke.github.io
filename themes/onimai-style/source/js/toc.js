@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
         tocLink.textContent = header.textContent;
         tocLink.href = '#' + header.id;
 
+        if (header.tagName === 'H1') {
+            tocItem.classList.add('toc-h1');
+        }
+        else if (header.tagName === 'H2') {
+            tocItem.classList.add('toc-h2');
+        }
+        else if (header.tagName === 'H3') {
+            tocItem.classList.add('toc-h3');
+        }
+
         tocItem.appendChild(tocLink);
         tocList.appendChild(tocItem);
     });
