@@ -11,8 +11,8 @@ date: 2024-03-04 15:40:31
 
 ID: Shotsuke
 
-就读南京大学，二年级本科生。
-A Sophomore in Nanjing University
+就读南京大学，三年级本科生。
+A Junior in Nanjing University
 
 计算机科学与技术系，信息计算与科学专业
 Computer Science and Technology, Infomation Computing and Science
@@ -34,7 +34,7 @@ My School Email/ Be FORMALLY Reached at: 221502023@smail.nju.edu.cn
 
 ## 浙里茗选项目
 
-2024年2月-至今
+2024年2月-2024年5月
 - 全权负责项目网站的搭建。
 - 参与项目IP形象的设计。
 - 项目前端网站：https://github.com/Shotsuke/CN-RUS-OnlineShopping
@@ -42,7 +42,7 @@ My School Email/ Be FORMALLY Reached at: 221502023@smail.nju.edu.cn
 
 ## AI虚拟主播项目
 
-2023年9月-至今
+2023年9月-2024年9月
 - 搭建一个完全由AI进行直播的虚拟主播。
 - 在bilibili平台上试播
 
