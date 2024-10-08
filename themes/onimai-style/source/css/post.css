@@ -85,3 +85,9 @@ article figure code {
     border-top: 2px solid var(--color-mafuyu);
     /* Top border for separation */
 }
+
+article figure pre {
+    tab-size: 4;
+    padding: .7em;
+    border-radius: .5em;
+}

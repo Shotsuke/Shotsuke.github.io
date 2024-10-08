@@ -68,3 +68,7 @@ source
 home页面告一段落，主要收尾了footer
 
 ![8.16](\../imgs/Hexo-Theme-Build/8.16.jpg)
+
+## 9+
+
+九月份初步完成了PC能够显示的主题

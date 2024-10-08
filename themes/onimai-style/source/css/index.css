@@ -18,7 +18,7 @@ body {
     background-repeat: repeat;
     background-color: var(--color-lightpink);
     /* background-image: url(../img/bg_dots.png); */
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 .main {
@@ -27,7 +27,7 @@ body {
     min-height: var(--set-min-height);
     background-color: #fff;
 
-    opacity: .8;
+    opacity: .9;
     background-size: cover;
     background-position: center;
 }
@@ -47,7 +47,7 @@ body {
     height: 100%;
     min-height: inherit;
     background-image: var(--background-main);
-    opacity: 0.5;
+    opacity: 0.6;
     background-size: cover;
     background-position: center;
     z-index: -1;

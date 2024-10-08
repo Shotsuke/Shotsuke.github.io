@@ -3,7 +3,7 @@ title: 计算机网络 NJU * CS144 <Computer Networking>
 date: 2024-08-04 9:43:00
 categories: "Course Notes"
 tags: Note
-excerpt: 大二下暑期自学CS144计算机网络珍贵笔记记录 * 南京大学2024秋计算机网络混合笔记。
+excerpt: 大二下暑期自学CS144计算机网络笔记 * 南京大学2024秋计算机网络混合笔记。
 ---
 
 # The Internet and IP

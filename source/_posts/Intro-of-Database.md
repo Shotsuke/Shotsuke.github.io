@@ -77,3 +77,32 @@ excerpt: 南京大学2024秋，数据库概论笔记。
 关系代数的特点：
 - 过程化：用户需要明确指定数据如何检索和操作，操作步骤清晰。
 - 操作返回一个新的关系。
+
+## 3.4 关系数据库语言SQL92
+
+### 模式定义与删除
+
+- `CREATE SCHEMA <模式名> AUTHORIZATION <用户名>`
+- `DROP SCHEMA <模式名> <删除方式>`
+
+### 基表的定义、删除与修改
+
+- `CREATETABLE<基表名>（<列定义>[<列定义>]…）[其他参数]`
+- `ALTER TABLE <基表名> ADD/DROP <列名> <数据类型>`
+- `DROP TABLE <基表名>`
+
+### 索引的建立与删除
+
+- `CREATE[UNIQUE] [CLUSTER] INDEX <索引名> ON<基表名>(<列名>[<顺序>][,<列名>[<顺序>],…])[其他参数]`
+- `DROP INDEX <索引名>`
+
+### SQL数据操纵功能
+
+```SQL
+SELECT <列名> [,<列名>,...]
+FROM <基表名> [,<基表名>,...]
+WHERE <逻辑条件>
+```
+
+- 结果排序：`ORDER BY <列名> [ASC|DESC]`
+- 分组：`GROUP BY ... HAVING ... `
