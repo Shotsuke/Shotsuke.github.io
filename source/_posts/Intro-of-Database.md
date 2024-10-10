@@ -80,18 +80,18 @@ excerpt: 南京大学2024秋，数据库概论笔记。
 
 ## 3.4 关系数据库语言SQL92
 
-### 模式定义与删除
+### 模式
 
 - `CREATE SCHEMA <模式名> AUTHORIZATION <用户名>`
 - `DROP SCHEMA <模式名> <删除方式>`
 
-### 基表的定义、删除与修改
+### 基表
 
-- `CREATETABLE<基表名>（<列定义>[<列定义>]…）[其他参数]`
+- `CREATE TABLE<基表名>（<列定义>[<列定义>]…）[其他参数]`
 - `ALTER TABLE <基表名> ADD/DROP <列名> <数据类型>`
 - `DROP TABLE <基表名>`
 
-### 索引的建立与删除
+### 索引
 
 - `CREATE[UNIQUE] [CLUSTER] INDEX <索引名> ON<基表名>(<列名>[<顺序>][,<列名>[<顺序>],…])[其他参数]`
 - `DROP INDEX <索引名>`
@@ -106,3 +106,33 @@ WHERE <逻辑条件>
 
 - 结果排序：`ORDER BY <列名> [ASC|DESC]`
 - 分组：`GROUP BY ... HAVING ... `
+- `ANY`, `SOME`: `WHERE column operator ANY/SOME (subquery);`
+- `EXISTS`: `WHERE EXISTS (subquery);`
+
+### 视图
+
+```SQL
+CREATE VIEW <视图名> [(<列名>[,<列名>,…])]
+AS <SELECT语句>
+[WITH CHECKOPTION]
+```
+
+**更新**
+
+```SQL
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+```
+
+**内连接**
+
+```SQL
+SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;
+```
+
+# 4：数据库安全性与完整性保护
+
