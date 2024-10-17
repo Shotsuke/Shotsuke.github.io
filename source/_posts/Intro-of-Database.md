@@ -136,3 +136,43 @@ ON table1.column = table2.column;
 
 # 4：数据库安全性与完整性保护
 
+## 4.1：SQL对数据库安全的支持
+
+```SQL
+GRANT  <操作权限列表>  ON  <操作对象>
+TO  <用户名列表>  [WITH GRANT OPTION]
+
+REVOKE  <操作权限列表>  ON  <操作对象>
+FROM  <用户名列表>  [RESTRICT | CASCADE]
+```
+
+- CASCADE：连锁回收
+- RESTRICT：在不存在连锁回收问题时才能回收权限，否则拒绝回收
+
+# 5：事务处理、并发控制与故障恢复技术
+
+## 5.1 事务处理
+
+事务的四个特性ACID
+- 原子性（Atomicity）
+- 一致性（Consistency）
+- 隔离性（Isolation）
+- 持久性（Durability）
+
+有关事务之间的并发：
+```SQL
+SET TRANSACTION ISOLATION LEVEL
+	  READUNCOMMITTED
+  | READCOMMITTED
+  |	READREPEATABLE
+  | SERIALIZABLE
+```
+
+- READUNCOMMITTED 未提交读
+  - 不申请任何锁
+- READCOMMITTED 提交读
+  - 读之前申请锁，读之后释放锁
+- READREPEATABLE 可重复读
+  - 读之前申请锁，事务结束释放锁
+- SERIALIZABLE 可序列化（可串行化）
+  - 避免所有干扰，串行执行
