@@ -1,3 +1,7 @@
+author: 'Shotsuke' # 作者名称
+author_avatar: '/static/img/avator.png' # 作者头像
+author_text: 'May you find your 404' # 作者信息
+
 social:
   - name: 'Github'
     link: 'https://github.com/shotsuke'
@@ -5,6 +9,8 @@ social:
     link: 'https://space.bilibili.com/32768166'
   - name: 'Steam'
     link: 'http://steamcommunity.com/id/Shotsuke'
+  - name: 'Discord'
+    link: 'http://discordapp.com/users/1160107339475587073'
 
 menu: # 页眉菜单项目
   home: /
