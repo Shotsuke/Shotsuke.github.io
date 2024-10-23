@@ -39,7 +39,7 @@ body {
     z-index: 2;
 }
 
-.mainbg {
+/* .mainbg {
     position: fixed;
     top: 0;
     left: 230px;
@@ -51,4 +51,4 @@ body {
     background-size: cover;
     background-position: center;
     z-index: -1;
-}
+} */
