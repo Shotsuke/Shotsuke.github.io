@@ -2,7 +2,10 @@
 title: 分布式与并行计算 <Distributed and Parallel Computing>
 date: 2024-09-03 10:11:00
 categories: "Course Notes"
-tags: Note
+tags:
+    - Note
+    - Course
+    - Distribution
 excerpt: 南京大学2024秋，避雷分布式与并行计算。
 ---
 

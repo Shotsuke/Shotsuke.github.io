@@ -2,7 +2,10 @@
 title: 操作系统实验部分 <Operating System Experiments>
 date: 2024-03-24 16:43:16
 categories: "Course Notes"
-tags: Note
+tags:
+    - Note
+    - Course
+    - Operating System
 excerpt: 南京大学2024春，jyy操作系统实验回忆录。
 ---
 

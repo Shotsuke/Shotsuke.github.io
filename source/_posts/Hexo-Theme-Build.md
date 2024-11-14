@@ -2,7 +2,10 @@
 title: Hexo主题搭建日志 <LETS GO HEXO>
 date: 2024-08-04 23:00:00
 categories: "Biuld Notes"
-tags: Note
+tags:
+    - Note
+    - Project
+    - Hexo Theme
 excerpt: 绪山真寻太可爱了！公式网站太可爱了！想要复刻！
 ---
 

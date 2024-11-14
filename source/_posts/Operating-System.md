@@ -2,7 +2,10 @@
 title: 操作系统 <Operating System>
 date: 2024-03-05 16:43:16
 categories: "Course Notes"
-tags: Note
+tags:
+    - Note
+    - Course
+    - Operating System
 excerpt: 都来选jyy的操作系统！考前刷壳/平时听课记录的笔记，南京大学2024春。
 ---
 

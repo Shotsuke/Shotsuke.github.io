@@ -2,10 +2,10 @@
 title: "Dinitz' Algorithm: The Original Version and Even's Version"
 date: 2024-04-17 20:00:00
 categories: "Paper Notes"
-tags: 
-    - Graph Theorem and Algorithms
-    - Read Paper
+tags:
     - Note
+    - Paper Reading
+    - Graph Theorem and Algorithms
 excerpt: 图论课程要求的论文的笔记记录。
 ---
 
