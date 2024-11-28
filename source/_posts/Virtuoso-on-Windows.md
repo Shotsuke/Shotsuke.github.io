@@ -1,6 +1,6 @@
 ---
 title: 在windows环境下配置virtuoso <Virtuoso on Windows>
-date: 2024-11-14 00:00:00
+date: 2024-11-14 17:00:00
 categories: "Environment Build"
 tags: 
 	- Note
