@@ -20,9 +20,6 @@ Computer Science and Technology, Infomation Computing and Science
 联系我：1946029982@qq.com / shotsuke@proton.me
 Be Reached at: 1946029982@qq.com / shotsuke@proton.me
 
-学校邮箱/正式邮箱：221502023@smail.nju.edu.cn
-My School Email/ Be FORMALLY Reached at: 221502023@smail.nju.edu.cn
-
 # Projects
 
 ## 南风愉阅项目
