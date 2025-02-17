@@ -17,8 +17,8 @@ A Junior in Nanjing University
 计算机科学与技术系，信息计算与科学专业
 Computer Science and Technology, Infomation Computing and Science
 
-联系我：1946029982@qq.com / shotsuke@proton.me
-Be Reached at: 1946029982@qq.com / shotsuke@proton.me
+联系我：1946029982@qq.com / shotsuke@proton.me(查看频率较低)
+Be Reached at: 1946029982@qq.com / shotsuke@proton.me(Rarely used)
 
 # Projects
 
@@ -43,11 +43,12 @@ Be Reached at: 1946029982@qq.com / shotsuke@proton.me
 - 搭建一个完全由AI进行直播的虚拟主播。
 - 在bilibili平台上试播
 
-# Achievements
+# Achievements / Scores
 
+- 六级：548
 - GPA：4.33/5
 - 南京大学本科生基础学科专项奖学金优秀奖
-- 南京大学人民奖学金三等奖
+- 南京大学人民奖学金三等奖（23年，24年）
 - 第31次CCF计算机软件能力认证194分
 
 # Why write blog?
