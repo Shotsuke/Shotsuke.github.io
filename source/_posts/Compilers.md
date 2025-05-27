@@ -17,8 +17,6 @@ excerpt: 南京大学2025春，编译原理（许畅）笔记。
 - 书面作业10%（20按时提交，20是否作答，60作答正确）
 - 上机实验30%（每个实验分数均匀分布，20按时提交，20成功编译和报告，60测试用例）
   - 组队：1人110%，2人100-105%，3人90-95%
-- 期末考试60%
+- 期末考试60
 
-## 题目4.4.5
-
-[为什么无法识别aaaaaa？](https://cs.stackexchange.com/questions/143480/dragon-book-exercise-4-4-5-why-is-aaaaaa-not-recognized-by-the-recursive-descen)
+衷心告诫你，千万不要单人组队，否则可能无奈退课。
