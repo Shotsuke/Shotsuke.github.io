@@ -25,6 +25,6 @@
     "hexo-theme-landscape": "^1.0.0",
     "mathjax": "^3.2.2",
     "save": "^2.9.0",
-    "vercel": "^34.1.11"
+    "vercel": "^36.0.0"
   }
 }
