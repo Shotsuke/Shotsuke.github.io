@@ -1,7 +1,7 @@
 ---
 title: Hexo主题搭建日志 <LETS GO HEXO>
 date: 2024-08-04 23:00:00
-categories: "Biuld Notes"
+categories: "Build Notes"
 tags:
     - Note
     - Project

@@ -8,3 +8,4 @@ date: 2024-03-29 9:13:26
 - [detect](https://detect.wiki/)
 - [IAmDanny](https://blog.iamdanny.online)
 - [NamelessYing](https://www.namelessying.xin/)
+- [Senuchy](https://senuchy.github.io/)

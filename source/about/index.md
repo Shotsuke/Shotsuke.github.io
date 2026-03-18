@@ -11,8 +11,8 @@ date: 2024-03-04 15:40:31
 
 ID: Shotsuke
 
-就读南京大学，三年级本科生。
-A Junior in Nanjing University
+就读南京大学，四年级本科生，直博
+A senior undergraduate admitted to a PhD program in Nanjing University
 
 计算机科学与技术系，信息计算与科学专业
 Computer Science and Technology, Infomation Computing and Science
