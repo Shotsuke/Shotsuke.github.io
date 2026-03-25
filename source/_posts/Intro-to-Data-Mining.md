@@ -342,3 +342,115 @@ Isolation Kernel is a data dependent kernel without closed form expression.
   - 每个点有自己的邻域
   - 密度是局部计算的
   - 能处理：变密度、非均匀结构
+
+### Dis 8
+
+**1. Is the partitioning performed as a randon within data range? If no whats the restriction? If yes why it works?**
+
+> Partitioning is random but constrained within the data range and structure. These constraints ensure that the random partitions reflect the underlying data distribution. The method works because dense regions are harder to separate, while sparse regions are easily isolated, and this behavior is captured statistically through repeated random partitioning.
+
+随机划分可能是“无效划分”，但多次随机 → 总体是有效的。
+划分是“树结构”，可以递归进行，划分次数可以远大于点的数量。
+我们关注的是在随机划分过程中，两个点在第 t 次之前还没被分开的概率。
+**Isolation 方法不是在“保证每次划分有效”，而是在“利用随机划分的统计行为”，通过观察点被分开的难易程度来刻画数据结构。**
+
+**2. Why is isolation kernel a data dependent method since it depends on random partitioning?**
+
+> Isolation kernel is data-dependent because the random partitions are generated based on the data distribution (e.g., data range and sampled points). Therefore, the resulting similarity reflects the structure and density of the data rather than purely geometric distance.
+
+密集区域 → 很难被分开
+稀疏区域 → 很容易被分开
+这不是人为设定，而是数据本身决定的。Isolation kernel 虽然使用随机划分，但划分是在“数据分布约束下”进行的，最终的相似度反映的是数据结构（密度、分布），因此是 data-dependent。
+
+**3. Why does it perform better than Gaussian / Laplacian kernel?**
+
+> Isolation kernel often performs better because it captures data distribution and density, making it more robust to noise, outliers, and non-uniform data, whereas Gaussian and Laplacian kernels rely only on pairwise distances.
+
+忽略了数据的密度，一个关心数据结构，另一个只关心点间距。
+Gaussian Kernel 实际上不关心密度、DBSCAN 显式地关心密度、Isolation Kernel 隐式地关心密度。
+
+**4. Why does it underperform in K-means?**
+
+> Kernel K-Means assumes that clusters can be represented by centroids in the feature space, which requires a Euclidean-like structure. Isolation kernel defines similarity based on separability and density, which does not align with the centroid-based assumption, leading to poor performance.
+
+不是因为 K-Means “本质是距离”，而是因为 K-Means 的优化目标和 Isolation kernel 的相似性定义不匹配。
+K-Means 假定数据有质心、并且是凸的、球形的，而 Isolation Kernel 定义的相似性是根据密度来的，因此他们的优化目标实际上并不一样。Isolation Kernel 在 SVM 这类更相符的算法中会更加有效。
+
+
+**5. Can mean partition in high-dimensional spaces capture complex structures?**
+
+> No. It assumes spherical clusters and relies on distance measures that become less meaningful in high dimensions.
+
+**6. As DBSCAN + IK can perform well, why we still need more algs, such as psKC?**
+
+> Although DBSCAN combined with Isolation Kernel performs well in capturing complex structures, it still suffers from parameter sensitivity, difficulty in handling varying densities, and instability due to randomness. Advanced methods such as psKC are designed to overcome these limitations by leveraging global similarity structures and reducing dependence on local thresholds.
+
+K-Means → 用“均值”
+DBSCAN → 用“密度”
+IK → 用“分离概率”
+psKC → 用“结构 + 全局优化”
+
+IK 改的是“相似度”，不是“密度阈值机制”，因此 DBSCAN 仍然不擅长处理密度不同的区域。psKC 这类方法避免定死阈值，用 kernel 表示结构，用 clustering 来处理。
+
+### High Dimension
+
+#### 高维空间中的问题与测度集中
+
+Talagrand 定义：
+
+> 一个随机变量，如果依赖很多独立随机变量，并且对每个变量的依赖都不大，那么它几乎是常数。
+
+对高维距离的启示：
+
+- 欧氏距离或余弦相似度是由很多维度贡献的
+- 每个维度影响较小 → 总体距离几乎相同
+- 结果：距离在高维空间趋于常数
+
+==>>
+
+- 单点最近邻（single nearest neighbor）几乎找不到
+- 高维空间的距离退化（curse of dimensionality）
+- hubness：少数点会频繁出现在很多点的 k 最近邻里
+
+**可区分性（Distinguishability）**：核映射后的特征空间能够区分原本不同的点
+**不可区分性（Indistinguishability）**：核映射后，不同点几乎无法区分
+
+#### Euclidean / Cosine 在高维的表现
+
+问题：
+
+- 距离几乎相同 → 单点最近邻不可靠
+- hubness 现象严重 → 某些点成为“枢纽”
+- 高维检索（retrieval）不准确
+
+解决方法：
+
+- 基于核的相似性方法（如 Isolation Kernel）
+  - 使用空间划分、全局结构
+  - 保持点的可区分性
+- 聚类或簇邻居替代单点最近邻
+  - 找到与查询同簇的点，比找单个最近邻更有意义
+
+### t-SNE
+
+目标：将高维数据嵌入低维（2D/3D），保持局部结构
+
+特点：
+
+- 强调保持局部邻居关系
+- 可以用 IK 核特征提高高维结构保留的准确性
+- 在可视化聚类、异常点、流形结构上表现好
+
+### Dis 9
+
+**1. What can be expect when Euclidean distance or Cosine similarity is used to perform retrieval on high-dimensional database?**
+
+> Distances between points become nearly identical, making it difficult to distinguish nearest neighbors. This also leads to issues such as hubness, where some points frequently appear as nearest neighbors.
+
+**2. What can be done instead and why?**
+
+> Kernel-based methods such as Isolation Kernel or cluster-based approaches can be used. These methods capture data structure and separability rather than relying solely on pairwise distances.
+
+**3. Summarize what you have learned about t-SNE?**
+
+> t-SNE is a dimensionality reduction technique that maps high-dimensional data into a low-dimensional space while preserving local neighborhood structure. It models pairwise similarities in both spaces and minimizes their divergence using KL divergence. It is particularly effective for visualizing complex structures such as clusters and manifolds in high-dimensional data.
