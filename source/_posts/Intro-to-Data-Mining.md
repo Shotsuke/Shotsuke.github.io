@@ -26,7 +26,7 @@ valid, and actionable information from large databases and
 then using the information to make crucial decisions.
 > 数据挖掘是从大型数据库中提取以前未知的、有效的、可操作的信息，然后使用这些信息做出关键决策的过程。
 
-### Def 1 Data Classification (数据分类)
+### Def Data Classification (数据分类)
 
 Given an n×d training data matrix D (database D), and a class label value in {1 . . . k} associated with each of the n rows in D (records in D), create a training model M, which can be used to predict the class label of a d-dimensional record Y ∉ D.
 
@@ -57,7 +57,7 @@ Given an n×d training data matrix D (database D), and a class label value in {1
 > Because it learns general patterns from training data and applies them to unseen data.
 > The goal is not to memorize the training data but to generalize to new instances.
 
-### Def 2 Data Clustering (数据聚类)
+### Def Data Clustering (数据聚类)
 
 Given a data matrix D, partition its rows (records) into sets/clusters C1 . . . Ck , such that the rows (records) in each cluster C are “similar” to one another.
 
@@ -80,7 +80,7 @@ Given a data matrix D, partition its rows (records) into sets/clusters C1 . . . 
 
 > High similarity with clusters and low similarity between clusters.
 
-### Def 3 Outlier Detection (异常检测)
+### Def Outlier Detection (异常检测)
 
 Given a data matrix D, determine the few rows of the data matrix that are very different from the majority of rows in the matrix.
 
@@ -103,13 +103,13 @@ Given a data matrix D, determine the few rows of the data matrix that are very d
 
 > A good anomaly detection result correctly identifies rare abnormal instances while minimizing false positives. Evaluation may use labeled anomalies, precision/recall, or domain knowledge.
 
-### Def 4 Frequent Pattern Mining （频繁模式挖掘）
+### Def Frequent Pattern Mining （频繁模式挖掘）
 
-**Definition 4 (Frequent Pattern Mining)** Given a binary n×d data matrix D, determine all subsets of columns such that all the values in these columns take on the value of 1 for at least a fraction s of the rows in the matrix. The relative frequency of a pattern is referred to as its support. The fraction s is referred to as the minimum support.
+**Definition (Frequent Pattern Mining)** Given a binary n×d data matrix D, determine all subsets of columns such that all the values in these columns take on the value of 1 for at least a fraction s of the rows in the matrix. The relative frequency of a pattern is referred to as its support. The fraction s is referred to as the minimum support.
 
 > 给定一个 n×d 的 二值矩阵（binary matrix） D。意思是数据只有 0 或 1。找出所有列的子集，使得这些列同时为 1 占的比例 s。
 
-**Definition 4.1 (Association Rules)** Let A and B be two sets of items. The rule A ⇒ B is said to be valid at support level s and confidence level c, if the following two conditions are satisfied: 
+**Definition (Association Rules)** Let A and B be two sets of items. The rule A ⇒ B is said to be valid at support level s and confidence level c, if the following two conditions are satisfied: 
 1. The support of the item set A is at least s. 
 2. The confidence of A ⇒ B is at least c.
 
@@ -166,7 +166,7 @@ Is there any issue in using a classification model trained from P to classify a 
 
 ## 2 Data
 
-### (Def 5) Types of Attributes
+### (Def) Types of Attributes
 
 - Nominal（名义型）
 - Ordinal（序数型）
@@ -224,7 +224,7 @@ Is there any issue in using a classification model trained from P to classify a 
 
 ## 3 Distances
 
-### Def 6 K-Means Clustering（K-均值聚类）
+### Def K-Means Clustering（K-均值聚类）
 
 Given a data matrix $D$ with $n$ rows (records) and $d$ columns (features), partition the rows into $k$ clusters $C\_1, …, C\_k$ such that the sum of squared distances between each point and the centroid of its assigned cluster is minimized. Specifically:
 1. For each cluster $C\_j$ , compute the centroid:
@@ -235,7 +235,7 @@ $$ \mu_j = \frac{1}{|C_j|} \sum_{x \in C_j} x $$
 > 给定 n×d 数据矩阵 D，把数据分成 k 个簇，每个点分配到最近的簇中心，使得簇内平方距离总和最小。
 Distance function 使用位置：在分配点到簇中心时，用距离（通常欧氏距离）计算“最近簇”。
 
-### Def 7 DBSCAN: Density-based Clustering（基于密度的聚类）
+### Def DBSCAN: Density-based Clustering（基于密度的聚类）
 
 DBSCAN Given a data matrix D, cluster the data based on density rather than predefined centroids.
 The steps are:
@@ -247,7 +247,7 @@ $$ N_\varepsilon(x) = \{ y \in D \mid d(x, y) \le \varepsilon \} $$
 > 根据每个点的邻域密度将数据分簇，不需要指定簇数。
 > Distance function 使用位置：计算每个点的 $ε$-邻域时，用距离函数判断哪些点在半径内。
 
-### Def 8 Data-independent distance/similarity measures（独立于数据分布的距离/相似度度量）
+### Def Data-independent distance/similarity measures（独立于数据分布的距离/相似度度量）
 
 Lp Norm / Minkowski Distance: 
 $$ d_{p}(x, y) = \left( \sum_{i=1}^{d} |x_i - y_i|^p \right)^{1/p} $$
@@ -285,7 +285,7 @@ DBSCAN 的关键思想：
 相互“密度可达”的点会被连成一个簇
 
 
-### Def 9 Isolation Kernel (隔离核)
+### Def Isolation Kernel (隔离核)
 
 Isolation Kernel of any two points $x, y \in \mathbb{R}^d$ is defined to be the expectation taken over the probability distribution $P\_{H\_\psi(D)}$ on all partitionings $H \in H\_\psi(D)$ such that both $x$ and $y$ fall into the same isolating partition $\theta[z] \in H$:
 $$
@@ -453,4 +453,501 @@ Talagrand 定义：
 
 **3. Summarize what you have learned about t-SNE?**
 
-> t-SNE is a dimensionality reduction technique that maps high-dimensional data into a low-dimensional space while preserving local neighborhood structure. It models pairwise similarities in both spaces and minimizes their divergence using KL divergence. It is particularly effective for visualizing complex structures such as clusters and manifolds in high-dimensional data.
+> **t-SNE is a dimensionality reduction technique that maps high-dimensional data into a low-dimensional space while preserving local neighborhood structure.** It models pairwise similarities in both spaces and minimizes their divergence using KL divergence. It is particularly effective for visualizing complex structures such as clusters and manifolds in high-dimensional data.
+
+# W5
+
+## 4 Data Mining Algorithms
+
+## Classification:
+
+1. Decision Trees（决策树）
+2. Rule-based classifier（基于规则的分类器）
+3. K nearest neighbor classifier（K近邻分类器）
+4. Support Vector Machines（支持向量机）
+5. Neural Networks（神经网络）
+
+### Def Decision Tree Construction Algorithm （决策树）
+
+A greedy algorithm that constructs the tree in a **top-down, recursive, divide-and-conquer** manner:
+
+1. Start with a set of training data
+2. **If** all examples belong to the same class:
+   - Make a leaf labeled with that class
+3. **Otherwise** choose a test based on one attribute:
+   - Each test attribute is selected on the basis of a **heuristic or statistical measure** (e.g., information gain)
+   - This becomes an **internal node**; then create:
+     - **One branch** for each value of categorical attribute, or
+     - **Two branches**: A<=T, A>T for numeric attribute A, threshold T
+4. Subdivide the examples according to their outcome on the test
+5. Apply the procedure recursively to each subset
+
+> 决策树构造是一个贪心算法，采用自顶向下、递归、分而治之的方式：
+> 
+> - 如果所有样本属于同一类 → 创建叶节点
+> - 否则选择一个属性进行分裂（基于启发式或统计度量，如信息增益）
+> - 对于类别属性：每个值一个分支
+> - 对于数值属性：两个分支（A<=T 和 A>T）
+> - 递归地对每个子集重复此过程
+
+### Def K-Nearest Neighbours Classifier (K近邻算法)
+
+KNN不需要训练过程，直接保存所有训练样本。
+预测时：找到与测试样本最近的k个训练样本，通过投票或平均决定类别。
+
+> 核心特点：
+> - 懒惰学习：训练时不做任何工作，预测时才计算
+> - 需要相似度度量（通常用欧氏距离）
+> - k值是超参数，需要调优
+
+### Def Support Vector Machines (支持向量机)
+
+> SVM：找到一个超平面，使得两类之间的**间隔（margin）最大化**。
+
+Decision boundary: 
+$$y_i(\mathbf{w} \cdot \mathbf{x}_i + b) \geq +1$$
+
+The weight vector: 
+$$\mathbf{w} = \sum_{i=1}^{s} \lambda_i y_i \mathbf{x}_i$$
+
+With s support vectors, the boundary can be expressed as:
+$$y_i \left( \sum_{i=1}^{s} \lambda_i y_i \mathbf{x}_i \cdot \mathbf{x}_j + b \right) \geq +1$$
+
+**Kernel Trick in SVM**
+
+通过核函数，可以在**不显式计算高维特征映射**的情况下，计算高维空间中的点积。
+
+> **为什么有用？**
+> - 原始空间线性不可分 → 映射到高维空间可能线性可分
+> - 核函数直接计算高维点积，避免显式映射（计算高效）
+> - Gaussian/RBF kernel 可以映射到**无限维空间**
+
+### Def Neural Networks (神经网络)
+
+神经网络模拟生物神经元的工作方式：
+
+> - Input layer（输入层）：接收原始特征
+> - Hidden layers（隐藏层）：提取抽象特征
+> - Output layer（输出层）：产生预测结果
+> 
+> 深度学习：
+> - 多隐藏层 = Deep Neural Network
+> - 能够学习层次化的特征表示
+
+### Dis 10
+
+**1. Explain the similarities and differences between the main classification methods.**
+
+> **Similarities:**
+> - All aim to learn a mapping from features to class labels
+> - All require labeled training data (supervised learning)
+> - Can handle multi-class problems
+> 
+> **Differences:**
+> 
+> | Method | Model Type | Training | Interpretability |
+> |--------|-----------|----------|-----------------|
+> | **Decision Tree** | Rule-based | Greedy splitting | High (visual rules) |
+> | **KNN** | Instance-based | None (lazy) | Medium (nearest neighbors) |
+> | **SVM** | Geometric | Optimization | Low (hyperplane) |
+> | **Neural Networks** | Function approximation | Gradient descent | Very low (black box) |
+> | **Rule-based** | Logical rules | Set-covering/separate-and-conquer | High (explicit rules) |
+
+**2. Explain why the divide-and-conquer algorithm used to generate a decision rule is called a greedy algorithm.**
+
+> Because at each split, it selects the **locally optimal** attribute (highest information gain) **without reconsidering previous decisions**. It never backtracks to optimize the global tree structure.
+
+**3. The set-covering algorithm used to generate decision rules is sometimes called the separate-and-conquer algorithm. How does this differ conceptually from the divide-and-conquer algorithm?**
+
+> **Divide-and-conquer (Decision Tree):**
+> - Recursively **splits the entire dataset** into subsets
+> - All data points are processed together in a hierarchical structure
+> 
+> **Separate-and-conquer (Set-covering/Rule-based):**
+> - **Learns one rule at a time**
+> - Once a rule is learned, **remove covered examples** from the dataset
+> - Repeat on remaining data until all covered
+> 
+> **Key difference:**
+> - Divide-and-conquer: 同时处理所有数据，递归分裂
+> - Separate-and-conquer: 逐个学习规则，每次"分离"已覆盖的样本
+
+**4. As the k-nearest neighbor algorithm does nothing in training, does it produce a generalized model that enables it to classify well on unseen data points?**
+
+> **Paradoxically, yes.**
+> 
+> KNN does not explicitly build a generalized model, but it **implicitly generalizes** by assuming that:
+> - Similar data points (in feature space) belong to the same class
+> - Local smoothness: nearby points share labels
+> 
+> **However:**
+> - It can overfit with small k (noise sensitivity)
+> - Performance depends heavily on distance metric and k choice
+> - No explicit model → no interpretability
+
+尽管没有显式模型，KNN通过"相似样本属于同一类"的假设**隐式泛化**。但容易过拟合（小k时），且依赖距离度量和k值选择。
+
+**5. Explain the distinct features of SVM with respect to other classification methods.**
+
+> **Distinct features of SVM:**
+> 
+> 1. **Maximum margin principle**: Not just any separating boundary, but the one with **largest margin** → better generalization
+> 2. **Kernel trick**: Can handle nonlinear problems by mapping to high-dimensional space **without explicitly computing transformation**
+> 3. **Support vectors**: Only a subset of training data (support vectors) determines the boundary → memory efficient
+> 4. **Convex optimization**: Guaranteed global optimum (no local minima like neural networks)
+> 5. **Theoretical foundation**: Based on structural risk minimization (VC theory)
+
+**6. Which of the five classification algorithms require a distance/similarity function?**
+
+> - ✅ **K-Nearest Neighbours**: Core requirement (Euclidean, Manhattan, etc.)
+> - ✅ **SVM (with kernel)**: Kernel function is essentially a similarity measure
+> - ❌ **Decision Tree**: Uses information gain/Gini (not distance-based)
+> - ❌ **Neural Networks**: Uses weighted sums and activation functions
+> - ❌ **Rule-based**: Uses logical conditions
+
+## Clustering:
+
+1. K-means / K-medoids - 基于中心点的方法
+2. DBSCAN - 基于密度的方法
+3. Spectral Clustering - 基于图论的方法
+4. IDK-based Clustering (e.g., psKC) - 基于Isolation Distributional Kernel的方法
+
+### Def Spectral Clustering (谱聚类)
+
+1. Preprocessing
+   - Produce a similarity matrix of a neighborhood graph
+   
+2. Eigen-decomposition
+   - Compute eigenvalues & eigenvectors of the similarity matrix or Laplacian matrix
+   - Map each point in the input space to a new space represented by k eigenvectors
+
+3. Clustering
+   - Often uses k-means on the transformed space
+
+> **谱聚类**利用图论和线性代数：
+> 
+> **核心思想：**
+> 将数据点看作图中的节点，用相似度连边，然后通过分析图的结构（特征向量）来划分簇。
+> 1. 构建相似度矩阵（邻接矩阵或Laplacian矩阵）
+> 2. 特征分解：找到前k个特征向量
+> 3. 在特征向量空间中用k-means聚类
+> 
+> **为什么有效？**
+> - 特征向量捕获了数据的全局结构
+> - 可以发现非凸形状的簇
+> - 对复杂流形结构鲁棒
+
+[谱聚类交互演示](/demos/spectral_clustering_explainer.html)
+
+### Dis 11 
+
+**1. Describe the two key steps in k-means clustering.**
+
+> **Step 1: Assignment**
+> - Assign each data point to the **nearest centroid** (using distance, e.g., Euclidean)
+> 
+> **Step 2: Update**
+> - Recompute each centroid as the **mean** of all points assigned to that cluster
+> 
+> **Repeat** until convergence (centroids stop moving or assignment doesn't change)
+
+将每个点分配到最近的质心 → 重新计算质心（簇内点的均值） → 重复直到收敛。
+
+**2. Describe the two key steps in DBSCAN.**
+
+> **Step 1: Density estimation**
+> - For each point, compute its **ε-neighborhood**: $N_ε(x) = \{y \mid d(x,y) \leq ε\}$
+> - Classify points as:
+>   - **Core points**: $|N_ε(x)| \geq MinPts$ (high-density region)
+>   - **Border points**: In ε-neighborhood of core point but not core itself
+>   - **Noise points**: Neither core nor border
+> 
+> **Step 2: Density-based connectivity**
+> - Connect core points that are within ε distance
+> - Form clusters from **density-connected** core points and their border points
+
+估计每个点的密度（ε-邻域内点数）→ 连接高密度区域（核心点及其边界点）→ 噪声点不属于任何簇。
+
+**3. Explain the purpose of the first two steps in Spectral Clustering.**
+
+> **Step 1 (Preprocessing):** 
+> - Construct a **similarity graph** representing pairwise similarities
+> - Captures the **manifold structure** of data (which points are "connected")
+> 
+> **Step 2 (Eigen-decomposition):**
+> - Extract **global structure** via eigenvectors of the graph Laplacian
+> - Transform data into a space where **clusters are more separable** (often linearly separable)
+> 
+> **Purpose:** Convert a complex clustering problem in original space into a simpler problem in spectral space, where k-means can work effectively.
+
+构建相似度图（捕获流形结构）→ 特征分解（提取全局结构，转换到更易分离的空间）。
+
+**4. Explain the key difference between IDK-based Clustering and the above three clustering methods.**
+
+> **K-means, DBSCAN, Spectral Clustering:**
+> - Use **data-independent** distance/similarity measures (Euclidean, Gaussian kernel)
+> - Same distance function for all regions
+> 
+> **IDK-based Clustering (e.g., psKC):**
+> - Uses **Isolation Distributional Kernel (IDK)**, which is **data-dependent**
+> - Similarity is based on **how easily two points are isolated from each other**
+> - Adapts to **local density variations** (dense vs sparse regions)
+> - More robust to non-uniform density and complex structures
+
+**核心区别：**
+- 前三者：使用固定的、数据无关的距离度量
+- IDK方法：使用数据依赖的相似度，基于隔离难度，能自适应不同密度区域
+
+## Anomaly Detection
+
+1. **Distance-based anomaly detectors（基于距离的异常检测器）**
+   - Local Outlier Factor (LOF)
+   - One-class Support Vector Machine (OCSVM)
+   - Kernel Density Estimator (KDE)
+
+2. **Isolation-based anomaly detectors（基于隔离的异常检测器）**
+   - **Isolation Forest (iForest)** - Liu et al. ICDM 2008
+   - **Isolation Distribution Kernel detector (IDK detector)**
+     - Based on Kernel Mean Embedding
+
+### Def Isolation Forest
+
+**iForest** (Liu et al ICDM 2008)
+
+**Core idea:** A collection of **isolation trees (iTrees)**
+
+**Key properties:**
+- Each iTree isolates every instance from the rest of the instances in a given sample
+- **Anomalies are 'few and different'**
+  - More susceptible to isolation
+  - **Shorter average path length**
+
+**Anomaly Score:**
+$$
+\text{Score}(x) = \frac{1}{t} \sum_{i=1}^{t} h_i(x)
+$$
+
+where $h_i(x)$ is the **path length** of $x$ traversed in tree $i$.
+
+> **Isolation Forest 的核心思想：**
+> 
+> **异常点更容易被"隔离"** → 在隔离树中的路径更短
+> 
+> **为什么？**
+> - 异常点：数量少、特征值与众不同 → 很快就能被单独划分出来
+> - 正常点：数量多、特征值相似 → 需要多次划分才能隔离
+> 
+> **异常分数：**
+> - 路径越短 → 异常分数越高 → 越可能是异常点
+> - 路径越长 → 异常分数越低 → 越可能是正常点
+
+**Construction of iTrees**
+
+**iTrees are completely random trees**
+- Guided by the range of values in a subsample
+
+**步骤：**
+
+1. **Subsample** $D_i$ from a given data set $D$
+   - $D_i \subset D$ ($i = 1,2,\cdots,t$)
+   - $|D_i| = \psi \ll |D| = n$
+
+2. **Build an iTree from each** $D_i$
+   - Partition recursively until every instance is isolated
+   - **Height restriction**: $h = \log_2 \psi$
+
+**Random partition:**
+- Randomly select an attribute
+- Randomly select a split value within the range of that attribute in current node
+
+> **隔离树的构造：**
+> 
+> **完全随机树** - 由子样本中的值范围引导
+> 
+> **关键步骤：**
+> 1. 从数据集 D 中随机抽取子样本 $D_i$（大小 $\psi \ll n$）
+> 2. 对每个子样本构建一棵隔离树：
+>    - 随机选择一个属性
+>    - 在该属性的值范围内随机选择分裂点
+>    - 递归划分，直到每个样本被隔离
+>    - 高度限制：$h = \log\_2 \psi$
+> 
+> **为什么是随机的？**
+> - 不需要计算信息增益（不像决策树）
+> - 速度快，适合大规模数据
+> - 通过集成多棵树来提高鲁棒性
+
+**子采样**
+
+Reduce both the **swamping** and **masking** effects
+
+**Swamping effect（淹没效应）：**
+- 大量正常点"淹没"了异常点的特征
+- 使得异常点不明显
+
+**Masking effect（掩盖效应）：**
+- 异常点太多时，彼此"掩盖"
+- 难以区分异常和正常
+
+> 1. **减少淹没效应：** 正常点数量减少 → 异常点相对更突出
+> 2. **减少掩盖效应：** 采样后异常点之间距离增大 → 更容易被单独隔离
+> 3. **计算效率：** $\psi \ll n$ → 每棵树构建更快
+> 4. **多样性：** 多次采样 → 多棵树 → 集成效果更好
+
+- iForest 的评估复杂度：$O(tn\log(\psi))$ 是**线性**于数据规模 $n$
+- LOF 的评估复杂度：$O(n^2)$ 是**平方**级别
+- 当数据量大时，iForest 明显更快
+
+### Def Isolation Distributional Kernel (分布式隔离核)
+
+**Background: Kernel Mean Embedding (KME)**
+
+Kernel mean embedding (KME) is a way to convert a **point-to-point kernel** to a **distributional kernel**:
+
+$$
+\widehat{K}(P_S, P_T) = \frac{1}{|S||T|} \sum_{x \in S} \sum_{y \in T} k(x, y)
+$$
+
+$$
+\approx \langle \widehat{\phi}(P_S), \widehat{\phi}(P_T) \rangle \quad \text{(using Nystrom method)}
+$$
+
+**Key property:**
+- If $k$ is a **characteristic kernel**, then its kernel mean map is **injective**, i.e.,
+  $$\| \widehat{\phi}(P_S) - \widehat{\phi}(P_T) \|_H = 0 \iff P_S = P_T$$
+
+**KME with Gaussian kernel has two key issues:**
+1. **Quadratic time complexity** (resolved using Nystrom method)
+2. **Weak task-specific accuracy**
+
+**Root cause:** Gaussian kernel
+
+> **核均值嵌入（KME）：**
+> 
+> 将点对点的核函数转换为**分布间的核函数**。
+> 
+> **Gaussian kernel 的问题：**
+> - 计算复杂度高（$O(n^2)$）
+> - 任务特定准确性弱（不够data-dependent）
+> 
+> **解决方案：** 用 Isolation Kernel 替换 Gaussian kernel → Isolation Distributional Kernel (IDK)
+
+
+### IDK Method for Anomaly Detection
+
+**核心思想：**
+
+Use IDK to measure the similarity effectively between every point (in the given dataset $D$) and $D$ (the reference dataset).
+
+**判断规则：**
+
+- **If** $x \sim P_D$, $\widehat{K}(\delta(x), P_D)$ is **large**, which can be interpreted as:
+  - $x$ is likely to be **part of** $P_D$ (正常点)
+
+- **If** $y \nsim P_D$, $\widehat{K}(\delta(y), P_D)$ is **small**, which can be interpreted as:
+  - $y$ is **not likely to be part of** $P_D$ (异常点)
+
+**Definition of anomaly:**
+
+> "Given a similarity measure $\widehat{K}$ of two distributions, an anomaly is an observation whose **Dirac measure** $\delta$ has a **low similarity** with the distribution from which a reference dataset is generated."
+
+> **IDK 异常检测方法：**
+> 
+> 1. 计算每个点 $x$ 的 Dirac measure $\delta(x)$（单点分布）
+> 2. 计算 $\delta(x)$ 与参考分布 $P_D$ 的相似度 $\widehat{K}(\delta(x), P_D)$
+> 3. 相似度低 → 异常点；相似度高 → 正常点
+> 
+> **为什么有效？**
+> - 使用 Isolation Kernel（data-dependent）
+> - 捕获数据的局部密度结构
+> - 比 Gaussian kernel 更准确
+
+
+### Example Computation
+
+**IDK 的计算示例：**
+
+$$
+\widehat{K}_I(\delta(x), P_D) = \frac{1}{t} \langle \widehat{\Phi}(\delta(x)), \widehat{\Phi}(P_D) \rangle
+$$
+
+**可视化：**
+- 数据空间 $\mathbb{R}^d$ 中有数据集 $D$
+- 对于点 $y_1, y_2$，计算它们的特征映射 $\widehat{\Phi}(\delta(y_1)), \widehat{\Phi}(\delta(y_2))$
+- 在 Hilbert Space $\mathcal{H}$ 中计算与 $\widehat{\Phi}(P_D)$ 的相似度
+
+> **关键步骤：**
+> 1. 用 Isolation 树构建特征映射 $\widehat{\Phi}$
+> 2. 计算点的 Dirac measure 与整体分布的内积
+> 3. 相似度作为正常/异常的评分
+
+---
+
+## Dis 12
+
+**1. Describe the operational principle of:**
+   - **Distance-based anomaly detector**
+   - **Isolation-based anomaly detector**
+   - **IDK-based anomaly detector**
+
+> **Distance-based anomaly detector (e.g., LOF):**
+> - 计算每个点到其 k 近邻的距离
+> - 比较点的局部密度与邻居的局部密度
+> - 局部密度明显低于邻居 → 异常点
+> 
+> **Isolation-based anomaly detector (e.g., iForest):**
+> - 构建随机隔离树（iTrees）
+> - 异常点"少且不同" → 容易被隔离 → 路径短
+> - 正常点"多且相似" → 难以隔离 → 路径长
+> - 异常分数 = 平均路径长度（越短越异常）
+> 
+> **IDK-based anomaly detector:**
+> - 使用 Isolation Distributional Kernel
+> - 计算每个点的 Dirac measure 与整体分布的相似度
+> - 相似度低 → 异常点
+
+**2. Is an Isolation tree a variant of decision tree? Explain your answer.**
+
+> **No, Isolation tree is NOT a variant of decision tree.**
+> 
+> **Key differences:**
+> 
+> | Aspect | Decision Tree | Isolation Tree |
+> |--------|--------------|----------------|
+> | **Goal** | Classification/Regression | Isolation/Anomaly detection |
+> | **Split criterion** | Information gain, Gini index (greedy) | **Random** split point |
+> | **Training** | Supervised (requires labels) | Unsupervised (no labels) |
+> | **Leaf nodes** | Class labels or values | Individual instances (isolated) |
+> | **Purpose** | Predict class/value | Measure path length (isolation difficulty) |
+> 
+> **虽然都是树结构，但：**
+> - Decision tree 追求**最优分裂**（贪心算法）
+> - Isolation tree 使用**随机分裂**（无需优化）
+> - Decision tree 是**监督学习**
+> - Isolation tree 是**无监督学习**
+
+**3. Explain another possible way to perform isolation which is different from using isolation trees. Hint: the principle is to isolate one point from the rest of the points in a sample.**
+
+> **Alternative isolation method: Random Hyperplane Projection**
+> 
+> **Principle:**
+> - Instead of axis-parallel splits (like iTrees), use **random hyperplanes**
+> - Randomly generate a hyperplane in d-dimensional space
+> - Count how many splits are needed to isolate a single point
+> 
+> **Steps:**
+> 1. Randomly select a normal vector $\mathbf{w} \in \mathbb{R}^d$
+> 2. Randomly select a bias $b$
+> 3. Split data by hyperplane: $\mathbf{w} \cdot \mathbf{x} + b = 0$
+> 4. Recursively split until point is isolated
+> 5. Record number of splits as isolation score
+> 
+> **Why it works:**
+> - Anomalies are **far from dense regions** → fewer splits needed
+> - Normal points are **within dense regions** → more splits needed
+> 
+> **另一种隔离方法：随机超平面投影**
+> 
+> 与 iTrees（轴平行分裂）不同，使用**随机方向的超平面**进行分裂。
+> 
+> 核心思想不变：异常点更容易被隔离 → 需要更少的分裂次数。

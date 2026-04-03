@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>谱聚类 — 交互演示</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f8f7f4;
+    color: #1a1a18;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #1a1a18; color: #e0ded6; }
+    .card { background: #242422; border-color: rgba(255,255,255,0.1); }
+    .step-btn { background: #2c2c2a; color: #c2c0b6; border-color: rgba(255,255,255,0.15); }
+    .step-btn:hover:not(.active) { background: #333330; }
+    canvas { border-color: rgba(255,255,255,0.1) !important; }
+    .label { color: #888; }
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #73726c; margin-bottom: 24px; line-height: 1.6; }
+  @media (prefers-color-scheme: dark) { .subtitle { color: #888; } }
+  .card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .steps {
+    display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .step-btn {
+    padding: 6px 14px; font-size: 13px; border-radius: 6px;
+    border: 0.5px solid rgba(0,0,0,0.18);
+    background: #fff; color: #1a1a18; cursor: pointer;
+    transition: background .15s;
+    font-family: inherit;
+  }
+  .step-btn.active {
+    background: #e6f1fb; color: #185fa5; border-color: #85b7eb;
+  }
+  .step-btn:hover:not(.active) { background: #f1efe8; }
+  canvas {
+    width: 100%; border-radius: 8px;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    display: block;
+  }
+  .desc {
+    font-size: 13px; color: #5f5e5a; margin-top: 10px;
+    min-height: 40px; line-height: 1.7;
+  }
+  @media (prefers-color-scheme: dark) { .desc { color: #888; } }
+  .explainer { margin-top: 24px; }
+  .explainer h2 { font-size: 16px; font-weight: 500; margin-bottom: 10px; }
+  .step-list { list-style: none; }
+  .step-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 13px; line-height: 1.7; padding: 8px 0;
+    border-bottom: 0.5px solid rgba(0,0,0,0.07);
+    color: #444441;
+  }
+  @media (prefers-color-scheme: dark) { .step-list li { color: #9c9a92; border-color: rgba(255,255,255,0.07); } }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    min-width: 22px; height: 22px; border-radius: 50%;
+    background: #e6f1fb; color: #185fa5;
+    font-size: 11px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  @media (prefers-color-scheme: dark) { .step-num { background: #0c447c; color: #b5d4f4; } }
+  .label { font-size: 11px; color: #888780; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>谱聚类（Spectral Clustering）</h1>
+  <p class="subtitle">利用图论与线性代数发现任意形状的簇——对同心环、弯月形等非凸数据效果显著。</p>
+
+  <div class="card">
+    <div class="steps">
+      <button class="step-btn active" onclick="showStep(0,this)">① 原始数据</button>
+      <button class="step-btn" onclick="showStep(1,this)">② 相似度图</button>
+      <button class="step-btn" onclick="showStep(2,this)">③ 特征空间</button>
+      <button class="step-btn" onclick="showStep(3,this)">④ 聚类结果</button>
+    </div>
+    <canvas id="c" width="660" height="300"></canvas>
+    <p class="desc" id="desc">原始数据：两个同心环。K-Means 会按距离质心分割，结果混乱——谱聚类可以正确处理这种非凸形状。</p>
+  </div>
+
+  <div class="explainer card" style="margin-top:16px">
+    <h2>算法步骤</h2>
+    <ul class="step-list">
+      <li>
+        <span class="step-num">1</span>
+        <div><strong>构建相似度图</strong>：计算每对点的相似度，常用高斯核
+          <em>w<sub>ij</sub> = exp(−‖x<sub>i</sub>−x<sub>j</sub>‖² / 2σ²)</em>，构成权重矩阵 W。</div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div><strong>构建拉普拉斯矩阵</strong>：L = D − W，其中 D 是度矩阵（对角线为各行权重之和）。</div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div><strong>求特征向量</strong>：取 L 最小的 k 个特征值对应的特征向量，组成新的低维表示矩阵。</div>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <div><strong>在新空间聚类</strong>：对特征向量矩阵的行向量用 K-Means 聚类，将结果映射回原空间。</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 660, H = 300, CX = W/2, CY = H/2;
+const isDark = () => matchMedia('(prefers-color-scheme:dark)').matches;
+
+function ring(n, r, noise) {
+  return Array.from({length:n}, (_,i) => {
+    const a = (2*Math.PI*i/n) + (Math.random()-.5)*.4;
+    return [CX + (r + (Math.random()-.5)*noise)*Math.cos(a),
+            CY + (r + (Math.random()-.5)*noise)*Math.sin(a)];
+  });
+}
+
+const pts1 = ring(28, 60, 8);
+const pts2 = ring(36, 110, 10);
+const all = [...pts1, ...pts2];
+
+function dist(a,b){return Math.hypot(a[0]-b[0],a[1]-b[1]);}
+function weight(a,b){const d=dist(a,b),s=28;return Math.exp(-(d*d)/(2*s*s));}
+
+const descs = [
+  "原始数据：两个同心环。K-Means 会按距离质心分割，结果混乱——谱聚类可以正确处理这种非凸形状。",
+  "相似度图：距离近的点之间连边，边越粗代表相似度越高。每个环内部连接紧密，环与环之间几乎没有连接。",
+  "特征空间：取拉普拉斯矩阵的第 2、3 小特征向量作为新坐标。原本缠绕的两个环，在新空间中变成了两个可分离的簇！",
+  "聚类结果：在特征空间对行向量做 K-Means，再映射回原空间——两个环被完美区分开，蓝色 vs 橙色。"
+];
+
+function drawStep0() {
+  ctx.clearRect(0,0,W,H);
+  pts1.forEach(p => {ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#378ADD';ctx.fill();});
+  pts2.forEach(p => {ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#EF9F27';ctx.fill();});
+}
+
+function drawStep1() {
+  ctx.clearRect(0,0,W,H);
+  all.forEach((a,i)=>all.forEach((b,j)=>{
+    if(i>=j)return;
+    const w=weight(a,b);
+    if(w>0.18){
+      ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
+      ctx.strokeStyle=`rgba(99,153,34,${Math.min(w*2.5,0.7)})`;
+      ctx.lineWidth=w*3;ctx.stroke();
+    }
+  }));
+  pts1.forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#378ADD';ctx.fill();});
+  pts2.forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#EF9F27';ctx.fill();});
+}
+
+function drawStep2() {
+  ctx.clearRect(0,0,W,H);
+  const pad = 60, ew = W-2*pad, eh = H-2*pad;
+  function embedPt(p, isInner) {
+    const angle = Math.atan2(p[1]-CY, p[0]-CX);
+    const noise = (Math.random()-.5)*0.15;
+    const ex = isInner
+      ? pad + ew*(0.18 + 0.22*(Math.cos(angle)*0.5+0.5)) + noise*30
+      : pad + ew*(0.58 + 0.22*(Math.cos(angle)*0.5+0.5)) + noise*30;
+    const ey = pad + eh*(0.5 + 0.38*Math.sin(angle)) + noise*30;
+    return [ex, ey];
+  }
+  ctx.fillStyle = isDark() ? '#666' : '#aaa';
+  ctx.font = '11px sans-serif';
+  ctx.fillText('特征向量 2 →', 8, H-8);
+  pts1.forEach(p=>{const[ex,ey]=embedPt(p,true);ctx.beginPath();ctx.arc(ex,ey,4,0,2*Math.PI);ctx.fillStyle='#378ADD';ctx.fill();});
+  pts2.forEach(p=>{const[ex,ey]=embedPt(p,false);ctx.beginPath();ctx.arc(ex,ey,4,0,2*Math.PI);ctx.fillStyle='#EF9F27';ctx.fill();});
+  ctx.beginPath();ctx.setLineDash([5,5]);
+  ctx.moveTo(W/2,pad-20);ctx.lineTo(W/2,H-pad+20);
+  ctx.strokeStyle=isDark()?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)';
+  ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+  ctx.font='12px sans-serif';
+  ctx.fillStyle=isDark()?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+  ctx.fillText('分割超平面',W/2-30,pad-6);
+}
+
+function drawStep3() {
+  ctx.clearRect(0,0,W,H);
+  pts1.forEach(p=>{
+    ctx.beginPath();ctx.arc(p[0],p[1],9,0,2*Math.PI);ctx.fillStyle='rgba(55,138,221,0.15)';ctx.fill();
+    ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#378ADD';ctx.fill();
+  });
+  pts2.forEach(p=>{
+    ctx.beginPath();ctx.arc(p[0],p[1],9,0,2*Math.PI);ctx.fillStyle='rgba(239,159,39,0.15)';ctx.fill();
+    ctx.beginPath();ctx.arc(p[0],p[1],4,0,2*Math.PI);ctx.fillStyle='#EF9F27';ctx.fill();
+  });
+  ctx.font='13px sans-serif';
+  ctx.fillStyle='#378ADD';ctx.beginPath();ctx.arc(20,15,5,0,2*Math.PI);ctx.fill();
+  ctx.fillStyle=isDark()?'#ccc':'#333';ctx.fillText('内环（簇 1）',30,19);
+  ctx.fillStyle='#EF9F27';ctx.beginPath();ctx.arc(20,35,5,0,2*Math.PI);ctx.fill();
+  ctx.fillStyle=isDark()?'#ccc':'#333';ctx.fillText('外环（簇 2）',30,39);
+}
+
+const drawFns = [drawStep0, drawStep1, drawStep2, drawStep3];
+let cur = 0;
+drawStep0();
+
+window.showStep = function(i, btn) {
+  cur = i;
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  drawFns[i]();
+  document.getElementById('desc').textContent = descs[i];
+};
+
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change', ()=>drawFns[cur]());
+</script>
+</body>
+</html>
