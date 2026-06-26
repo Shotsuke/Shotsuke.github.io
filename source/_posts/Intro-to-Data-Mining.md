@@ -1615,3 +1615,1225 @@ $$
 - 工程上常走“先变换后学习”：子结构、描述子、图核。
 - 图核让图任务可复用成熟算法（`SVM`、谱聚类等）。
 - 大网络常先对象化（子图/ego-net）再比较与学习。
+
+# W7
+
+## 7 Retrieval and Binary Hashing（检索与二值哈希）
+
+### Retrieval Task
+
+Given a dataset $D$ of objects and a query $q$, retrieval aims to return the subset of objects in $D$ that are most similar to $q$.
+
+The objects can be:
+
+- Points in $\mathbb{R}^d$
+- Texts or images
+- Complex objects such as graphs, trajectories, and time series
+- LLM embedded databases
+
+> 检索任务的本质是 nearest neighbor search。直接线性扫描最准确，但当数据库很大时，逐个计算相似度太慢，因此需要 indexing 或 hashing。
+
+### Linear Search vs Indexing
+
+**Linear search**
+
+- 对每个 query，计算它与数据库中所有对象的相似度。
+- 优点：结果精确，通常作为 performance ceiling 或 ground truth。
+- 缺点：时间复杂度高，数据库越大越慢。
+
+**Indexing / hashing**
+
+- 先把对象映射到便于快速查找的表示或桶中。
+- 查询时只访问少量候选对象，而不是全库扫描。
+- 优点：速度快、内存可控。
+- 缺点：通常是 approximate retrieval，可能牺牲一部分准确率。
+
+### Learning to Hash (L2H)
+
+Learning to Hash 的目标是：
+
+$$
+\text{high-dimensional real vectors}
+\rightarrow
+\text{compact binary codes}
+$$
+
+然后用 **Hamming distance** 代替原空间中的 Euclidean distance 或 cosine similarity。
+
+> 二值码的好处是存储小、比较快。比如实值向量需要浮点乘加，二值码可以用 bit operation 或 Hamming distance 快速比较。
+
+常见 hashing function 类型：
+
+- Thresholding-based
+- Hypersphere-based
+- Hyperplane-based
+
+传统 L2H 常需要复杂学习过程来优化 hash functions，但课程里重点强调：**learning 不一定总是必要的**。
+
+### Effective Binary Hashing 的三个常见标准
+
+1. **Full Space Coverage**
+   - 每个数据点都能被分配到某个 hash code。
+   - 避免 query 或 database point 无法落入任何桶。
+
+2. **Entropy Maximization**
+   - 数据尽量均匀分布到不同 bucket。
+   - 避免大量点挤在少数 code 上，导致检索退化。
+
+3. **Bit Independence**
+   - 每一位提供尽量不同的信息。
+   - 避免二值码冗余。
+
+> 这三个标准解释了为什么 hash code 不能只是随便压缩。一个好的 hash 表示要覆盖空间、充分利用 code space，并且每一位都要有信息量。
+
+## VDeH: Voronoi Diagram Encoded Hashing
+
+### Core Idea
+
+VDeH 是一种 **learning-free**、**data-dependent** hashing method。
+
+核心洞察：
+
+> Voronoi diagram naturally provides full space coverage, tends to produce balanced cells when generated from data samples, and can be encoded into binary hash functions.
+
+中文理解：
+
+- Voronoi cells 共同划分整个空间，所以天然 coverage。
+- 如果 cell centers 来自数据采样，每个 cell 往往覆盖一定数量的数据点，有助于 entropy。
+- 通过 encoded hashing，可以把“属于哪个 cell”转成二值码。
+
+### VDeH Workflow
+
+1. **Partition**
+   - 用采样点构造 Voronoi partition。
+
+2. **Locate and Index**
+   - 对于一个点 $x$，找到它最近的 Voronoi center。
+   - 该 center 对应一个 cell index。
+
+3. **Encode and Concatenate**
+   - 把 cell index 编码为 binary code。
+   - 多个 partition 的编码拼接成最终 hash code。
+
+> 直接 one-hot 表示会导致 bits 强相关，因为一个点只能落在一个 cell 中。VDeH 的 encoded hashing 目标是把 cell index 转换成更可用的二值表示。
+
+### VDeH 的优点与局限
+
+优点：
+
+- 不需要复杂 learning phase。
+- 利用数据分布构造 partition，是 data-dependent。
+- 在传统 image/text retrieval 数据上可以兼顾准确率和速度。
+
+局限：
+
+- Voronoi partition 依赖实例粒度的最近中心。
+- 在 LLM embedding space 中，如果使用全部维度做 Voronoi partition，partition diversity 可能不足。
+- 对高维 LLM embeddings，单纯 VD partition 可能导致 retrieval accuracy 明显下降。
+
+## IKE: Isolation Kernel Embedding
+
+### Core Idea
+
+IKE 使用 **Isolation Kernel (IK)** 把 LLM embeddings 转换成 compact binary representations。
+
+IK 的基本思想：
+
+> 两个点如果经常落在同一个 isolating partition 中，则它们相似；如果容易被不同 partition 分开，则它们不相似。
+
+给定 $t$ 个 partitions，每个 partition 有 $\psi$ 个 isolating regions。每个点在一个 partition 中只落入一个 region，因此可以得到 one-hot mapping：
+
+$$
+\phi_i(x) \in \{0,1\}^{\psi}
+$$
+
+把 $t$ 个 partitions 的结果拼接：
+
+$$
+\Phi(x) \in \{0,1\}^{t \times \psi}
+$$
+
+IK 可以近似为：
+
+$$
+K_\psi(x,y) \simeq \frac{1}{t}\langle \Phi(x), \Phi(y)\rangle
+$$
+
+> IKE 的关键不是学习一个 encoder，而是用 isolation partitions 生成二值特征。相似度可以通过比较二值表示快速计算。
+
+### Sparse Representation and Compression
+
+由于每个 partition 中只有一个位置为 1，$\Phi(x)$ 非常稀疏。
+
+因此可以只存每个 partition 中 1 的 index：
+
+$$
+\Phi_{idx}(x) \in \{1,\cdots,\psi\}^{t}
+$$
+
+两个点的 IK 相似度就可以通过比较 index 是否相等来近似：
+
+$$
+K_\psi(x,y) \simeq \frac{1}{t}\sum_{i=1}^{t}\mathbf{1}(\Phi_{idx}^{i}(x)=\Phi_{idx}^{i}(y))
+$$
+
+> 这解释了为什么 IKE 能同时降低 memory 和 retrieval latency：存的是 compact indices，算的是简单比较，而不是高维浮点向量点积。
+
+### iForest vs VD Partition
+
+IKE 中两种常见 partition implementation：
+
+| Method | Partition granularity | Mechanism |
+| --- | --- | --- |
+| iForest | feature-granularity | 随机选特征和 split value 递归切分 |
+| VD | instance-granularity | 根据到 sampled points 的最近距离划分 Voronoi cells |
+
+IKE 默认使用 **iForest**。
+
+原因：
+
+- iForest 的 random split 能产生更多样的 partitions。
+- 大量 independent trees 的 ensemble 可以抵消单个 partition 的偏差。
+- 对 LLM embedding，partition diversity 比只满足 coverage / entropy / independence 更关键。
+
+### IKE Workflow for Text Retrieval
+
+1. 用 LLM 把 corpus 中所有 documents 转换成 embedding vectors。
+2. 从 embeddings 中随机采样，构造 iForest partition model。
+3. 把所有 embeddings 映射到 IKE representation space。
+4. 建立 IKE-based vector database。
+5. 查询时先把 query embedding 映射到 IKE space，再做 retrieval。
+6. IKE 可以用于 exhaustive search，也可以结合 HNSW、IVF 等 ANN index。
+
+### Parameter Effects
+
+- $t$：partition/tree 数量。通常 $t$ 增大，retrieval performance 更稳定、更好，但计算和存储也增加。
+- $\psi$：每个 partition 的 sampled points 或 regions 数。$\psi$ 增大不一定提高效果；过大可能降低 partition diversity 或增加映射开销。
+
+> IKE 的经验结论是：小 $\psi$ 也能保持较高准确率，同时减少 mapping overhead 和 query latency。
+
+### VDeH vs IKE
+
+| Aspect | VDeH | IKE |
+| --- | --- | --- |
+| Main partition | Voronoi diagram | Isolation partitions, default iForest |
+| Granularity | Instance-level | Feature-level random split |
+| Learning | No learning | No learning |
+| Main strength | Simple data-dependent hashing | High partition diversity, LLM retrieval compression |
+| Weakness | 全维 VD 在 LLM embedding 上可能退化 | Cross-modal retrieval 效果仍有限 |
+
+核心区别：
+
+> VDeH 更依赖 Voronoi cells 的空间划分；IKE 更强调 isolation partition ensemble 的多样性。对 LLM embeddings，partition diversity 是除了 coverage、entropy、independence 之外的第四个关键标准。
+
+### Discussion: IKE
+
+**1. What are the key differences between IKE and VDeH?**
+
+> IKE uses isolation partitions, usually implemented by iForest, while VDeH uses Voronoi diagram based partitions. VDeH partitions by nearest sampled instances, whereas IKE uses randomized feature-level splits. IKE is more suitable for LLM embeddings because randomized trees provide higher partition diversity.
+
+中文说明：
+
+- VDeH：用 sampled centers 形成 Voronoi cells。
+- IKE：用 iForest 形成大量随机 isolation partitions。
+- 二者都是 learning-free 和 data-dependent，但 IKE 更适合高维 LLM embedding retrieval。
+
+**2. The LLM embedded databases used have ground-truths for each query. Is this necessary for retrieval evaluation?**
+
+> Yes, ground truth or a reliable reference ranking is needed to evaluate retrieval accuracy. Without it, we can measure speed and memory, but cannot judge whether the retrieved results are correct.
+
+中文说明：
+
+检索 evaluation 至少需要知道“哪些结果应该被认为 relevant”。如果没有人工标注 ground truth，也可以用原始 embedding 的 exact search ranking 作为近似 reference，但这只能评价与原始向量空间的一致性。
+
+**3. What are the advantages of using IKE on an LLM embedded database? How is this achieved?**
+
+> IKE reduces memory usage and retrieval latency while maintaining comparable retrieval accuracy. This is achieved by mapping high-dimensional FP embeddings into compact binary/index representations using isolation partitions, and then computing similarity with simple bitwise or equality operations.
+
+中文说明：
+
+优势：
+
+- 存储从高维浮点向量变成 compact code。
+- 查询时减少浮点点积或距离计算。
+- 可与 HNSW / IVF 等 ANN index 结合。
+- learning-free，不需要为每个数据集训练复杂压缩模型。
+
+**4. Why can learning-free IKE outperform learning-based CSR?**
+
+> Possible reasons include better alignment between isolation partitioning and retrieval similarity, high partition diversity from randomized trees, reduced overfitting because no supervised compression model is trained, and efficient ensemble behavior from many independent partitions.
+
+中文说明：
+
+learning-based 方法不一定占优，因为 retrieval compression 的关键未必是“模型复杂”，而是 binary representation 是否能保留局部相似结构。IKE 用大量简单但多样的 partitions 形成 ensemble，可能比复杂但相关性强的 learned bits 更稳。
+
+# W7 Workshop
+
+## Retrieval of Complex Data Objects
+
+复杂对象检索通常有两条路线：
+
+1. **Non-hashing / full-precision representation**
+   - Graph：GCN embedding、IGK embedding、GMN。
+   - Trajectory：Hausdorff distance、t2vec embedding。
+   - 优点：表示能力强，准确率可能高。
+   - 缺点：计算或存储成本大。
+
+2. **Hashing / binary representation**
+   - VDeH
+   - SpH
+   - brLSH
+   - ITQ
+   - 优点：速度快，内存小。
+   - 缺点：近似表示可能损失准确率。
+
+### Retrieval Evaluation
+
+常用指标：
+
+- **mAP (mean Average Precision)**
+- **Precision-Recall curve**
+
+> 一个 retrieval method 的 ranking 应尽量和 ground truth 或 exact search ranking 一致。速度提升只有在准确率还能接受时才有意义。
+
+## Workshop Discussion
+
+**1. Given a vector database, how can we improve retrieval efficiency of linear search, and what can be expected of retrieval accuracy?**
+
+> Use indexing or hashing methods such as binary hashing, HNSW, IVF, or LSH-like methods. Retrieval becomes faster because the search is restricted to a smaller candidate set or uses cheaper distance computation. The accuracy may decrease because most indexing methods are approximate, but a good method should preserve the nearest-neighbor ranking as much as possible.
+
+中文说明：
+
+线性扫描是精确但慢；索引方法是快但近似。评价时要同时看 speed、memory 和 mAP/Recall。
+
+**2. Given a graph database, explain two approaches to retrieval.**
+
+> One approach is graph embedding, such as GCN or IGK, which maps each graph into a vector and then uses vector distance for retrieval. Another approach is graph similarity learning, such as GMN, which directly learns graph-pair similarity. A third practical option is binary hashing such as VDeH applied to graph embeddings.
+
+中文说明：
+
+| Approach | Example | Pros | Cons |
+| --- | --- | --- | --- |
+| No-learning embedding | IGK | 不需要训练，较快 | 依赖 kernel/embedding 质量 |
+| Learning-based model | GMN | 可学习复杂相似性 | 训练成本高，泛化依赖数据 |
+| Hashing | VDeH / SpH / ITQ | 快、内存小 | 近似，有准确率损失 |
+
+**3. Given a trajectory database, explain three approaches to retrieval.**
+
+> First, use a hand-designed trajectory distance such as Hausdorff distance. Second, learn trajectory embeddings such as t2vec and retrieve by vector distance. Third, convert the trajectory representation into binary codes with hashing methods such as VDeH, SpH, brLSH, or ITQ.
+
+中文说明：
+
+- Hausdorff：无学习、可解释，但计算可能慢，对噪声敏感。
+- t2vec：学习轨迹表示，检索快，但需要训练数据。
+- Hashing：进一步压缩表示，速度最快，但可能损失细节。
+
+**4. Why are binary hash codes advantageous over real-valued hashing?**
+
+> Binary codes require much less storage and enable very fast Hamming-distance or bitwise computation. They are also easier to index and compare at scale. Real-valued codes preserve more information but still require floating-point storage and arithmetic.
+
+中文说明：
+
+二值码的核心优势是工程效率：更小的 memory footprint、更快的比较、更适合大规模检索系统。
+
+**5. Why can a hashing method outperform the ceiling achieved by Euclidean distance?**
+
+> If the Euclidean distance is computed on a representation that does not match the true task similarity, then its ranking is not a true semantic ceiling. A data-dependent hashing method may transform the representation in a way that better captures the useful distributional or structural information, and therefore can outperform Euclidean search on the original embedding.
+
+中文说明：
+
+“Euclidean ceiling” 只是原表示 + 欧氏距离下的上限，不一定是任务真实上限。好的 hashing 可能改变相似度结构，所以有机会超过它。
+
+**6. Why employ an indexing method such as VDeH?**
+
+> To improve retrieval efficiency by reducing memory usage and replacing expensive real-valued distance computation with cheaper binary-code comparison, while preserving retrieval quality as much as possible.
+
+**7. Do the methods discussed employ distributional information? How many levels?**
+
+> Yes. Methods such as IGK, VDeH, and IKE use data-dependent information from the given dataset. For complex objects, there can be two levels: the distribution inside each object, such as points in a trajectory or nodes in a graph, and the distribution across objects in the whole database.
+
+中文说明：
+
+- 第一层：对象内部的 distribution，例如一条 trajectory 由多个采样点组成。
+- 第二层：数据库中多个对象之间的 distribution。
+
+**8. How can we employ the second level of distributional information?**
+
+> First map each complex object into a distributional representation, then build another data-dependent kernel or hashing method over the set of object representations. This uses not only the internal distribution of each object, but also the distribution of objects in the database.
+
+中文说明：
+
+两层 distributional information 的想法是：先把复杂对象内部结构表示出来，再在对象集合层面学习或构造 data-dependent similarity。
+
+# W8
+
+## 8 Mining Data Stream（数据流挖掘）
+
+### What Is Data Stream?
+
+Data stream means data arrives continuously and may be infinite in the future.
+
+Examples:
+
+- Transaction streams：信用卡、超市 POS、网购记录。
+- Web click-streams：网站用户点击行为。
+- Social streams：Twitter 等平台持续产生文本流。
+- Network streams：通信网络中的流量数据。
+
+> 数据流挖掘的关键变化是：数据不能假设已经完整存放在磁盘中。算法必须边到达边处理。
+
+### Four Challenges
+
+1. **One-pass constraint**
+   - 数据到达速度快，通常只能处理一次。
+
+2. **Concept drift**
+   - 数据分布会随时间变化。
+
+3. **Resource constraints**
+   - 内存、计算、时间都有限。
+
+4. **Massive-domain constraints**
+   - 离散属性可能有极大取值空间。
+   - 例如 $10^8$ 个邮箱用户会产生约 $10^{16}$ 个可能通信对。
+
+### Data Stream vs Time Series
+
+| Aspect | Data stream | Time series |
+| --- | --- | --- |
+| Main emphasis | 在线到达、资源受限、只能近似维护统计 | 按时间顺序观测的序列 |
+| Object | 可以是 transaction、click、text、network packet 等 | 通常是连续时间或离散时间上的数值序列 |
+| Challenge | one-pass、concept drift、massive domain | trend、seasonality、subsequence pattern、misalignment |
+
+> Time series 可以看作一种有时间顺序的数据；data stream 更强调在线处理框架和资源约束。
+
+## Synopsis Structures
+
+由于不能保存完整数据流，stream mining 常使用 **online synopsis construction**。
+
+Synopsis 是数据流的紧凑摘要：
+
+- Random samples
+- Bloom filters
+- Sketches
+- Distinct element-counting structures
+- Microclusters
+
+### Generic vs Specific Synopsis
+
+**Generic synopsis**
+
+- 例如 reservoir sampling。
+- 优点：可用于很多任务。
+- 缺点：对 distinct counting、membership query 等专门问题不一定高效。
+
+**Specific synopsis**
+
+- 为特定任务设计。
+- 例如 Bloom filter 做 membership query，Count-Min Sketch 做 frequent counting，Flajolet-Martin 做 distinct counting。
+
+## Reservoir Sampling
+
+### Goal
+
+Continuously maintain a sample of $k$ points from a stream without storing the whole stream.
+
+Algorithm:
+
+1. 前 $k$ 个点直接放入 reservoir。
+2. 第 $n$ 个新点到达时，以概率 $k/n$ 进入 reservoir。
+3. 如果进入，则随机踢出 reservoir 中的一个旧点。
+
+性质：
+
+> After $n$ stream points have arrived, each point has probability $k/n$ of being included in the reservoir.
+
+中文说明：
+
+reservoir sampling 保证了对已经到达的所有点做无偏采样。问题是它不自动处理 concept drift，因为早期点和近期点被公平对待。
+
+### Decay-based Reservoir for Concept Drift
+
+为了让新数据更重要，可以使用 bias function：
+
+$$
+f(r,n)=\exp[-\lambda(n-r)]
+$$
+
+其中 $r$ 是某个点到达时刻，$n$ 是当前时刻。
+
+> 越新的点，$n-r$ 越小，权重越大；越旧的点，权重指数衰减。
+
+## Bloom Filter
+
+Bloom filter 用于 set-membership query：
+
+> Given an element $y$, has it ever occurred in the stream?
+
+结构：
+
+- 一个长度为 $m$ 的 bit array。
+- $w$ 个 independent hash functions。
+- 插入元素 $x$ 时，把 $h_1(x),\cdots,h_w(x)$ 对应位置置为 1。
+
+查询：
+
+- 如果任意一个对应 bit 为 0，则 $y$ 一定没出现过。
+- 如果所有对应 bit 都为 1，则报告 $y$ 出现过。
+
+关键性质：
+
+> False positives are possible, but false negatives are not.
+
+中文说明：
+
+Bloom filter 可能把没出现过的元素误判为出现过，因为 hash collision 会让对应 bits 都变成 1；但如果某个 bit 是 0，它一定没出现过。
+
+## Count-Min Sketch
+
+Count-Min Sketch 用于 count-based summary。
+
+结构：
+
+- 一个 $w \times m$ 的二维数组。
+- 每一行对应一个 hash function。
+
+更新：
+
+对每个 incoming element $x$，在每一行更新：
+
+$$
+C[i,h_i(x)] \leftarrow C[i,h_i(x)] + 1
+$$
+
+查询元素 $y$ 的频率：
+
+$$
+\hat{G}(y)=\min_i C[i,h_i(y)]
+$$
+
+为什么取 minimum：
+
+- hash collision 只会让计数变大，不会变小。
+- minimum 是多个 overestimate 中最紧的估计。
+
+应用：
+
+- Frequent elements / heavy hitters
+- Join size estimation
+- Quantiles
+- Massive-domain counting
+
+## AMS Sketch
+
+AMS sketch 用于估计 stream 的 second-order moment：
+
+$$
+F_2=\sum_{i=1}^{n} f_i^2
+$$
+
+在 massive-domain 场景中，无法维护所有 distinct elements 的精确频率，AMS sketch 用随机 $\{-1,1\}$ hash values 构造估计量。
+
+关键结论：
+
+$$
+F_2 = E[Q^2]
+$$
+
+> AMS 的意义是：不用存所有 $f_i$，也能估计频率分布的二阶统计量。
+
+## Flajolet-Martin Algorithm
+
+Flajolet-Martin 用于 **distinct element counting**。
+
+思想：
+
+1. 对 stream element $x$ 计算 hash value $h(x)$。
+2. 看 $h(x)$ 二进制表示中 rightmost 1 的位置，也就是 trailing zeros 的数量。
+3. 维护所有元素中的最大值 $R_{max}$。
+
+估计：
+
+$$
+E[R_{max}] = \log_2(\phi n), \quad \phi=0.77351
+$$
+
+因此：
+
+$$
+\hat{n} \approx \frac{2^{R_{max}}}{\phi}
+$$
+
+> 直觉是：能看到很多 trailing zeros 的 hash value 是低概率事件；如果它出现了，说明 distinct elements 数量可能很大。
+
+### Summary on Sketches
+
+| Task | Synopsis |
+| --- | --- |
+| Set membership | Bloom filter |
+| Frequent item count | Count-Min Sketch |
+| Second-order moment query | AMS Sketch |
+| Distinct element counting | Flajolet-Martin |
+
+## Discussion: Data Stream Basics
+
+**1. Explain what concept drift is. How does it relate to i.i.d.?**
+
+> Concept drift means the data distribution changes over time. It violates the identical distribution part of the i.i.d. assumption because data arriving at different times may come from different distributions.
+
+中文说明：
+
+i.i.d. 假设要求所有样本来自同一分布；concept drift 说明 $P_t$ 会随时间变成 $P_{t+1}$，因此模型不能永远依赖旧数据。
+
+**2. Difference between data stream and time series. How does concept drift relate?**
+
+> A time series is an ordered sequence of observations, often numerical, while a data stream emphasizes continuous online arrival under memory and one-pass constraints. Concept drift in data streams is similar to changing patterns in time series, but stream mining additionally cares about online processing and limited storage.
+
+**3. Which constraints does the synopsis approach address?**
+
+> Synopsis structures mainly address one-pass, resource, and massive-domain constraints by maintaining compact summaries instead of the full stream. They can also help with concept drift when combined with decay, sliding windows, or time-aware snapshots.
+
+中文说明：
+
+Synopsis 不是自动解决所有问题。它解决的是“不能存全量、不能多次扫描、domain 太大”的问题；concept drift 还需要 window、decay 或 drift detection。
+
+## Stream Clustering
+
+### Why Clustering Is Useful in Streams
+
+Stream clustering 可以作为 compact synopsis：
+
+- 用 cluster statistics 代表大量数据点。
+- 可作为后续 classification、anomaly detection、summarization 的基础。
+- 比 reservoir sample 更结构化。
+
+### CluStream
+
+CluStream 使用 two-stage methodology：
+
+1. **Online microclustering**
+   - 实时处理 stream。
+   - 维护细粒度 cluster statistics。
+   - 这些摘要称为 microclusters。
+
+2. **Offline macroclustering**
+   - 对 microclusters 进一步聚类。
+   - 根据用户指定的 time horizon 和 temporal granularity 给出更宏观的 cluster 结果。
+
+### Microcluster
+
+Microcluster 保存一个局部簇的统计信息，而不是保存所有原始点。
+
+新点 $X_i$ 到达时：
+
+1. 计算它到当前 microcluster centroids 的距离。
+2. 如果它自然属于最近 microcluster，就吸收它并更新统计量。
+3. 如果不属于任何已有 microcluster，就创建新的 microcluster。
+4. 若 microcluster 数量超限，则删除 stale microcluster 或合并两个旧 microclusters。
+
+> Microcluster 是 stream clustering 的中间摘要。它既比单个点紧凑，又保留了局部结构。
+
+### Pyramidal Time Frame
+
+为了支持不同 time horizon 的查询，可以按 pyramidal time frame 存 snapshots。
+
+作用：
+
+- 最近时间保存更密。
+- 远古时间保存更稀。
+- 任意用户指定 horizon 都能近似找到对应 snapshot。
+
+### CSketch for Massive-Domain Stream Clustering
+
+CSketch 用 Count-Min Sketch 存每个 cluster 中 attribute-value combinations 的频率。
+
+流程：
+
+1. 每个 cluster 对应一个 sketch。
+2. 对 incoming point，计算它与每个 cluster sketch 的 dot product。
+3. 把点分到 dot product 最大的 cluster。
+4. 更新该 cluster 的 sketch。
+
+> CSketch 类似 online k-means，但 cluster representative 不是均值向量，而是 sketch 中的离散频率摘要。
+
+## Discussion: Stream Clustering
+
+**1. Explain how one can use microclusters to perform clustering.**
+
+> Maintain many fine-grained microclusters online as compact summaries of local regions. Then apply an offline clustering algorithm to the microcluster summaries rather than to all raw stream points.
+
+中文说明：
+
+Microcluster 先在线压缩数据流，再离线生成 macroclusters。这样既满足 streaming constraints，又能让用户按不同粒度查看聚类结果。
+
+**2. Can k-means, k-medoids, or DBSCAN use microclusters?**
+
+> K-means can naturally use microclusters by treating their centroids and weights as summarized points. K-medoids can also use microclusters if representatives or pairwise distances between summaries are available. DBSCAN is harder because it relies on local density and neighborhood connectivity, but it can be adapted if microclusters preserve enough radius, density, and adjacency information.
+
+中文说明：
+
+| Algorithm | Use microclusters? | Reason |
+| --- | --- | --- |
+| k-means | Yes | centroid + weight 可直接用 |
+| k-medoids | Possible | 需要代表对象或距离 |
+| DBSCAN | Harder | 需要保留密度可达和邻域结构 |
+
+## Streaming Classification
+
+### VFDT: Very Fast Decision Trees
+
+VFDT 假设 concept 不变，使用 Hoeffding bound 决定何时 split。
+
+在某个节点，如果 best split attribute 和 second-best split attribute 的 Gini 差距足够大，就执行 split。
+
+判断条件中会出现：
+
+$$
+\sqrt{\frac{R^2\ln(1/\delta)}{2n}}
+$$
+
+其中：
+
+- $R$ 是 split criterion 的取值范围。
+- $n$ 是该节点看到的样本数。
+- $\delta$ 控制错误概率。
+
+> VFDT 的关键是等到样本足够多时再分裂，从而保证在线构造的 tree 接近 batch mode 的 tree。
+
+局限：
+
+- 不处理 concept drift。
+
+### CVFDT
+
+CVFDT 为 concept drift 加入两点：
+
+1. **Sliding window**
+   - 只用近期 training items 限制旧概念影响。
+
+2. **Alternate subtrees**
+   - 在内部节点维护候选子树。
+   - 当 stream evolution 使原 split 不再最佳时，可替换子树。
+
+### Supervised Microcluster Classification
+
+思想：
+
+- 不再保存所有 labeled points。
+- 用带标签的 microclusters 作为训练摘要。
+- 不同 class 的数据点不允许混在同一个 microcluster 中。
+- 测试时找 top-k nearest microclusters，并用 dominant label 分类。
+
+> 这是把 KNN 的训练集压缩成 microclusters，从而适应 streaming 场景。
+
+### Massive-Domain Streaming Classification
+
+使用 Count-Min Sketch 做 rule-based classification。
+
+流程：
+
+1. 每个 class 维护一个 sketch。
+2. 对训练样本中的 item combinations 生成 pseudo-items。
+3. 把 pseudo-items 加入对应 class sketch。
+4. 不同 class 中高频、区分度强的 pseudo-items 形成隐式规则。
+5. 测试时查询各 class sketch，按 rule-based classifier 思路分类。
+
+> 适合 attribute-value combinations 巨大的场景，因为不能显式维护所有组合。
+
+## SENC: Streaming Emerging New Classes
+
+SENC = Classification under Streaming Emerging New Classes。
+
+三个子问题：
+
+1. Detecting emerging new classes
+2. Classifying known classes
+3. Updating models to integrate each new class as known
+
+### Why SENC Is Not Just Classification
+
+传统方法常把 SENC 当作 classification problem，重点放在：
+
+- 已知类分类
+- 模型更新
+
+但 SENC 更关键的是：
+
+> Emerging new class detection should be treated as an anomaly detection problem.
+
+原因：
+
+- 新类样本相对于已知类通常表现为 outlying anomalies。
+- true labels 只有初始训练集有，后续 stream 中标签可能不可用。
+- 不能保存全部训练数据，也不能完全 retrain。
+
+### SENCForest
+
+SENCForest 使用 completely-random trees 作为共同核心：
+
+- 作为 unsupervised anomaly detector 检测新类。
+- 作为 classifier 处理已知类。
+- 模型更新不依赖保存初始训练集。
+
+> 课程重点：SENC 的核心不只是 classify known classes，而是先发现 unknown emerging classes。
+
+## Discussion: Stream Classification and Anomaly
+
+**6. Fixed-length sliding window for concept drift: merit and limitation.**
+
+> The merit is that it is simple and focuses the model on recent data, reducing the influence of outdated concepts. The limitation is that choosing the window size is difficult: a small window may discard useful information and increase variance, while a large window may react too slowly to drift.
+
+中文说明：
+
+固定窗口是最直接的 drift 处理方法，但它把所有 drift 都假设成一个固定时间尺度，这在真实 stream 中往往不成立。
+
+**7. How may we use a sketch for anomaly detection in data streams?**
+
+> Use sketches to maintain approximate frequencies of items or feature combinations. Incoming objects with very low estimated frequency, unusual combinations, or large deviations from sketch-based summaries can be flagged as anomalies.
+
+**8. Disadvantage and advantage of sketch for anomaly detection.**
+
+> Advantages include small memory usage, one-pass updates, and suitability for massive-domain streams. Disadvantages include approximation errors, hash collisions, possible false normality for rare but collided items, and limited ability to capture complex local structure.
+
+中文说明：
+
+Sketch 适合频率异常，不一定适合复杂空间异常。它很省内存，但表达能力取决于你把什么东西编码进 sketch。
+
+**9. Is SENC a classification problem only?**
+
+> No. SENC includes classification of known classes, but it also requires detecting emerging new classes and updating the model. The new-class detection part is better viewed as anomaly detection under streaming constraints.
+
+**10. Clustering for outlier detection vs LOF / Isolation Forest.**
+
+> Clustering can detect outliers as points far from cluster centers or belonging to very small clusters. Its advantage is simplicity and integration with summarization. Its disadvantage is that it depends heavily on the clustering algorithm and may miss local outliers. LOF directly compares local density, and Isolation Forest directly measures isolation difficulty, so they are usually more targeted anomaly detectors.
+
+中文说明：
+
+聚类可以顺便做异常检测，但异常检测不是它的原生目标。LOF 和 iForest 更直接定义了 abnormality score。
+
+**11. Generality of synopsis methods and why outlier analysis is difficult.**
+
+> Reservoir sampling is general but may miss rare anomalies. Bloom filters and sketches are task-specific and mainly support membership or frequency queries. Microclusters preserve compact structure but may absorb anomalies into summaries. Outlier analysis is difficult because anomalies are rare, and synopsis construction often intentionally discards rare details.
+
+中文说明：
+
+Synopsis 的目标是压缩主流信息，而 anomaly detection 恰好关心少数信息。这是根本冲突。
+
+**12. Issues in using reservoir sample plus offline classifier for streaming classification.**
+
+> This approach is general because any conventional classifier can be trained on the sample. However, it may lose rare classes, react slowly to drift, depend heavily on sample size and decay settings, and require labels that may be delayed or unavailable. It also separates sampling from learning, so the synopsis may not preserve task-specific decision boundaries.
+
+中文说明：
+
+reservoir + offline model 的优点是简单通用；问题是它把 streaming 难题都压给了 sample。sample 如果没有保留新类、边界样本或 drift 信息，后面的 offline classifier 再强也没用。
+
+### W8 小结
+
+- 数据流的核心约束：one-pass、concept drift、resource、massive domain。
+- Synopsis 是数据流挖掘的基础思想。
+- Reservoir sampling 通用但不擅长 distinct counting 或稀有异常。
+- Bloom filter 支持 membership query，有 false positive 无 false negative。
+- Count-Min Sketch 支持频率估计，会 overestimate。
+- AMS sketch 估计 second-order moment。
+- Flajolet-Martin 估计 distinct elements。
+- Stream clustering 常用 microclusters 和 online/offline 两阶段。
+- Streaming classification 要处理 drift、标签延迟、新类出现。
+- SENC 不只是分类问题，也包含 emerging class detection 和 model update。
+
+# W9
+
+## 9 Social Network Analysis（社交网络分析）
+
+### What Is a Social Network?
+
+A social network can be represented as a graph:
+
+$$
+G=(N,A)
+$$
+
+其中：
+
+- $N$ 是 nodes，也叫 actors。
+- $A$ 是 edges，表示 actors 之间的 connections。
+
+Examples:
+
+- Twitter、LinkedIn、Facebook。
+- Telecommunications、email、chat networks。
+- Flickr、YouTube 等 media-sharing networks。
+- Bibliographic and citation networks。
+
+### Ways to Analyze Networks
+
+- Identify densely linked clusters of nodes
+  - Community detection / clustering
+- Predict the label or type of a node
+  - Collective classification / node classification
+- Predict whether two nodes are linked
+  - Link prediction / recommender
+- Measure similarity of two nodes or subgraphs
+  - Node similarity / subgraph similarity
+
+## Network Properties
+
+### Homophily
+
+> Connected nodes are more likely to have similar properties.
+
+中文解释：
+
+“物以类聚”。社交网络里相连的人往往兴趣、属性或标签更相似。这是 collective classification 能成立的重要前提。
+
+### Triadic Closure
+
+> If two individuals have a common friend, they are more likely to be connected or become connected.
+
+这会提高 local clustering coefficient。
+
+### Local Clustering Coefficient
+
+对于节点 $i$，local clustering coefficient 衡量：
+
+> 在 $i$ 的邻居之间，实际存在的边占所有可能邻居对的比例。
+
+Watts-Strogatz average clustering coefficient 是所有节点 local clustering coefficient 的平均。
+
+### Preferential Attachment
+
+> In a growing network, nodes with higher degree are more likely to receive new edges.
+
+中文说明：
+
+越有名的节点越容易获得新连接，导致 hub nodes 出现。
+
+### Small World Property
+
+> The average path length between node pairs is small, often growing like $\log(n(t))$.
+
+即网络很大，但任意两点之间平均距离仍然较短。
+
+### Densification
+
+Real-world networks often add nodes and edges over time, with edges growing faster:
+
+$$
+e(t) \propto n(t)^\beta,\quad 1<\beta<2
+$$
+
+### Shrinking Diameters
+
+随着网络 densify，平均距离或 diameter 可能随时间缩短。
+
+### Giant Connected Component
+
+网络 densify 后，常出现包含大量节点的 giant connected component。
+
+### Power-Law Degree Distribution
+
+Degree distribution 常满足：
+
+$$
+P(k)\propto k^{-\gamma},\quad 2\leq \gamma \leq 3
+$$
+
+> 大多数节点 degree 很小，少数节点 degree 很大，这解释了 hub nodes。
+
+### Centrality and Prestige
+
+**Centrality**
+
+- 衡量节点对网络结构的影响。
+- 高 degree、短路径位置、桥接位置等都可能带来 centrality。
+
+**Prestige**
+
+- 在有向社交网络中特别重要。
+- 例如 Twitter 上 followers 多代表 prestige；following 很多人不代表 prestige，只说明活跃或外向。
+
+## Community Detection
+
+Community detection 在 social network 中近似等价于 clustering。
+
+目标：
+
+> Partition a network into groups so that edges across different partitions are minimized and edges within partitions are dense.
+
+### Why Network Clustering Is Hard
+
+1. K-means 不能直接推广到 network，因为 nodes 没有自然欧氏坐标和均值。
+2. Hubs 会连接多个 communities，使边界模糊。
+3. 不同区域 edge density 不同。
+4. 真实网络常有 giant component，容易导致不平衡 clusters。
+
+### 2-way Minimum Cut
+
+2-way cut 把图分成两个部分，使跨分区边权和最小。
+
+如果无 edge weight、无 balancing constraints，特殊情形可以多项式求解。
+
+但加入以下条件后会变难：
+
+- Arbitrary edge weights
+- Balancing constraints
+
+通常会变成 NP-hard。
+
+> 在社交网络中，balancing 很重要。如果不加约束，minimum cut 可能只切出一个孤立节点或很小的 peripheral component，这不是有意义的 community。
+
+### Kernighan-Lin Algorithm
+
+Kernighan-Lin 是 local search 方法。
+
+核心概念：
+
+$$
+D_i = E_i - I_i
+$$
+
+其中：
+
+- $E_i$ 是把节点 $i$ 移动到另一分区带来的 external cost。
+- $I_i$ 是 internal cost。
+
+它通过局部交换节点来改进 cut。
+
+特点：
+
+- 是 local method。
+- 依赖 random initialization。
+- 通常用于 balanced partition。
+
+### Multilevel Kernighan-Lin
+
+High-level idea：
+
+1. Coarsen graph
+   - 通过 matching 合并节点和边，得到更小图。
+2. Partition smaller graph
+   - 在粗图上做分割。
+3. Expand and refine
+   - 把分割映射回原图，并用 Kernighan-Lin 改进。
+
+Matching definitions：
+
+- **Matching**：边集合中没有两条边共享 endpoint。
+- **Maximal matching**：不能再加入新边而仍保持 matching 的 matching。
+
+> Multilevel partitioning 的价值在于先在小图上做全局粗分割，再回到原图微调，效率和质量更平衡。
+
+## Spectral Clustering for Networks
+
+Spectral clustering uses graph embedding:
+
+> Transform graph nodes into a multidimensional space that preserves local network structure, then apply a standard clustering algorithm.
+
+三步：
+
+1. **Preprocessing**
+   - 构造 similarity matrix 或 neighborhood graph。
+
+2. **Eigen-decomposition**
+   - 计算 similarity matrix 或 Laplacian matrix 的 eigenvectors。
+   - 用前 $k$ 个 eigenvectors 表示节点。
+
+3. **Clustering**
+   - 通常在 embedding space 中用 k-means。
+
+### Laplacian Matrix
+
+给定 weight matrix $W$，degree matrix $\Lambda$：
+
+$$
+\Lambda_{ii}=\sum_j W_{ij}
+$$
+
+Laplacian：
+
+$$
+L=\Lambda-W
+$$
+
+一个常见优化形式：
+
+$$
+\min \operatorname{trace}(Y^TLY)
+\quad
+\text{s.t. }Y^T\Lambda Y=I
+$$
+
+直觉：
+
+> Highly connected nodes should have close embeddings.
+
+### Normalization
+
+归一化 similarity matrix：
+
+$$
+\Lambda^{-1/2}W\Lambda^{-1/2}
+$$
+
+作用：
+
+- 用节点度数归一化边相似度。
+- 降低 high-degree nodes 的偏置。
+- 对 edge density 差异大的网络更容易得到 balanced clusters。
+
+## Discussion #1: Clustering
+
+**1. Explain what a 2-way minimum cut problem is.**
+
+> It partitions a graph into two disjoint node sets while minimizing the total weight of edges crossing the partition.
+
+中文说明：
+
+目标是让两个分区之间的连接尽量少。
+
+**2. Why is balancing constraint more important in community detection? What would unconstrained cut look like?**
+
+> Real networks often contain hubs, peripheral nodes, and giant components. Without balancing, the minimum cut may isolate a tiny set of nodes or a single weakly connected node, producing a mathematically small cut but not a meaningful community.
+
+中文说明：
+
+多维 clustering 中簇大小不均不一定错误；但 community detection 中，如果切出一个孤立点，通常不是我们想要的 community。
+
+**3. Why is Kernighan-Lin local? Does it produce balanced clusters?**
+
+> It is local because it improves a partition through local node swaps starting from an initial partition. It is usually designed for balanced 2-way partitioning, so it can produce balanced clusters when initialized and constrained that way.
+
+**4. Why is Spectral Clustering global? Does it produce balanced clusters?**
+
+> Spectral clustering is global because it uses eigenvectors of a matrix representing the entire graph. With normalization, it tends to reduce degree bias and can produce more balanced clusters, but the final balance also depends on the embedding and the final clustering step.
+
+**5. Why is k-means often used as the final step in spectral clustering?**
+
+> Spectral embedding maps nodes into a Euclidean vector space. K-means is simple, efficient, and works naturally on fixed-dimensional vectors, so it is a convenient final clustering method.
+
+**6. Must we use k-means as the final step?**
+
+> No. Other clustering algorithms can be used on the spectral embedding. The impact depends on whether the alternative algorithm matches the structure in the embedding space. K-means is common because the spectral embedding is often designed to make clusters approximately separable in Euclidean space.
+
+中文说明：
+
+“spectral” 只负责变换表示，最后真正分簇的算法可以替换。
+
+## Discussion #2: Large Graph vs Graph Database
+
+**7. Differences in using graph kernels for a large graph vs a database of graphs.**
+
+> For a database of graphs, each graph is already an object, so graph kernels can be computed between graph objects directly. For a single large graph, we first need to define comparable graph objects, such as ego-networks, communities, subgraphs, or temporal snapshots, and then compute kernels among them.
+
+中文说明：
+
+小图数据集：图就是样本。  
+单个大网络：要先切成样本。
+
+**8. Differences in using spectral clustering for a large graph vs a database of graphs.**
+
+> For a large graph, spectral clustering is applied directly to the node similarity or Laplacian matrix to cluster nodes. For a database of graphs, each graph is treated as an object; we first build a similarity matrix between graph objects, then apply spectral clustering to that object-level graph.
+
+**9. Does spectral clustering have the same random initialization drawback as Kernighan-Lin?**
+
+> The spectral embedding itself does not rely on random initialization because it is obtained from eigen-decomposition. However, if k-means is used in the final step, that final clustering may still involve random initialization.
+
+**10. Is "spectral clustering" a misnomer?**
+
+> It is partly true. The spectral component performs feature transformation or embedding using eigenvectors, while a separate clustering algorithm such as k-means performs the final grouping. However, the term is still meaningful because the spectral embedding is the key step that makes the clustering problem easier.
+
+中文说明：
+
+Spectral clustering = spectral embedding + clustering。名字虽然省略了最后一步，但重点确实在 spectral transformation。
+
+## Collective Classification（Node Classification）
+
+### Definition
+
+In a network where only some nodes are labeled, collective classification predicts the labels of unlabeled nodes.
+
+依赖条件：
+
+- Homophily：相连节点更可能同类。
+- 标签稀疏：不能只看 labeled neighbors，也要通过 unlabeled nodes 传播信息。
+- Transductive semi-supervised setting：train nodes 和 test nodes 在同一个图中联合分类。
+
+### Three Types of Correlations
+
+1. Node $v$ 的 label 与 $v$ 自身 features 的相关性。
+2. Node $v$ 的 label 与邻居 features 或已观测 labels 的相关性。
+3. Node $v$ 的 label 与邻居未观测 labels 的相关性。
+
+> Collective classification 的关键是联合使用 node content、link structure、neighbor labels。
+
+## ICA: Iterative Classification Algorithm
+
+ICA 的特点：
+
+1. 为每个节点构造 link features。
+2. 重要 link features 通常是邻居类别分布。
+3. 邻居 $j$ 对节点 $i$ 的类别贡献可用 edge weight $w_{ij}$ 加权。
+4. 也可以加入 degree、PageRank、connectivity 等 structural features。
+5. 迭代更新未标记节点的预测标签，直到稳定或达到迭代上限。
+
+> ICA 和普通分类器的区别是：它把邻居预测标签也当作特征，因此节点预测彼此依赖。
+
+## Supervised Spectral Methods
+
+Two ways:
+
+1. Transform the graph into multidimensional data, then apply a classifier such as KNN.
+2. Directly learn an $n \times k$ class probability matrix $Z$ using an optimization related to spectral clustering.
+
+### Supervised Feature Generation with Spectral Embedding
+
+给定 undirected graph $G=(N,A)$ 和 weight matrix $W$：
+
+1. 对每对同标签节点增加权重为 $\mu$ 的边。
+   - 如果边已存在，则增加其权重。
+   - 得到 augmented graph $G^+$。
+   - $\mu$ 控制 label supervision 的强度。
+2. 对 $G^+$ 做 spectral embedding，生成 $r$-dimensional representation。
+3. 在 embedding 上使用 multidimensional classifier，例如 nearest neighbor classifier。
+
+> 这相当于把 label 信息注入图结构，再通过 spectral embedding 让同类节点在向量空间中更接近。
+
+## Discussion #3: Classification
+
+**1. Distinctive features of ICA compared with other collective classification methods.**
+
+> ICA explicitly constructs link features from neighboring labels and iteratively updates node predictions. Unlike methods that solve a global optimization problem, ICA can use a standard classifier repeatedly, but its predictions depend on the current estimated labels of neighboring nodes.
+
+中文说明：
+
+ICA 的核心是 iterative 和 local dependency：先有初始预测，再用邻居标签分布反复修正。
+
+**2. Can we use graph kernels for collective classification? How?**
+
+> Yes. For each target node, construct an ego-network or local subgraph around the node, then use graph kernels to compute similarities between these subgraphs. The resulting kernel matrix can be used with SVM, KNN, or semi-supervised classifiers for node classification.
+
+中文说明：
+
+图核本来比较图对象；node classification 中可以把每个节点的 neighborhood 变成一个小图对象。
+
+**3. Graph kernel approach vs spectral embedding approach for collective classification.**
+
+> The graph kernel approach compares local graph objects such as ego-networks through structural similarity and can be used directly by kernel classifiers. The spectral embedding approach transforms all nodes in the whole network into a shared vector space using global graph structure, then applies a standard classifier.
+
+中文说明：
+
+| Approach | Object | Main idea |
+| --- | --- | --- |
+| Graph kernel | node-centered subgraphs | 比较局部结构相似性 |
+| Spectral embedding | all nodes in one graph | 用全局图结构生成节点向量 |
+
+### W9 小结
+
+- 社交网络可建模为 graph，nodes 是 actors，edges 是 relations。
+- 重要性质包括 homophily、triadic closure、preferential attachment、small world、densification、power-law degree distribution。
+- Community detection 是网络上的 clustering，但 hubs、density variation 和 giant component 会增加难度。
+- 2-way cut 需要 balancing，否则容易切出无意义的小块。
+- Kernighan-Lin 是 local search，spectral clustering 是 global embedding。
+- Spectral clustering 的 spectral 部分做的是 feature transformation，最后通常仍用 k-means。
+- Collective classification 是 transductive semi-supervised node classification。
+- ICA 用邻居 label distribution 构造 link features 并迭代预测。
+- Graph kernels 和 spectral embedding 都能用于 node classification，但一个偏局部子图相似，一个偏全局节点嵌入。
