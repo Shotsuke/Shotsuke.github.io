@@ -5,7 +5,7 @@ date: 2024-03-04 15:40:31
 
 # Character
 
-![Yamane](../imgs/character/浅色重绘-透明背景.png)
+![Yamane](../imgs/character/zero-options/b-letter.png)
 
 # Info
 

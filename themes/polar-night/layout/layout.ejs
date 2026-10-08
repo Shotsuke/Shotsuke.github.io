@@ -1,0 +1,35 @@
+<!doctype html>
+<html data-polar-shell="1" data-mode="dark" lang="<%= theme.language || 'zh-CN' %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#35434d">
+  <title><%= page.title ? polar_title(page.title) + ' · ' : (is_archive() ? '文章归档 · ' : '') %><%= config.title %></title>
+  <meta name="description" content="<%= page.excerpt ? polar_excerpt(page, 155) : theme.description %>">
+  <link rel="canonical" href="<%= full_url_for(page.path || '') %>">
+  <link rel="icon" type="image/svg+xml" href="<%= url_for('/images/polar-mark.svg') %>">
+  <% if ((is_home() && page.current === 1) || page.layout === 'novel') { %><link rel="preload" as="image" href="<%= url_for(page.layout === 'novel' ? (theme.novel_hero_image || theme.hero_image) : theme.hero_image) %>"><% } %>
+  <script>try { document.documentElement.dataset.mode = localStorage.getItem('shotsuke-mode') === 'light' ? 'light' : 'dark'; } catch {}</script>
+  <link rel="stylesheet" href="<%= url_for('/css/polar.css') %>">
+  <link rel="stylesheet" href="<%= url_for('/css/afterglow.css') %>">
+  <script defer src="<%= url_for('/js/polar.js') %>"></script>
+  <script defer src="<%= url_for('/js/math.js') %>"></script>
+  <script defer src="<%= url_for('/js/radio.js') %>"></script>
+  <script defer src="<%= url_for('/js/navigation.js') %>"></script>
+</head>
+<body data-math="<%= theme.math && (is_post() || page.layout === 'page') ? 'true' : 'false' %>" data-math-src="<%= url_for('/js/mathjax/tex-svg.js') %>" class="<%= page.layout === 'novel' ? 'novel-page' : '' %> <%= is_post() ? 'reading-page' : '' %>" data-search-url="<%= url_for('/search.json') %>" data-motion="<%= theme.motion ? 'on' : 'off' %>">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <%- partial('_partial/header') %>
+  <main id="main" tabindex="-1"><%- body %></main>
+  <%- partial('_partial/footer') %>
+  <dialog class="search-dialog" id="search-dialog" aria-labelledby="search-heading">
+    <div class="search-top"><span class="eyebrow" id="search-heading">搜索文章</span><button class="icon-button" data-close-search aria-label="关闭搜索">×</button></div>
+    <label class="sr-only" for="search-input">搜索文章标题与正文</label>
+    <input id="search-input" type="search" placeholder="搜索标题或正文…" autocomplete="off">
+    <p class="search-status" role="status" aria-live="polite">搜索这里的文章与笔记。</p>
+    <div class="search-results"></div>
+  </dialog>
+  <%- partial('_partial/radio') %>
+  <p class="sr-only" id="navigation-status" role="status" aria-live="polite"></p>
+</body>
+</html>

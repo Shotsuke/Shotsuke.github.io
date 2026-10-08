@@ -1,0 +1,8 @@
+<div class="reading-progress" aria-hidden="true"></div>
+<section class="article-shell wrap">
+  <header class="article-heading"><a class="eyebrow back-link" href="<%= url_for('/archives/') %>">← 返回手记</a><div class="post-kicker"><% page.categories.each(cat => { %><a href="<%= url_for(cat.path) %>"><%= polar_category(cat.name) %></a><% }) %><time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY.MM.DD') %></time></div><h1><%= polar_title(page.title) %></h1><% const subtitle = String(page.title).match(/<([^>]+)>\s*$/); if (subtitle) { %><p class="article-subtitle"><%= subtitle[1] %></p><% } %><p class="article-byline">文 / <%= config.author %><span>约 <%= Math.max(1, Math.ceil(strip_html(page.content).length / 500)) %> 分钟阅读</span></p></header>
+  <% const outline = toc(page.content, {list_number:false, max_depth:3}); %>
+  <div class="article-grid"><article class="prose" id="article-content"><%- page.content %></article><aside class="article-aside <%= outline ? '' : 'no-outline' %>"><% if (outline) { %><details class="toc-panel" open><summary>这封信的目录</summary><%- outline %></details><% } %><a class="quiet-link" href="<%= url_for('/novel/') %>">在极北，有一个故事 ↗</a></aside></div>
+  <div class="article-end"><span aria-hidden="true">✳</span><p>谢谢你读到这里。</p><div class="tag-links"><% page.tags.each(tag => { %><a href="<%= url_for(tag.path) %>"># <%= tag.name %></a><% }) %></div></div>
+  <nav class="adjacent-posts" aria-label="相邻文章"><% if (page.prev) { %><a href="<%= url_for(page.prev.path) %>"><small>← 较新的一封</small><span><%= polar_title(page.prev.title) %></span></a><% } %><% if (page.next) { %><a href="<%= url_for(page.next.path) %>"><small>较早的一封 →</small><span><%= polar_title(page.next.title) %></span></a><% } %></nav>
+</section>

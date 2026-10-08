@@ -1,0 +1,42 @@
+name: Polar Night
+site_name: Shotsuke
+description: 写下学习、故事，以及那些不想被时间带走的事。
+language: zh-CN
+hero_image: /images/ghostpia-story.jpg
+novel_hero_image: /images/ghostpia-top.jpg
+music:
+  enabled: true
+  src: https://ghostpia.xyz/sounds/bgm.mp3
+  credit_url: https://ghostpia.xyz/en/
+  volume: 30
+motion: true
+math: true
+menu:
+  - name: 首页
+    url: /
+    key: home
+  - name: 文章
+    url: /archives/
+    key: archives
+  - name: 小说
+    url: /novel/
+    key: novel
+  - name: 关于
+    url: /about/
+    key: about
+  - name: 友邻
+    url: /friends/
+    key: friends
+novel:
+  title: 生死逆转
+  english_title: LIFE AND DEATH REVERSAL
+  post_slug: Life-and-Death-Reversal
+  # 正式立绘放在 source/images/characters/ 后，在此填写网址。
+  # 未填写时显示书信与人物名字，不显示缺图占位框。
+  zero_image: /images/characters/zero-reference-v1.png
+  ying_image: /images/characters/ying-snow-v1.png
+social:
+  - name: GitHub
+    url: https://github.com/Shotsuke
+  - name: Bilibili
+    url: https://space.bilibili.com/32768166

@@ -1,0 +1,9 @@
+<% const novel = polar_novel(); %>
+<section class="novel-hero" aria-labelledby="novel-title">
+  <img class="novel-art" src="<%= url_for(theme.novel_hero_image || theme.hero_image) %>" alt="雪地中回望的少女，身后留着一串脚印" fetchpriority="high" width="1920" height="1080"><div class="novel-shade"></div><%- partial('_partial/snow') %>
+  <div class="novel-hero-copy"><h1 id="novel-title"><%= theme.novel.title %></h1><div class="novel-divider" aria-hidden="true">✳</div><p class="novel-tagline">「你说过的，要来一直陪我啊。」</p><div class="novel-actions"><% if (novel) { %><a class="button button-light" href="<%= url_for(novel.path) %>">开始阅读 <span>↗</span></a><% } %><a class="novel-more" href="#story">关于这个故事 ↓</a></div></div>
+  <div class="novel-bottom wrap"><button class="realm-button" aria-pressed="false">切换至余光 <span aria-hidden="true">◐</span></button></div>
+</section>
+<section class="story-section wrap" id="story"><div class="story-label"><h2>世界很冷。<br>你的来信很暖。</h2><span class="story-symbol" aria-hidden="true">℧</span></div><div class="story-intro"><p>一封从极北寄来的信，把萤带到了零的身边。</p><p>她们穿过积雪覆盖的小镇，去临海的旅馆泡温泉，乘着扫帚越过海面，在炉火旁等一场极光。</p><p>这里太安静了。<br>安静得仿佛，所有人都不会再离开。</p><p class="story-last">而零只是，把她的手握得更紧了一点。</p></div></section>
+<section class="letter-section"><div class="letter-paper"><span class="letter-postmark" aria-hidden="true">北方来信</span><h2>萤：</h2><p>上次写信的时候，雪还没有下得这么早，海也还没有结得这么厚。极北的冬天总是来得很快，像一扇门被忽然关上，只留下一点余光和一点回声。</p><p>你要来的话，我就去车站接你…！<br>记得带帽子，最好还是带那种能盖住耳朵的。</p><p class="letter-sign">零</p><span class="letter-fold" aria-hidden="true"></span></div></section>
+<section class="novel-read wrap"><h2>那么，去看极光吧。</h2><p>《生死逆转》 · 原作短篇</p><% if (novel) { %><a class="button" href="<%= url_for(novel.path) %>">展开这封信 <span>↗</span></a><% } %></section>

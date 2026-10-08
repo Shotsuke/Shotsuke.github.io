@@ -1,0 +1,5 @@
+<section class="wrap archive-page">
+  <header class="page-heading"><h1><%= page.category ? polar_category(page.category) : page.tag ? '# ' + page.tag : page.year ? page.year + (page.month ? ' / ' + page.month : '') : '写过的那些日子' %></h1></header>
+  <div class="category-strip"><a href="<%= url_for('/archives/') %>" <%- !page.category && !page.tag ? 'class="selected"' : '' %>>全部</a><% site.categories.sort('name').each(cat => { %><a class="<%= page.category === cat.name ? 'selected' : '' %>" href="<%= url_for(cat.path) %>"><%= polar_category(cat.name) %><sup><%= cat.length %></sup></a><% }) %></div>
+  <%- partial('_partial/posts', {posts:page.posts}) %><%- partial('_partial/pagination') %>
+</section>

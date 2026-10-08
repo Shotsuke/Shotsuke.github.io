@@ -1,0 +1,3 @@
+<section class="wrap simple-page"><header class="page-heading"><h1><%= page.path.startsWith('about/') ? '关于这里，关于我' : page.path.startsWith('friends/') ? '远方也亮着灯' : page.path.startsWith('categories/') ? '手记分类' : page.title %></h1><% if (page.path.startsWith('friends/')) { %><p>循着这些地址，去朋友的世界坐一会儿。</p><% } %></header>
+  <% if (page.path.startsWith('categories/')) { %><div class="category-directory"><% site.categories.sort('name').each(cat => { %><a href="<%= url_for(cat.path) %>"><span><%= polar_category(cat.name) %></span><small><%= cat.length %> 篇 ↗</small></a><% }) %></div><% } else { %><article class="prose <%= page.path.startsWith('friends/') ? 'friends-prose' : '' %>"><%- page.content %></article><% } %>
+</section>

@@ -1,0 +1,9 @@
+<% if (theme.music && theme.music.enabled) { %>
+<section class="night-radio" aria-label="雪夜电台" data-playing="false">
+  <button class="bgm-toggle" type="button" aria-label="播放背景音乐" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="play-symbol" d="m9 5 11 7-11 7z"/><path class="pause-symbol" d="M8 5v14M16 5v14"/></svg></button>
+  <div class="radio-copy"><span class="radio-title"><span id="radio-title">雪夜电台</span><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span></span><a href="<%= theme.music.credit_url %>" target="_blank" rel="noopener noreferrer">ghostpia · 官网 BGM ↗</a></div>
+  <label class="radio-volume"><span class="sr-only">背景音乐音量</span><input id="bgm-volume" type="range" min="0" max="100" value="<%= theme.music.volume ?? 30 %>" aria-label="背景音乐音量"></label>
+  <span id="bgm-status" class="sr-only" role="status"></span>
+  <audio id="bgm" src="<%= theme.music.src %>" preload="none" loop></audio>
+</section>
+<% } %>

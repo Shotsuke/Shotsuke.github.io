@@ -1,0 +1,14 @@
+<% if (page.current === 1) { %>
+<section class="home-hero" aria-labelledby="home-heading">
+  <img class="hero-art" src="<%= url_for(theme.hero_image) %>" alt="深蓝夜空下，积雪覆盖的小镇亮着零星灯光" fetchpriority="high" width="1280" height="780">
+  <div class="hero-wash"></div><%- partial('_partial/snow') %>
+  <div class="hero-content wrap"><h1 id="home-heading">在漫长的夜里，<br>留下一点<span class="light-word">光</span>。</h1><p class="hero-description"><%= theme.description %></p><a class="text-link" href="#letters">翻开手记 <span>↓</span></a></div>
+</section>
+<% } %>
+<section class="journal wrap" id="letters">
+  <div class="section-heading"><div><h2><%= page.current > 1 ? '往日手记' : '最近的来信' %><span class="tiny-star" aria-hidden="true">✳</span></h2></div><a class="subtle-link" href="<%= url_for('/archives/') %>">全部 <%= site.posts.length %> 篇手记 ↗</a></div>
+  <div class="journal-grid"><div><div class="category-strip"><a class="selected" href="<%= url_for('/') %>#letters">全部</a><% site.categories.sort('name').each(cat => { %><a href="<%= url_for(cat.path) %>"><%= polar_category(cat.name) %><sup><%= cat.length %></sup></a><% }) %></div><%- partial('_partial/posts', {posts:page.posts}) %><%- partial('_partial/pagination') %></div>
+  <aside class="journal-aside">
+    <a class="novel-invitation" href="<%= url_for('/novel/') %>"><span class="invitation-symbol" aria-hidden="true">Ω <i>℧</i></span><h3>生死逆转</h3><p>在世界的至北方，<br>有人还在等一封回信。</p><span class="text-link">走进故事 <span>↗</span></span></a>
+  </aside></div>
+</section>

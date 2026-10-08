@@ -1,0 +1,186 @@
+/* Friend's dusk palette and image treatment, on Polar Night's page layouts. */
+:root {
+  color-scheme: dark;
+  --paper: #35434d;
+  --paper-light: #485862;
+  --ink: #edf2f4;
+  --muted: #bdcbd3;
+  --line: #657681;
+  --blue: #c2d6e1;
+  --red: #c5dce7;
+  --panel: #41515c;
+  --code: #293943;
+  --header-bg: #53616bf2;
+  background: var(--paper);
+  scrollbar-color: #96aab6 transparent;
+}
+body {
+  min-height: 100svh;
+  background: radial-gradient(ellipse at 12% -4%, #46545e 0, transparent 38%),
+    radial-gradient(ellipse at 88% 3%, #2f3c46 0, transparent 42%),
+    linear-gradient(160deg, #404e58 0%, #35434d 58%, #2e3b45 100%);
+}
+html[data-mode="light"] {
+  color-scheme: light;
+  --paper: #f3f5f7;
+  --paper-light: #fff;
+  --ink: #22303a;
+  --muted: #586e7b;
+  --line: #d0dae0;
+  --blue: #476c80;
+  --red: #3f718b;
+  --panel: #e9eff3;
+  --code: #eaf0f3;
+  --header-bg: #f3f5f7f2;
+}
+html[data-mode="light"] body {
+  background: radial-gradient(ellipse at 12% -4%, #fff 0, transparent 38%),
+    radial-gradient(ellipse at 88% 3%, #e5edf3 0, transparent 42%),
+    linear-gradient(160deg, #f8fafb 0%, #f3f5f7 58%, #eaf0f4 100%);
+}
+.site-header {background: var(--header-bg);border-color: var(--line);gap:24px}
+.site-nav {gap:30px;margin-right:20px}
+.header-tools {gap:14px}
+.mode-button {font-size:24px;border:1px solid var(--line);border-radius:14px}
+.home-hero,.novel-hero {
+  width:min(1324px, calc(100% - 72px));margin:28px auto 0;
+  border-radius:28px;background:#263643;color:#eef3f5;
+  box-shadow:0 22px 55px #1b2a3626;
+}
+.home-hero {height:610px;min-height:540px}
+.hero-art {object-position:center 52%;filter:saturate(.45) contrast(.94) brightness(.86);opacity:.94}
+.hero-wash {
+  background:linear-gradient(0deg,#1323308c 0%,#2033445c 42%,#1d304020 100%),
+    linear-gradient(90deg,#17283896 0%,#24394a5e 38%,#233c4f25 75%,#1d314010 100%);
+}
+.hero-content {padding-top:110px}
+.hero-content h1 {font-size:clamp(36px,4.4vw,64px);text-shadow:0 2px 24px #0d1b2855}
+.hero-description {color:#d9e4eb;max-width:430px}
+.light-word {color:#e4eef2}
+.light-word::after {background:#c4d8e2aa}
+.hero-content .text-link {border-color:#c0d2dda1;font-size:13px}
+.home-hero .snow,.novel-hero .snow {z-index:-1}
+.novel-hero {height:660px;min-height:550px}
+.novel-art {object-position:center 40%;filter:saturate(.4) contrast(.95) brightness(.72)}
+.novel-shade {background:linear-gradient(180deg,#1b2c4260,#22354a38 40%,#152b42cc)}
+.novel-page[data-realm="dawn"] .novel-art {filter:saturate(.55) contrast(.95) brightness(.95)}
+.novel-page[data-realm="dawn"] .novel-shade {background:linear-gradient(180deg,#263b5060,#37537026 40%,#20384e99)}
+.novel-hero-copy {text-shadow:0 2px 24px #0f223e80}
+.novel-bottom {width:calc(100% - 72px)}
+.realm-button {font-size:12px;min-height:44px}
+.novel-more {font-size:12px}
+.novel-invitation {
+  border-radius:22px;outline:0;border-color:var(--line);
+  background:linear-gradient(155deg,var(--paper-light),var(--panel));
+  box-shadow:0 14px 30px #1425301a;
+}
+.novel-invitation:hover {background:var(--panel)}
+.novel-invitation p,.post-arrow,.tiny-star,.footer-bottom,.category-strip sup {color:var(--muted)}
+.invitation-symbol,.invitation-symbol i {color:var(--blue)}
+.post-info p {font-size:12px}
+.post-kicker {font-size:11px}
+.post-date small {font-size:10px}
+.category-strip {font-size:12px}
+.pagination a:hover,.category-directory a:hover {background:var(--panel)}
+.prose a {color:var(--blue);text-decoration-color:var(--line)}
+.prose blockquote {color:var(--muted);background:var(--panel);border-color:var(--blue)}
+.prose th {background:var(--panel)}
+.prose pre,.prose figure.highlight {background:var(--code);border-color:var(--line);border-radius:12px}
+.prose code {background:var(--code)}
+.prose pre code {background:none}
+.prose img {border-radius:14px}
+.token.comment,.token.prolog,.token.doctype,.token.cdata {color:#a8bac6}
+.token.punctuation {color:#c4d3dc}
+.token.property,.token.tag,.token.constant,.token.symbol {color:#e3b9b1}
+.token.boolean,.token.number {color:#dfc6a3}
+.token.selector,.token.attr-name,.token.string,.token.char {color:#b4d9c9}
+.token.operator,.token.keyword {color:#b1c7ed}
+.token.function,.token.class-name {color:#d5bfdf}
+html[data-mode="light"] .token.comment {color:#5e7581}
+html[data-mode="light"] .token.punctuation {color:#526773}
+html[data-mode="light"] .token.property,html[data-mode="light"] .token.tag {color:#8b4949}
+html[data-mode="light"] .token.boolean,html[data-mode="light"] .token.number {color:#86623e}
+html[data-mode="light"] .token.string,html[data-mode="light"] .token.attr-name {color:#3e7060}
+html[data-mode="light"] .token.operator,html[data-mode="light"] .token.keyword {color:#48618e}
+html[data-mode="light"] .token.function,html[data-mode="light"] .token.class-name {color:#795982}
+.search-dialog {background:var(--paper);border-color:var(--line);border-radius:24px}
+#search-input {color:var(--ink)}
+#search-input::placeholder {color:var(--muted)}
+.letter-section {background-color:var(--panel)}
+.letter-paper {color:#2f4552;border-radius:2px}
+.letter-fold {border-right-color:var(--panel);border-bottom-color:var(--panel)}
+.character-visual,.ying .character-visual {border-radius:20px;background:linear-gradient(155deg,var(--paper-light),var(--panel))}
+.character-glyph,.ying .character-glyph {color:var(--blue);opacity:.6}
+.character-mark {color:var(--muted)}
+.site-footer {padding-bottom:125px}
+#main:focus {outline:none}
+html[data-navigating="true"] {cursor:progress}
+html[data-navigating="true"]::after {content:'';position:fixed;top:0;left:0;right:0;height:2px;background:var(--blue);z-index:100}
+
+/* The player's shape and controls are carried over from shotsuke-site. */
+.night-radio {position:fixed;right:24px;bottom:max(20px,env(safe-area-inset-bottom));z-index:35;display:flex;align-items:center;gap:12px;padding:11px 16px 11px 11px;border:1px solid #9db2c24d;border-radius:24px;background:#3c4d59f2;color:#e8f0f5;box-shadow:0 8px 32px #14253033;backdrop-filter:blur(20px);color-scheme:dark}
+.bgm-toggle {display:grid;place-items:center;flex-shrink:0;width:42px;height:42px;padding:10px;border-radius:50%;background:#d9e7ef12;border:1px solid #d9e7ef33;color:#dcebf4}
+.bgm-toggle:hover {background:#d9e7ef26}
+.bgm-toggle svg {width:19px;height:19px;fill:currentColor;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pause-symbol {display:none;fill:none;stroke-width:3}
+.night-radio[data-playing="true"] .play-symbol {display:none}
+.night-radio[data-playing="true"] .pause-symbol {display:block}
+.radio-copy {min-width:0;line-height:1.5}
+.radio-title {display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:1px}
+.radio-copy a {font:10px/1.6 var(--sans);color:#bdcdd8;white-space:nowrap}
+.radio-copy a:hover {color:#fff}
+.radio-volume {display:flex;align-items:center;margin-left:4px}
+.radio-volume input {width:55px;height:32px;margin:0;accent-color:#bfd4e2;cursor:pointer}
+.equalizer {display:inline-flex;gap:2px;height:12px;align-items:center}
+.equalizer i {width:2px;height:3px;background:#c3dbea;border-radius:2px;animation:radio-wave 1s ease-in-out infinite alternate;animation-play-state:paused}
+.equalizer i:nth-child(2) {animation-delay:-.6s}
+.equalizer i:nth-child(3) {animation-delay:-.3s}
+.night-radio[data-playing="true"] .equalizer i {animation-play-state:running}
+@keyframes radio-wave {to{height:11px}}
+body[data-motion="off"] .equalizer i {animation:none}
+@media(max-width:1100px) {
+  .site-header {gap:16px}.site-nav {gap:22px;margin-right:8px}.header-tools {gap:8px}
+}
+@media(max-width:800px) {
+  .article-aside {background:var(--panel);border:1px solid var(--line);border-radius:14px}
+  .site-nav.is-open {background:var(--header-bg);border-color:var(--line)}
+  .home-hero,.novel-hero {width:calc(100% - 40px);border-radius:24px;margin-top:20px}
+  .hero-content {width:calc(100% - 72px);padding-top:100px}
+}
+@media(max-width:600px) {
+  .header-tools {gap:3px}.mode-button {min-width:34px;border:0;padding:6px;font-size:22px}
+  .home-hero,.novel-hero {width:calc(100% - 28px);margin-top:14px;border-radius:22px}
+  .home-hero {height:560px;min-height:500px;max-height:none}
+  .hero-content {width:calc(100% - 42px);padding-top:100px}
+  .hero-content h1 {font-size:clamp(27px,7.6vw,43px);line-height:1.8;letter-spacing:.07em}
+  .hero-description {font-size:13px;letter-spacing:.6px;max-width:270px}
+  .hero-art {object-position:60% center}
+  .novel-hero {height:650px;min-height:560px;max-height:none}
+  .novel-art {object-position:40% center}
+  .novel-hero h1 {font-size:clamp(37px,10vw,49px)}
+  .novel-bottom {width:calc(100% - 40px);bottom:20px}
+  .night-radio {right:12px;bottom:max(12px,env(safe-area-inset-bottom));gap:9px;padding:9px 12px 9px 9px;border-radius:22px;max-width:calc(100% - 24px)}
+  .radio-volume input {width:48px}
+  .site-footer {padding-bottom:110px}
+}
+@media(prefers-reduced-motion:reduce) {.equalizer i{animation:none!important}}
+@media print {.night-radio{display:none!important}body{background:white!important;color:#111}.prose{color:#111}}
+
+
+/* Original character artwork: preserve the whole silhouette at every width. */
+.character-grid {gap:44px}
+.character {grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:24px;align-items:center}
+.character-visual,.ying .character-visual {min-height:0;background:radial-gradient(ellipse at 50% 42%,var(--panel),transparent 72%);border-radius:20px;overflow:visible}
+.character-art-link {display:block;width:100%;border-radius:20px;transition:transform .25s ease}
+.character-art-link:hover {transform:translateY(-4px)}
+.character-visual img {display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:contain;object-position:center}
+@media(max-width:800px) {
+  .character-grid {grid-template-columns:1fr;gap:32px;max-width:560px;margin-inline:auto}
+  .character {grid-template-columns:minmax(0,45%) minmax(0,1fr);gap:28px}
+}
+@media(max-width:600px) {
+  .character {grid-template-columns:minmax(0,44%) minmax(0,1fr);gap:18px;padding-top:24px}
+  .character-copy h3 {font-size:28px}
+  .character-copy>p:not(.eyebrow) {font-size:13px}
+  .character blockquote {font-size:12px}
+}

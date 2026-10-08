@@ -1,0 +1,12 @@
+<header class="site-header">
+  <a class="wordmark" href="<%= url_for('/') %>" aria-label="Shotsuke 首页"><span class="site-sigil" aria-hidden="true">✳</span><span><%= theme.site_name %></span></a>
+  <nav id="site-nav" class="site-nav" aria-label="主导航">
+    <% theme.menu.forEach(item => { %><a href="<%= url_for(item.url) %>" <%- polar_active(item.key) ? 'aria-current="page"' : '' %>><%= item.name %><span class="nav-dot" aria-hidden="true"></span></a><% }) %>
+  </nav>
+  <div class="header-tools">
+    <button class="search-button icon-button" data-open-search aria-label="搜索文章"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+    <button class="mode-button icon-button" aria-label="切换到明亮模式" aria-pressed="false" title="切换明亮／暮色"><span aria-hidden="true">☼</span></button>
+    <button class="motion-button" aria-pressed="<%= theme.motion ? 'true' : 'false' %>" aria-label="切换飘雪动画"><span aria-hidden="true">❄</span><span class="motion-label">飘雪</span></button>
+    <button class="menu-button icon-button" aria-expanded="false" aria-controls="site-nav" aria-label="打开导航"><span></span><span></span></button>
+  </div>
+</header>

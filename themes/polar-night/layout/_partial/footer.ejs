@@ -1,0 +1,5 @@
+<footer class="site-footer wrap">
+  <div class="footer-note"><span class="site-sigil" aria-hidden="true">✳</span><p>雪会停，信会抵达。</p></div>
+  <div class="footer-links"><% theme.social.forEach(item => { %><a href="<%= item.url %>" target="_blank" rel="noopener noreferrer"><%= item.name %> ↗</a><% }) %><a href="#main">回到上方 ↑</a></div>
+  <div class="footer-bottom"><span>© <%= date(Date.now(), 'YYYY') %> <%= config.author %></span></div>
+</footer>
