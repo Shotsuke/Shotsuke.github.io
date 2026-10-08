@@ -1,4 +1,5 @@
 """Offline contract tests for Actions publication and concurrent writers."""
+import asyncio
 import base64
 import contextlib
 import io
@@ -37,7 +38,7 @@ class PublisherTests(unittest.TestCase):
         with patch.object(publish, 'api', api):
             self.assertEqual(publish.current(), ('HEAD123', {'version': 1}))
 
-    def test_ref_conflict_remerges_both_devices_without_health_login(self):
+    def test_device_report_refreshes_health_and_remerges_conflicts(self):
         now = publish.datetime.now(publish.timezone.utc).isoformat()
         mac = {'device':'mac','app':'Code','activity':'working','sampled_at':now}
         windows = {'device':'windows','app':'Firefox','activity':'browsing','sampled_at':now}
@@ -53,11 +54,31 @@ class PublisherTests(unittest.TestCase):
             event.write_text(json.dumps({'client_payload': mac}))
             with patch.dict(os.environ, {'GITHUB_EVENT_NAME':'repository_dispatch','GITHUB_EVENT_PATH':str(event)}), \
                  patch.object(publish, 'current', side_effect=[('old', {}), ('new', {'computers': {'windows': windows}})]), \
-                 patch.object(publish, 'write', write), patch.object(publish, 'collect') as collect, \
+                 patch.object(publish, 'write', write), patch.object(publish, 'collect', return_value=({'heart_rate': {'value': 77, 'sampled_at': now}}, 'ok')) as collect, \
                  contextlib.redirect_stdout(io.StringIO()):
                 publish.main()
-        collect.assert_not_called()
+        collect.assert_awaited_once()
+        self.assertEqual(writes[-1][1]['health']['heart_rate']['value'], 77)
         self.assertEqual(writes[-1][0], 'new')
         self.assertEqual(set(writes[-1][1]['computers']), {'mac', 'windows'})
+
+    def test_health_failure_still_publishes_computer_and_keeps_old_sample_time(self):
+        now = publish.datetime.now(publish.timezone.utc).isoformat()
+        mac = {'device':'mac','app':'Code','activity':'working','sampled_at':now}
+        old_heart = {'value':75,'sampled_at':'2026-10-08T03:40:00Z'}
+        for failure in [TimeoutError(), RuntimeError('private upstream details')]:
+            with self.subTest(failure=type(failure).__name__), tempfile.TemporaryDirectory() as folder:
+                event = Path(folder) / 'event.json'
+                event.write_text(json.dumps({'client_payload': mac}))
+                output = io.StringIO()
+                with patch.dict(os.environ, {'GITHUB_EVENT_NAME':'repository_dispatch','GITHUB_EVENT_PATH':str(event)}), \
+                     patch.object(publish, 'current', return_value=('old', {'health': {'heart_rate': old_heart}})), \
+                     patch.object(publish, 'write') as write, patch.object(publish, 'collect', side_effect=failure), \
+                     contextlib.redirect_stdout(output):
+                    publish.main()
+                document = write.call_args.args[1]
+                self.assertEqual(document['computers']['mac']['app'], 'Code')
+                self.assertEqual(document['health']['heart_rate'], old_heart)
+                self.assertNotIn('private upstream details', output.getvalue())
 
 if __name__ == '__main__': unittest.main()

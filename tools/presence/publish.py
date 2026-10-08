@@ -49,6 +49,14 @@ def write(parent, document):
         api('git/refs', 'POST', {'ref': 'refs/heads/' + BRANCH, 'sha': commit['sha']})
 
 
+async def refresh_health(now):
+    # A stalled health request must not prevent computer presence from being published.
+    try:
+        return await asyncio.wait_for(collect(now), timeout=45)
+    except Exception:
+        return {}, 'unavailable'
+
+
 def main():
     logging.disable(logging.CRITICAL)
     now = datetime.now(timezone.utc)
@@ -57,7 +65,8 @@ def main():
     incoming = event.get('client_payload') if event_name == 'repository_dispatch' else None
     override = event.get('inputs') if event_name == 'workflow_dispatch' else None
     if override and override.get('activity') == 'keep': override = None
-    health, status = ({}, 'not_requested') if incoming is not None else asyncio.run(collect(now))
+    # Device reports also refresh health: GitHub cron can be delayed or skipped.
+    health, status = asyncio.run(refresh_health(now))
     # Retry a ref conflict using the latest snapshot so two device reports cannot overwrite each other.
     for attempt in range(3):
         parent, old = current()

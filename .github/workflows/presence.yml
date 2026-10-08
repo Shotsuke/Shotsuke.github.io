@@ -31,11 +31,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install health reader
-        if: github.event_name != 'repository_dispatch'
         run: pip install -r tools/presence/requirements.txt --quiet
       - name: Update public snapshot
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MI_USER_ID: ${{ github.event_name != 'repository_dispatch' && secrets.MI_USER_ID || '' }}
-          MI_PASS_TOKEN: ${{ github.event_name != 'repository_dispatch' && secrets.MI_PASS_TOKEN || '' }}
+          MI_USER_ID: ${{ secrets.MI_USER_ID }}
+          MI_PASS_TOKEN: ${{ secrets.MI_PASS_TOKEN }}
         run: python tools/presence/publish.py
