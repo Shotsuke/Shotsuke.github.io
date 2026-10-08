@@ -12,6 +12,10 @@
   <script>try { document.documentElement.dataset.mode = localStorage.getItem('shotsuke-mode') === 'light' ? 'light' : 'dark'; } catch {}</script>
   <link rel="stylesheet" href="<%= url_for('/css/polar.css') %>">
   <link rel="stylesheet" href="<%= url_for('/css/afterglow.css') %>">
+  <% if (theme.presence && theme.presence.enabled) { %>
+  <link rel="stylesheet" href="<%= url_for('/css/presence.css') %>">
+  <script defer src="<%= url_for('/js/presence.js') %>"></script>
+  <% } %>
   <script defer src="<%= url_for('/js/polar.js') %>"></script>
   <script defer src="<%= url_for('/js/math.js') %>"></script>
   <script defer src="<%= url_for('/js/radio.js') %>"></script>

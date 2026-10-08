@@ -1,0 +1,2 @@
+# Audited upstream revision; only the cloud adapter is used. No web server in Actions.
+mi-fitness-mcp @ https://github.com/HUAYUE1024/mi-fitness-mcp-cn/archive/addd2849cc882fe52da5f49188e69d6b6f5ec113.zip

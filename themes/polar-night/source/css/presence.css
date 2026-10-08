@@ -1,0 +1,20 @@
+.site-brand{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.presence{position:relative;line-height:1.6;font-family:var(--sans);letter-spacing:0}
+.presence-trigger{display:grid;place-items:center;width:36px;height:44px;padding:0;border-radius:12px}
+.presence-trigger:hover,.presence-trigger[aria-expanded=true]{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.presence-dot{width:8px;height:8px;border-radius:50%;background:#a3b1ba;box-shadow:0 0 0 4px #a3b1ba17}
+.presence[data-state=working] .presence-dot{background:#a7cfbb;box-shadow:0 0 0 4px #a7cfbb17}
+.presence[data-state=gaming] .presence-dot{background:#dac2ac;box-shadow:0 0 0 4px #dac2ac17}
+.presence[data-state=browsing] .presence-dot,.presence[data-state=using] .presence-dot{background:#b0cedd;box-shadow:0 0 0 4px #b0cedd17}
+.presence[data-state=sleeping] .presence-dot{background:#c6b7dc;box-shadow:0 0 0 4px #c6b7dc17}
+.presence[data-state=offline] .presence-dot,.presence[data-state=away] .presence-dot{background:transparent;box-shadow:none;border:1px solid var(--muted)}
+.presence-card{position:absolute;top:calc(100% - 1px);left:-12px;width:300px;padding:21px 22px 17px;border:1px solid var(--line);border-radius:17px;background:var(--paper);color:var(--ink);box-shadow:0 15px 40px #0c192633;z-index:50;text-align:left}
+.presence-card[hidden]{display:none}
+.presence-title{font-size:14px;font-weight:500;letter-spacing:.3px;margin-bottom:17px}
+.presence-values{margin:0;display:grid;gap:13px;font-size:12px}
+.presence-values>div{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px}
+.presence-values dt{color:var(--muted)}
+.presence-values dd{margin:0;overflow-wrap:anywhere;line-height:1.6}
+.presence-values dd small{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.presence-note{border-top:1px solid var(--line);padding-top:12px;margin-top:17px;font-size:10px;line-height:1.8;color:var(--muted)}
+@media(max-width:600px){.site-brand{gap:0}.presence-trigger{width:28px}.presence-card{position:fixed;top:calc(var(--header) - 5px);left:12px;width:min(300px,calc(100vw - 24px));max-height:calc(100svh - var(--header) - 20px);overflow:auto}.site-header{gap:8px}.header-tools{gap:3px}.wordmark{gap:7px}}

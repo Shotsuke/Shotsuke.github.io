@@ -6,3 +6,8 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+
+# Local presence configuration and compiled collector
+tools/presence/agents/config.json
+tools/presence/agents/frontmost
+__pycache__/

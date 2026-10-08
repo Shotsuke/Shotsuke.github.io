@@ -1,0 +1,17 @@
+<% if (theme.presence && theme.presence.enabled) { %>
+<div class="presence" data-presence data-url="<%= theme.presence.url %>" data-state="unknown">
+  <button class="presence-trigger" type="button" aria-label="小㊗️正在：状态不明；查看近况" aria-expanded="false" aria-controls="presence-card">
+    <span class="presence-dot" aria-hidden="true"></span>
+  </button>
+  <section class="presence-card" id="presence-card" aria-labelledby="presence-title" hidden>
+    <p class="presence-title" id="presence-title">小㊗️正在：状态不明</p>
+    <dl class="presence-values">
+      <div><dt>心率</dt><dd data-presence-heart>尚未接入</dd></div>
+      <div><dt>今日步数</dt><dd data-presence-steps>尚未接入</dd></div>
+      <div><dt>Mac</dt><dd data-presence-mac>尚未接入</dd></div>
+      <div><dt>Windows</dt><dd data-presence-windows>尚未接入</dd></div>
+    </dl>
+    <p class="presence-note" data-presence-note>约每 10 分钟更新，超过 1 小时标记过期。</p>
+  </section>
+</div>
+<% } %>

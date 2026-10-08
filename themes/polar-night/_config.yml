@@ -40,3 +40,7 @@ social:
     url: https://github.com/Shotsuke
   - name: Bilibili
     url: https://space.bilibili.com/32768166
+
+presence:
+  enabled: true
+  url: https://raw.githubusercontent.com/Shotsuke/Shotsuke.github.io/presence-data/status.json

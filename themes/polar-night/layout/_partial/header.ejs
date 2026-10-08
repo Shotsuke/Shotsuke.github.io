@@ -1,5 +1,8 @@
 <header class="site-header">
+  <div class="site-brand">
   <a class="wordmark" href="<%= url_for('/') %>" aria-label="Shotsuke 首页"><span class="site-sigil" aria-hidden="true">✳</span><span><%= theme.site_name %></span></a>
+  <%- partial('_partial/presence') %>
+  </div>
   <nav id="site-nav" class="site-nav" aria-label="主导航">
     <% theme.menu.forEach(item => { %><a href="<%= url_for(item.url) %>" <%- polar_active(item.key) ? 'aria-current="page"' : '' %>><%= item.name %><span class="nav-dot" aria-hidden="true"></span></a><% }) %>
   </nav>

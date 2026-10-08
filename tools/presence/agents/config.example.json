@@ -1,0 +1,9 @@
+{
+  "repository": "Shotsuke/Shotsuke.github.io",
+  "device": "mac",
+  "idle_after_seconds": 300,
+  "private_apps": [],
+  "working_apps": ["Visual Studio Code", "Code", "Code - Insiders", "Codex", "Xcode", "PyCharm", "IntelliJ IDEA", "WINWORD", "EXCEL", "POWERPNT", "Obsidian", "Terminal", "iTerm2", "WindowsTerminal"],
+  "gaming_apps": [],
+  "browser_apps": ["Safari", "Google Chrome", "chrome", "Microsoft Edge", "msedge", "Firefox", "firefox", "Arc", "Brave Browser", "brave", "Vivaldi"]
+}
