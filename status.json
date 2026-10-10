@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-10T05:15:34.601991Z",
+  "generated_at": "2026-10-10T05:25:39.753503Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -16,9 +16,9 @@
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "飞书",
-      "activity": "using",
-      "sampled_at": "2026-10-10T05:15:17.407440Z"
+      "app": "",
+      "activity": "away",
+      "sampled_at": "2026-10-10T05:25:18.884116Z"
     }
   },
   "manual": null
