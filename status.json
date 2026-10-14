@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "generated_at": "2026-10-14T12:50:32.320395Z",
+  "generated_at": "2026-10-14T13:00:37.612148Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 83,
-      "sampled_at": "2026-10-14T11:30:00Z"
+      "value": 78,
+      "sampled_at": "2026-10-14T12:50:00Z"
     },
     "steps": {
-      "value": 7283,
-      "sampled_at": "2026-10-14T08:59:00Z",
+      "value": 7604,
+      "sampled_at": "2026-10-14T12:28:00Z",
       "date": "2026-10-14"
     }
   },
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "Safari浏览器",
       "activity": "using",
-      "sampled_at": "2026-10-14T12:50:11.607789Z"
+      "sampled_at": "2026-10-14T13:00:13.206240Z"
     }
   },
   "manual": null
