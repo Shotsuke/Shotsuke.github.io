@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generated_at": "2026-10-13T22:46:25.100836Z",
+  "generated_at": "2026-10-14T01:26:36.825825Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 59,
-      "sampled_at": "2026-10-13T22:10:00Z"
+      "value": 87,
+      "sampled_at": "2026-10-14T00:50:00Z"
     },
     "steps": {
       "value": 100,
