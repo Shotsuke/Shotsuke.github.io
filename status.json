@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-14T06:34:53.590338Z",
+  "generated_at": "2026-10-14T07:02:22.077696Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,17 +8,17 @@
       "sampled_at": "2026-10-14T05:50:00Z"
     },
     "steps": {
-      "value": 2887,
-      "sampled_at": "2026-10-14T05:57:00Z",
+      "value": 4073,
+      "sampled_at": "2026-10-14T06:58:00Z",
       "date": "2026-10-14"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "",
-      "activity": "away",
-      "sampled_at": "2026-10-14T06:34:29.944873Z"
+      "app": "ChatGPT",
+      "activity": "using",
+      "sampled_at": "2026-10-14T07:02:04.737447Z"
     }
   },
   "manual": null
