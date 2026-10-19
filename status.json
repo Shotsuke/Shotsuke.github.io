@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-19T03:06:31.868893Z",
+  "generated_at": "2026-10-19T03:16:32.363693Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,17 +8,17 @@
       "sampled_at": "2026-10-17T10:20:00Z"
     },
     "steps": {
-      "value": 186,
-      "sampled_at": "2026-10-18T17:21:00Z",
+      "value": 650,
+      "sampled_at": "2026-10-19T02:53:00Z",
       "date": "2026-10-19"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "QQ",
+      "app": "腾讯会议",
       "activity": "using",
-      "sampled_at": "2026-10-19T03:06:09.431311Z"
+      "sampled_at": "2026-10-19T03:16:10.878976Z"
     }
   },
   "manual": null
