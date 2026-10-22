@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generated_at": "2026-10-22T11:03:41.369243Z",
+  "generated_at": "2026-10-22T11:13:39.837049Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 75,
-      "sampled_at": "2026-10-22T10:00:00Z"
+      "value": 72,
+      "sampled_at": "2026-10-22T11:00:00Z"
     },
     "steps": {
       "value": 4792,
@@ -16,9 +16,9 @@
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "飞书",
-      "activity": "using",
-      "sampled_at": "2026-10-22T11:03:16.335913Z"
+      "app": "",
+      "activity": "away",
+      "sampled_at": "2026-10-22T11:13:17.971894Z"
     }
   },
   "manual": null
