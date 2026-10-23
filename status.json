@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-23T06:04:15.033083Z",
+  "generated_at": "2026-10-23T06:14:18.277279Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "QQ",
       "activity": "using",
-      "sampled_at": "2026-10-23T06:03:57.182193Z"
+      "sampled_at": "2026-10-23T06:13:58.713748Z"
     }
   },
   "manual": null
