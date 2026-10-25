@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "generated_at": "2026-10-25T09:50:23.372972Z",
+  "generated_at": "2026-10-25T10:00:27.475554Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 77,
-      "sampled_at": "2026-10-25T08:30:00Z"
+      "value": 79,
+      "sampled_at": "2026-10-25T09:50:00Z"
     },
     "steps": {
-      "value": 1401,
-      "sampled_at": "2026-10-25T07:13:00Z",
+      "value": 1414,
+      "sampled_at": "2026-10-25T09:02:00Z",
       "date": "2026-10-25"
     }
   },
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "",
       "activity": "away",
-      "sampled_at": "2026-10-25T09:50:07.053604Z"
+      "sampled_at": "2026-10-25T10:00:08.564206Z"
     }
   },
   "manual": null
