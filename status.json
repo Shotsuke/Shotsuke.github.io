@@ -1,23 +1,23 @@
 {
   "version": 1,
-  "generated_at": "2026-10-28T13:42:45.635801Z",
+  "generated_at": "2026-10-28T15:30:19.516874Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 65,
-      "sampled_at": "2026-10-28T13:30:00Z"
+      "value": 63,
+      "sampled_at": "2026-10-28T14:50:00Z"
     },
     "steps": {
-      "value": 8043,
-      "sampled_at": "2026-10-28T11:46:00Z",
+      "value": 8436,
+      "sampled_at": "2026-10-28T14:05:00Z",
       "date": "2026-10-28"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "WPS Office",
-      "activity": "using",
+      "app": "",
+      "activity": "away",
       "sampled_at": "2026-10-28T13:42:26.721022Z"
     }
   },
