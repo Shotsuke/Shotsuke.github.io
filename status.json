@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-29T12:22:27.977771Z",
+  "generated_at": "2026-10-29T12:32:39.264714Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "腾讯会议",
       "activity": "using",
-      "sampled_at": "2026-10-29T12:22:12.499425Z"
+      "sampled_at": "2026-10-29T12:32:13.903466Z"
     }
   },
   "manual": null
