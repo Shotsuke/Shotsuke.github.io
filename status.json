@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-29T19:18:08.699679Z",
+  "generated_at": "2026-10-29T19:35:32.470228Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "",
       "activity": "away",
-      "sampled_at": "2026-10-29T19:17:47.730363Z"
+      "sampled_at": "2026-10-29T19:35:10.603128Z"
     }
   },
   "manual": null
