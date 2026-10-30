@@ -1,23 +1,23 @@
 {
   "version": 1,
-  "generated_at": "2026-10-30T16:51:43.663118Z",
+  "generated_at": "2026-10-30T20:05:20.674726Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 81,
-      "sampled_at": "2026-10-30T13:00:00Z"
+      "value": 57,
+      "sampled_at": "2026-10-30T19:30:00Z"
     },
     "steps": {
-      "value": 4334,
-      "sampled_at": "2026-10-30T14:46:00Z",
-      "date": "2026-10-30"
+      "value": 61,
+      "sampled_at": "2026-10-30T17:18:00Z",
+      "date": "2026-10-31"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "ChatGPT",
-      "activity": "using",
+      "app": "",
+      "activity": "away",
       "sampled_at": "2026-10-30T16:51:24.448316Z"
     }
   },
