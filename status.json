@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generated_at": "2026-11-01T07:49:34.048894Z",
+  "generated_at": "2026-11-01T10:43:10.432346Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
-      "value": 84,
-      "sampled_at": "2026-11-01T07:18:00Z"
+      "value": 96,
+      "sampled_at": "2026-11-01T09:50:00Z"
     },
     "steps": {
-      "value": 1458,
-      "sampled_at": "2026-11-01T07:19:00Z",
+      "value": 3882,
+      "sampled_at": "2026-11-01T09:47:00Z",
       "date": "2026-11-01"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "",
-      "activity": "away",
-      "sampled_at": "2026-10-31T05:00:10.515860Z"
+      "app": "Safari浏览器",
+      "activity": "using",
+      "sampled_at": "2026-11-01T10:42:52.013266Z"
     }
   },
   "manual": null
