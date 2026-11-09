@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-09T07:48:42.656981Z",
+  "generated_at": "2026-11-09T08:12:49.675345Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,17 +8,17 @@
       "sampled_at": "2026-11-03T04:40:00Z"
     },
     "steps": {
-      "value": 2213,
-      "sampled_at": "2026-11-09T05:48:00Z",
+      "value": 2804,
+      "sampled_at": "2026-11-09T07:56:00Z",
       "date": "2026-11-09"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "QQ",
+      "app": "ChatGPT",
       "activity": "using",
-      "sampled_at": "2026-11-09T07:48:22.315063Z"
+      "sampled_at": "2026-11-09T08:12:28.588505Z"
     }
   },
   "manual": null
