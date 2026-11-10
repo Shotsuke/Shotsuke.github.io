@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-10T03:11:09.239780Z",
+  "generated_at": "2026-11-10T03:24:20.772065Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,8 +8,8 @@
       "sampled_at": "2026-11-03T04:40:00Z"
     },
     "steps": {
-      "value": 2284,
-      "sampled_at": "2026-11-10T02:05:00Z",
+      "value": 2835,
+      "sampled_at": "2026-11-10T03:16:00Z",
       "date": "2026-11-10"
     }
   },
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "终端",
       "activity": "using",
-      "sampled_at": "2026-11-10T03:10:47.646970Z"
+      "sampled_at": "2026-11-10T03:24:01.687726Z"
     }
   },
   "manual": null
