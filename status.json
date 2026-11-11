@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-11T05:41:47.082530Z",
+  "generated_at": "2026-11-11T06:03:59.472113Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,17 +8,17 @@
       "sampled_at": "2026-11-03T04:40:00Z"
     },
     "steps": {
-      "value": 2929,
-      "sampled_at": "2026-11-11T04:30:00Z",
+      "value": 3762,
+      "sampled_at": "2026-11-11T05:52:00Z",
       "date": "2026-11-11"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "WPS Office",
+      "app": "Safari浏览器",
       "activity": "using",
-      "sampled_at": "2026-11-11T05:41:25.010281Z"
+      "sampled_at": "2026-11-11T06:03:36.048797Z"
     }
   },
   "manual": null
