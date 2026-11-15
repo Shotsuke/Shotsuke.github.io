@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-14T23:28:45.023852Z",
+  "generated_at": "2026-11-15T03:00:29.641132Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,9 +8,9 @@
       "sampled_at": "2026-11-03T04:40:00Z"
     },
     "steps": {
-      "value": 2510,
-      "sampled_at": "2026-11-14T07:48:00Z",
-      "date": "2026-11-14"
+      "value": 76,
+      "sampled_at": "2026-11-14T21:24:00Z",
+      "date": "2026-11-15"
     }
   },
   "computers": {
