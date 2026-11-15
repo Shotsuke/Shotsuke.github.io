@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-15T14:23:58.811254Z",
+  "generated_at": "2026-11-15T14:34:00.706772Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "ChatGPT",
       "activity": "using",
-      "sampled_at": "2026-11-15T14:23:40.046788Z"
+      "sampled_at": "2026-11-15T14:33:41.892988Z"
     }
   },
   "manual": null
