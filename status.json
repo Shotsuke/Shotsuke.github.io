@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-15T15:24:10.810441Z",
+  "generated_at": "2026-11-15T15:34:10.997184Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -16,9 +16,9 @@
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "",
-      "activity": "away",
-      "sampled_at": "2026-11-15T15:23:50.622839Z"
+      "app": "Typora",
+      "activity": "using",
+      "sampled_at": "2026-11-15T15:33:52.459226Z"
     }
   },
   "manual": null
