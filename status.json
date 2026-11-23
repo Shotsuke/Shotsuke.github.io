@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-23T09:07:01.248812Z",
+  "generated_at": "2026-11-23T09:17:00.638589Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -16,9 +16,9 @@
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "",
-      "activity": "away",
-      "sampled_at": "2026-11-23T09:06:39.967024Z"
+      "app": "Clash Verge",
+      "activity": "using",
+      "sampled_at": "2026-11-23T09:16:42.568401Z"
     }
   },
   "manual": null
