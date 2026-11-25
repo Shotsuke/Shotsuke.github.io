@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T03:54:27.355670Z",
+  "generated_at": "2026-11-25T04:04:39.322033Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -18,7 +18,7 @@
       "device": "mac",
       "app": "WPS Office",
       "activity": "using",
-      "sampled_at": "2026-11-25T03:53:59.910948Z"
+      "sampled_at": "2026-11-25T04:04:01.501066Z"
     }
   },
   "manual": null
