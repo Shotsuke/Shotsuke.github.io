@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-26T22:59:59.459012Z",
+  "generated_at": "2026-11-26T23:59:23.462545Z",
   "ttl_seconds": 3600,
   "health": {
     "heart_rate": {
@@ -8,17 +8,17 @@
       "sampled_at": "2026-11-03T04:40:00Z"
     },
     "steps": {
-      "value": 752,
-      "sampled_at": "2026-11-26T07:23:00Z",
-      "date": "2026-11-26"
+      "value": 83,
+      "sampled_at": "2026-11-26T17:38:00Z",
+      "date": "2026-11-27"
     }
   },
   "computers": {
     "mac": {
       "device": "mac",
-      "app": "",
-      "activity": "away",
-      "sampled_at": "2026-11-26T18:25:52.275967Z"
+      "app": "Clash Verge",
+      "activity": "using",
+      "sampled_at": "2026-11-26T23:58:57.863071Z"
     }
   },
   "manual": null
